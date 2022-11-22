@@ -63,6 +63,25 @@ if (scientist === "Rosalind Franklin") {
 scientist.toUpperCase() //Erro pois nesse ponto o tipo é string | number
 ```
 
+#### Verificações com typeof
+De maneira resumida, é a mesma coisa que o operador `is` no dart, java etc.
+Essas verificações são bastante flexíveis (dá pra usar !, else etc) e isso faz com que elas acabem sendo uma das mais práticas no dia a dia.
+ex:
+```typescript
+let researcher = Math.random() > 0.5 ? "Rosalind Franklin" : 51;
+if (typeof researcher === "string") {
+  researcher.toUpperCase();
+  researcher.toFixed();  //Erro pois nesse escopo researcher vai ser sempre string
+}
+
+if (!(typeof researcher === "string")) {
+  researcher.toUpperCase(); //Erro pois nesse escopo researcher nunca será string
+  researcher.toFixed(); //Correto pois na declaração o typescript infere que o tipo um union de string | number. Como nesse escopo researcher nunca será string logo será sempre number.
+} else {
+  researcher.toUpperCase();
+  researcher.toFixed(); //Aqui dá erro pois researcher será string
+}
+```
 
 
 ---
