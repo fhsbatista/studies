@@ -83,6 +83,33 @@ if (!(typeof researcher === "string")) {
 }
 ```
 
+## Tipos Literais
+O tipo literal é o tipo mais restrito possível no typescript. O "literal" representa um valor específico de um tipo primitivo, o que é diferente de um tipo primitivo, pois esse poderia ser qualquer valor desse primitivo.
+
+Veja o código abaixo por exemplo:
+```typescript
+const philosopher = "Hypatia"
+```
+
+Poderíamos dizer que philosopher é uma `string`, e isso está certo. Porém, não é qualquer string, é algo mais especial que isso. Philosopher é o tipo literal `"Hypatia"`, isso pois ela é uma `const`, ou seja, não pode ser alterada, e o valor atribuído é uma `string`.
+
+Nesses casos, se passarmos o ponteiro do mouse na variável, a IDE irá mostrar que o tipo é `"Hypathia"` em vez de `string`.
+
+### `Union` de literais
+Temos uma flexibilidade bem interessante que é a de poder usar `union` de literais para enumerar opções.
+
+Ex:
+```typescript
+let statusCarro: "Andando" | "Dirigingo" | "Ré" | undefined | boolean
+statusCarro = "Andando"
+statusCarro = "Ré"
+statusCarro = undefined
+statusCarro = false
+statusCarro = "Estacionado" //Erro pois o literal "Estacionado" não faz parte do union de literais definidos ao declarar a variável
+```
+
+
+
 
 ---
 **Footnotes**
