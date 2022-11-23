@@ -97,6 +97,7 @@ Nesses casos, se passarmos o ponteiro do mouse na variável, a IDE irá mostrar 
 
 ### `Union` de literais
 Temos uma flexibilidade bem interessante que é a de poder usar `union` de literais para enumerar opções.
+Isso deve ser feito colocando os literais como o **tipo** da variável, o que é diferente de atribuir o valor. Para definir o tipo, usamos o `:` em vez de `=`.
 
 Ex:
 ```typescript
@@ -108,8 +109,25 @@ statusCarro = false
 statusCarro = "Estacionado" //Erro pois o literal "Estacionado" não faz parte do union de literais definidos ao declarar a variável
 ```
 
+### Atribuindo literais à variáveis
+Um ponto para ficar atento é quando atribuímos um literal como valor de uma variável.
+Quando fazemos isso, o typescript não vai permitir que um literal seja atribuído à uma variável quando esse é diferente do literal que foi usado na hora de declarar a variável.
 
+Ex:
 
+```typescript
+let carName: "dodge ram"
+carName = "polo" //Erro pois a variável vai aceitar apenas o literal "dodge ram"
+```
+
+Porém, uma variável que é de um tipo literal pode ser atribuído à uma variável cujo tipo é o mesmo tipo do literal pois ambos os tipos são iguais
+
+Ex:
+
+```typescript
+let carName: "dodge ram"
+let otherCarName: string = carName //Dá certo, carName pode ser atribuído à uma string pois o seu literal faz parte do conjunto de infinitas strings possíveis
+```
 
 ---
 **Footnotes**
