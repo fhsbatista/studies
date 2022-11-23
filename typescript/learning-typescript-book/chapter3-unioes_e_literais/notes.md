@@ -129,6 +129,20 @@ let carName: "dodge ram"
 let otherCarName: string = carName //Dá certo, carName pode ser atribuído à uma string pois o seu literal faz parte do conjunto de infinitas strings possíveis
 ```
 
+## Verificação estrita de nulos
+A capacidadde de `union` e valores **literais** é muito útil para trabalhar com valores "nullables". O typescript foi um dos precursores dessa possibilidade nas linguagens modernas que temos hoje em dia com esse recurso, como kotlin, dart, swift etc.
+
+### Configuração
+É interessante também ter em mente que essa ferramenta no typescript é configurável. A configuração **strictNullChecks** é a mais restrita e portanto talvez a mais segura. (Essas configurações são abordadas no capítulo 13).
+
+#### strictNullChecks
+Quando desativado, automaticamente o typescript adicionará o union `null | undefined` em todos os tipos do código.
+
+O recomendado é que o strictNullChecks esteja ativado.
+
+### Estreitamento por verdades
+No Javascript, todos os valores são considerados como **verdades**, exceto aqueles que são previamente entendidos como **falsos**, que são: `false`, `0`, `-0`, `0n`, `""`, `null`, `undefined` e `NaN`. 
+
 ---
 **Footnotes**
 
