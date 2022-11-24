@@ -141,7 +141,45 @@ Quando desativado, automaticamente o typescript adicionará o union `null | unde
 O recomendado é que o strictNullChecks esteja ativado.
 
 ### Estreitamento por verdades
-No Javascript, todos os valores são considerados como **verdades**, exceto aqueles que são previamente entendidos como **falsos**, que são: `false`, `0`, `-0`, `0n`, `""`, `null`, `undefined` e `NaN`. 
+No Javascript, todos os valores são considerados como **verdades**, exceto aqueles que são previamente entendidos como **falsos**, que são: `false`, `0`, `-0`, `0n`, `""`, `null`, `undefined` e `NaN`.
+
+Isso pode ser útil em condicionais por exemplo, pois podemos estreitar o valor de uma variável caso ela seja "verdade".
+
+No exemplo abaixo, a variável pode ser string ou undefined. Na condicional, verificamos se ela é "verdade", isso acontecerá quando a variável for diferente de `""` e `undefined`. Isso nos permite trabalhar com a variável tendo o tipo `string` apenas dentro do escopo do `if`.
+
+```typescript
+let geneticist =  Math.random() > 0.5 ? "Barbara McClintock" : undefined
+if (geneticist) {
+  geneticist.toUpperCase() //Não dá erro pois aqui o tipo vai ser string, pois a condição seria false caso a variável fosse undefined
+}
+geneticist.toUpperCase() //Erro pois a variável pode ser undefined
+```
+
+Isso pode ser bem útil no dia a dia. 
+Mas o inverso não é possível 😕. No caso em que a condição é falsa, seria interessante se o tipo estreitasse a variável para o tipo que faria a condição ser falsa (no ex acima seria `undefined` por exemplo), mas isso não acontece. O que vai acontecer é que o tipo será o union `string | undefined`
+
+```typescript
+let geneticist =  Math.random() > 0.5 ? "Barbara McClintock" : undefined
+if (!geneticist) {
+  geneticist.toUpperCase() //Aqui dá erro pois o tipo é string | undefined
+}
+```
+
+### Variáveis sem valores iniciais
+O typescript consegue nos avisar quando tentamos usar uma variável que ainda não teve valor definido.
+
+```typescript
+let fighter: string
+fighter.toUpperCase() //Erro pois fighter ainda não teve um valor atribuído
+```
+
+Um ponto a sempre se lembrar é que essa mensagem não irá aparecer quando o tipo da variável incluir `undefined`.
+No exemplo abaixo, não será exibido erro ao tentar acessar a variável.
+
+```typescript
+let dancer: string | undefined
+dancer?.toUpperCase() //Não dá erro pois como o tipo inclui undefined, o typescript permite usar o operador "?" que torna seguro tentar acessar algo da variável
+```
 
 ---
 **Footnotes**
