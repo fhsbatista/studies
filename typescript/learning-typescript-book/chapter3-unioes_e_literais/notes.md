@@ -181,6 +181,56 @@ let dancer: string | undefined
 dancer?.toUpperCase() //Não dá erro pois como o tipo inclui undefined, o typescript permite usar o operador "?" que torna seguro tentar acessar algo da variável
 ```
 
+## Aliases de tipos
+Já vimos que os `union` podem ser muito úteis. Porém, podemos cair em casos em que vamos usar frequentemente o mesmo `union` e ele pode conter muitos tipos. Com o tempo, isso pode ficar verboso ao longo do código.
+
+Ex:
+
+```typescript
+//Exemplos de unions verbosos e que se repetem
+let rawDataFirst: boolean | number | string | null | undefined
+let rawDataSecond: boolean | number | string | null | undefined
+let rawDataThird: boolean | number | string | null | undefined
+```
+
+O recurso de aliases do typescript é uma maneira de aliviar essa verbosidade, pois com ele podemos definir o `union` apenas uma vez ao declarar o alias e depois usamos o alias nos lugares que queremos usar aquele `union` extenso.
+
+Obs: Uma convenção é que o alias tenha o nome em **PascalCase**.
+
+Para definir um alias, usamos o keyword `type`, seguido de um `=` e então o `union`.
+
+Ex:
+
+```typescript
+//Usando alias
+//Convenção de nome: PascalCase!
+type RawData = boolean | number | string | null | undefined
+
+let rawDataForth: RawData
+let rawDataFifth: RawData
+let rawDataSixth: RawData
+```
+
+### Aliases no javascript
+Esse recurso de aliases existe apenas no typescript. No javascript, uma variável cujo tipo é um alias será declarada sem tipo algum, ou seja, o javascript ignora o alias.
+Portanto, não é possível depender dos alias em runtime e logo não é possível usar o alias como se fosse o "valor" de algo, como por exemplo, em um `console.log()`.
+Felizmente o typescript consegue identificar os momentos em que o alias é usado como "valor" e irá nos avisar.
+
+Ex:
+```typescript
+//Usando alias em runtime
+console.log(RawData) //Erro pois o alias está sendo usado como valor. Aliases não existem no javascript, portanto não funcionam em runtime e logo não podem ser usados como "valor" 
+```
+
+### Combinando aliases de tipo
+É possível criar um alias declarando um outro alias como parte do conjunto. 
+
+```typescript
+//Conjunto de alias
+type Id = number | string
+type MaybeId = Id | undefined | null
+```
+
 ---
 **Footnotes**
 
