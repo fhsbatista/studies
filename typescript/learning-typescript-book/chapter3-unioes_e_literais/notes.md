@@ -1,4 +1,14 @@
 # Uniões e literais
+
+## Resumo
+ - Como declarar um `union`.
+ - Estreitando variáveis de tipo `union` com **atribuição**, **condição** e `type of`.
+ - O que são **literais** e as diferenças entre eles e tipos primitivos.
+ - **Null safety** no typescript com o estreitamento de nulos.
+ - **Aliases** de tipos
+
+## Introdução
+
 São as 2 formas que o typescript tem para poder inferir o tipo de uma variável.
 Estes são recursos bastante poderosos e algo que outras linguagens convencionais não conseguem fazer.
 
