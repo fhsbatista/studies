@@ -56,4 +56,51 @@ poetWithType = {
 }
 ```
 
+## Tipagem estrutural
+O typescript tem um recurso interessante e que não vi em outras linguagens que trabalhei ainda. Esse recurso é o de permitir que um objeto possa ser usado como valor de uma variável mesmo que esse objeto e a variável sejam de tipos diferentes **quando** esse objeto possui dentro dele uma propriedade que é do mesmo tipo da variável. Nesse caso, o valor da variável passa a ser o valor da propriedade do objeto cujo tipo é o mesmo da variável. Ficou complicado isso, pelo exemplo é melhor pra entender.
 
+```typescript
+type WithFirstName = {
+  firstName: string
+}
+
+type WithLastName = {
+  lastName: string
+}
+
+const hasBoth = {
+  firstName: "Lucille",
+  lastName: "Clifton",
+}
+
+let withFirstName: WithFirstName = hasBoth //Permitido pois hasBoth contém firstName
+let withLastName: WithLastName = hasBoth //Permitido pois hasBoth contém lastName
+```
+
+### Verificação de uso
+O recurso mostrado anteriormente somente quando o objeto e a variável são compatíves, ou seja, o objeto tem todos os campos que o tipo da variável pede. O typescript sempre faz essa verificação quando atribuímos valor à uma variável.
+
+Vejamos um exemplo da verificação dando erro:
+
+```typescript
+type FirstAndLastNames = {
+  first: string
+  last: string
+}
+
+const hasOnlyOne: FirstAndLastNames = {
+    first: "Sappho"
+} //Erro pois o objeto passado não contém a propriedade last.
+
+const hasBothNames: FirstAndLastNames = {
+  first: "Sarojini",
+  last: "Naidu"
+} //Funciona pois o objeto passa contém todas as propriedades que FirstAndLastNames pede
+```
+
+#### Verificação de tipos e nomes
+No exemplo anterior vimos um problema acontecendo pela ausência de uma ou mais propriedaes que o tipo da variável pede.
+Porém, as verificações vão além disso.
+Para que o typescript entenda que a propridade de um objeto é referente a propridade x do tipo da variável, é necessário que NOME e TIPO sejam os mesmos.
+
+Continuar aqui... exemplo de erro quando o objeto tem a propriedade que a variável pede mas com nome ou tipo diferente.
