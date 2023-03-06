@@ -5,6 +5,8 @@ plugins {
 }
 
 tasks.register('generateDescriptions', Copy) {
+  group 'theme park'
+  description 'Generates rides descriptions including token substitution'
   from 'descriptions'
   into "$buildDir/descriptions"
   filter(ReplaceTokens, tokens: [THEME_PARK_NAME: "Grelephants's Wonder World",])
@@ -16,3 +18,5 @@ tasks.register('zipDescriptions', Zip) {
   destinationDirectory = buildDir
   archiveFileName = 'descriptions.zip'
 }
+
+defaultTasks 'generateDescriptions'
