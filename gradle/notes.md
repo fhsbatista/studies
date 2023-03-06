@@ -29,3 +29,18 @@ Log do Build
  - Ou use `--console` para definir o nível do log. As opções são: `plain`, `auto`, `rich`, `verbose`. O default é `auto`.
  Ex: `./gradlew gD --info --console=plain`
 
+## Ciclo de vida do build
+Saber em qual etapa do ciclo um problema está acontecendo pode ajudar muito a encontrar a solução.
+Ciclos: inicialização, configuracão e execução
+
+### Inicialização
+ - Aqui é onde o gradle identifica quais são os projetos que vão participar do build.
+ - É quando o `settings.gradle` é executado.
+
+### Configuração
+ - Momento em que o gradle vai identificar as tasks dos projetos
+ - É quando o `build.gradle` é executado.
+
+## Execução
+ - Momento em que as tasks são executadas de fato.
+
