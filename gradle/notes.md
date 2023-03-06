@@ -3,6 +3,10 @@ Comandos:
   Obs: Neste comando vão aparecer somentes as tasks que estão dentro de um grupo.
  - `./gradlew tasks -all` - Lista todas as tasks, mesmo as que não estão dentro de um grupo.
 
+ Glossário
+ - "build script": é o arquivo `build.gradle`
+ - "plugin": é um código "pre-packaged" que aplicamos no build script para ter acesso a algumas tasks. Ex: o plugin `base` disponibiliza a task `clean` que é usada para limpar o diretório `build`.
+
 
 Grupos:
  - Para adicionar uma task dentro de um grupo, basta colocar o parametro `group` na definicao da task.
@@ -41,6 +45,121 @@ Ciclos: inicialização, configuracão e execução
  - Momento em que o gradle vai identificar as tasks dos projetos
  - É quando o `build.gradle` é executado.
 
-## Execução
+### Execução
  - Momento em que as tasks são executadas de fato.
 
+## Groovy
+ - Roda na JVM.
+ - O código usado pelo gradle é código Java.
+ - Dinamicamente tipada.
+
+### Groovy x java: 4 principais diferenças
+#### Groovy roda como um script. Não é necessário criar uma classe para tudo como no java.
+ Ex:
+
+ Groovy
+ ```Groovy
+ println('eu sou groovy')
+ ```
+
+ Java
+ ```Java
+ package com.fbatista
+
+ public class PrintMessage {
+  public static void main(String[] args) {
+    System.out.println("eu sou o java");
+  }
+ }
+ ```
+
+#### Parenteses são opcionais
+ Ex:
+
+ Groovy
+ ```Groovy
+ def sum(first, second) {
+  println first + second
+ }
+
+ sum 2, 5
+ ```
+
+ Java
+ ```Java
+ package com.fbatista
+
+ public class Sum {
+  public void sum(int first, int second) {
+    System.out.println(first + second);
+  }
+
+  public static void main(String[] args) {
+    new Sum().sum(2, 3)
+  }
+ }
+ ```
+
+Exemplo no `build.gradle` 
+```Groovy
+plugins {
+  id 'base'
+}
+```
+
+#### Suporte a closures
+Entenda closure como uma função que pode ser passa via parâmetro
+
+Ex:
+```Groovy
+def callMeLater = {
+  println 'ring ring'
+}
+callMeLater() //prints 'ring ring'
+```
+
+Ex2:
+```Groovy
+def pickupPhone(name, phoneNoise) {
+  phoneNoise()
+  println 'Hello? ' + name + ' here'
+}
+pickupPhone 'Fernando', { println 'trim trim'}
+```
+
+Exemplo no `build.gradle` 
+```Groovy
+tasks.register('closureInAction') {
+  doLast {
+    println 'task definition using closures'
+  }
+}
+
+tasks.register 'closureInAction', {
+  doLast {
+    println 'task definition using closures'
+  }
+}
+```
+
+#### Closure fora de parenteses
+Quando o último parametro é uma função, vc pode passar os primeiros parametros dentro de parenteses e deixar o último, que é a função, fora dos parenteses
+
+```Groovy
+def pickupPhone(name, phoneNoise) {
+  phoneNoise()
+  println 'Hello? ' + name + ' here'
+}
+pickupPhone('Fernando') { 
+  println 'trim trim'
+}
+```
+
+Exemplo no `build.gradle` 
+```Groovy
+tasks.register('closureInAction') {
+  doLast {
+    println 'task definition using closures'
+  }
+}
+```
