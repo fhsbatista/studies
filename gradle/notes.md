@@ -163,3 +163,69 @@ tasks.register('closureInAction') {
   }
 }
 ```
+
+## Configurando o projeto
+Existem várias maneiras de se configurar um projeto.
+Para começar, existem várias propriedades que podem ser usadas na configuração. Para mais detalhes sobre cada propriedade, veja a documentação da classe `Project` em https://docs.gradle.org/current/javadoc/org/gradle/api/Project.html
+
+### Propriedades básicas
+`description`: Descrição do projeto. É o que aparece quando executamentos a task "projects"
+`group`: Um identificador do "owner" do projeto. É usado para publicar o artefato (ex: .jar) posteriormente. Ex: com.fbatista, org.edu etc.
+`version`: Versão que vai ser usada na publicação do artefato.
+
+## Tasks
+São usadas para performar alguma ação na pasta "build" do projeto. Como zipar arquivos, copiar etc.
+
+### Documentação que mostra as tasks que já vem com o gradle
+https://docs.gradle.org/current/dsl/
+
+### Task `class` e Task `definition`
+Obs: Tenho a impressão de que entendi um pouco errado pois as duas coisas ainda parecem ambíguas. Portanto a definição abaixo pode estar um pouco errada.
+
+No contexto de Task, class e definition são coisas diferentes.
+
+class: é o "blueprint" da task. É a classe em si. Normalmente estão dentro do próprio gradle.
+definition: é a configuração de uma task no projeto.
+
+Ex: A task "copy" já existe no gradle, isso seria a class. Quando eu configuro essa task no meu projeto para copiar arquivos, essa configuração seria o "definition".
+
+### Como configurar uma task no projeto
+Existe duas maneiras. Uma delas é mais performática, a outra é mais lenta e mais antiga e está a "deprecated", porém é importante entende-la já que vários projetos ainda podem estar usando.
+
+- Utilizando o .register (maneira mais atual)
+
+```groovy
+task.register('generateDescriptions', Copy) {
+  //configuration
+}
+```
+Obs: Essa é a maneira mais recomendada por conta de performance. A diferença dela em relação ao modo antigo (abaixo) é que SEM o `register`, ou seja, modo antigo, a configuração da Task era feita na fase de  "configuração" do lifecycle. O problema é que pode acontecer de a Task nem precisar ser executada (pois pode estar desabilitada por exemplo), assim adicionando um tempo que pode ser grande ao build. Com o `register`, a configuração da Task vai para a segunda fase do life cycle que é a de execução, e aí nesse caso, a Task vai ser configurada somente se ele realmente for executada.
+
+- Modo antigo (deprecated)
+```groovy
+task('generateDescriptions', Copy) {
+  //configuration
+}
+```
+Configurações comuns:
+ - group
+ - description
+ - enabled (por default é true, quando false, a task não é executada)
+ - onlyIf (parecido com o enabled, mas vai usar uma lógica para definir se executa ou não)
+ - Para consultar todas as configurações possíveis, acessar: https://docs.gradle.org/current/javadoc/org/gradle/api/Task.html
+
+Nas configurações existem vários campos que podemos passar e eles vão variar de acordo com a Task que estamos trabalhando. Existem 2 campos que sempre estão presentes nas Tasks, que são: `group` e `description`.
+Ex:
+```groovy
+tasks.register('generateDescriptions', Copy) {
+  group 'ThemePark'
+  description 'Copies the theme park ride descriptions'
+  enabled false
+  // Igual o enabled, mas usando uma condição em vez do bool diretamente
+  // onlyIf {
+  //   2 == 3 * 2
+  // }
+  from 'descriptions'
+  into "$buildDir/descriptions"
+}
+```
