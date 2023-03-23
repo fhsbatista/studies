@@ -5,7 +5,7 @@ package com.fbatista.gradle.multiproject;
 
 public class App {
     public String getGreeting() {
-        return "Hello World!";
+        return MessageService.generateMessage();
     }
 
     public static void main(String[] args) {
