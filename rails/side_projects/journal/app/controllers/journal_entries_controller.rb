@@ -12,6 +12,11 @@ class JournalEntriesController < ApplicationController
     entries = JournalEntry.all
     render json: entries
   end
+
+  def by_date
+    entries = JournalEntry.where(date: params[:date])
+    render json: entries
+  end
 end
 
 def journal_entry_params
