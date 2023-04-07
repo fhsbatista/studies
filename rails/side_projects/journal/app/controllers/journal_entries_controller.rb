@@ -7,6 +7,11 @@ class JournalEntriesController < ApplicationController
       render json: entry.errors, status: unprocessable_entity, message: "Something went wrong"
     end
   end
+
+  def index
+    entries = JournalEntry.all
+    render json: entries
+  end
 end
 
 def journal_entry_params
