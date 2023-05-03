@@ -35,3 +35,4 @@
 /config/master.key
 
 rails/tdd_book/gatherer/tmp
+rails/tdd_book/gatherer/spec/examples.txt
