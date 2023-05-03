@@ -65,4 +65,12 @@ RSpec.describe CreateProject do
       end
     end
   end
+
+  describe "failure cases" do
+    it "fails when trying to save a project with no name" do 
+      creator = CreateProject.new(name: "", task_string: "")
+      creator.create
+      expect(creator).not_to be_a_success
+    end
+  end
 end
