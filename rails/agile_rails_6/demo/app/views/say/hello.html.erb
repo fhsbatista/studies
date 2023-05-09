@@ -1,0 +1,12 @@
+<h1>Hello from rails</h1>
+<p>It is now <%= @time %></p>
+<p>
+  Say
+  <%= link_to "Goodbye", say_goodbye_path %>!
+</p>
+<p>
+Dir list
+<%= @files.each do |file| %>
+<br> file:<%= file %>
+<% end %>
+</p>
