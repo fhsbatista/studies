@@ -1,0 +1,37 @@
+.store {
+  max-width: 80em;
+}
+
+.store ul.catalog {
+  border-top: solid 0.250em;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.store li {
+  padding: 1em;
+  margin: 0;
+  border-bottom: solid thin #ddd;
+}
+
+.store li::after {
+  clear: both;
+  content: " ";
+  display: block;
+}
+
+.store img {
+  float: left;
+  padding: 1em;
+  width: 200px;
+  height: 200px;
+  object-fit: contain;
+  margin-right: 1em;
+  margin-bottom: 1em;
+  box-shadow: 0.176em 0.176em 0.354em 0px rgba(0, 0, 0, 0.75);
+}
+
+.store .price {
+  font-size: 1.414em;
+}
