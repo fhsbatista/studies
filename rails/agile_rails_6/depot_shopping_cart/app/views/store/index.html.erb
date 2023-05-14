@@ -1,8 +1,11 @@
 <% if notice %>
-  <aside id="notice"><%= notice %> </aside>
+  <aside id="notice"><%= notice %>
+  </aside>
 <% end %>
 
-<h1> Your pragmatic catalog </h1>
+<h1>
+  Your pragmatic catalog
+</h1>
 <ul class="catalog">
   <% @products.each do |product| %>
     <li>
@@ -12,7 +15,7 @@
         <%= sanitize(product.description) %>
       </p>
       <div class="price">
-        <%= product.price %>
+        <%= number_to_currency(product.price) %>
       </div>
     </li>
   <% end %>
