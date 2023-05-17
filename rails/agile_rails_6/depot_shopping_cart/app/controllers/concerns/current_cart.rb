@@ -1,4 +1,6 @@
 module CurrentCart
+  private
+
   def set_cart
     @cart = Card.find(session[:cart_id])
   rescue ActiveRecord::RecordNotFound
