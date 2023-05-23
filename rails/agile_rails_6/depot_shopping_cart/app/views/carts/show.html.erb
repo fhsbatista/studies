@@ -5,10 +5,8 @@
 <h2>
   Depot cart
 </h2>
-<ul>
+<ul class="cart-items">
   <% @cart.line_items.each do |item| %>
-    <li><%= item.quantity %>
-      x
-      <%= item.product.title %></li>
+    <li><%= item.quantity %>&times;<%= item.product.title %></li>
   <% end %>
 </ul>
