@@ -12,12 +12,11 @@ class ProductsTest < ApplicationSystemTestCase
 
   test "should create product" do
     visit products_url
-    click_on "New product"
+    click_on "New Product"
 
     fill_in "Description", with: @product.description
     fill_in "Image url", with: @product.image_url
     fill_in "Price", with: @product.price
-    fill_in "String", with: @product.string
     fill_in "Title", with: @product.title
     click_on "Create Product"
 
@@ -32,8 +31,7 @@ class ProductsTest < ApplicationSystemTestCase
     fill_in "Description", with: @product.description
     fill_in "Image url", with: @product.image_url
     fill_in "Price", with: @product.price
-    fill_in "String", with: @product.string
-    fill_in "Title", with: @product.title
+    fill_in "Title", with: "A very long and weird title for a book"
     click_on "Update Product"
 
     assert_text "Product was successfully updated"
