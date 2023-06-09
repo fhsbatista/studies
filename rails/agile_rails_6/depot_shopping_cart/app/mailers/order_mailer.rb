@@ -1,13 +1,13 @@
 class OrderMailer < ApplicationMailer
-  default from: 'Fernando <depot@store.com>'
+  default from: "Fernando <depot@store.com>"
 
-  def received
+  def received(order)
     @order = order
-    mail to: order.email, subject: 'Depot store order confirmation'
+    mail to: order.email, subject: "Depot store order confirmation"
   end
 
-  def shipped
+  def shipped(order)
     @order = order
-    mail to: order.email, subject: 'Depot store order shipped'
+    mail to: order.email, subject: "Depot store order shipped"
   end
 end
