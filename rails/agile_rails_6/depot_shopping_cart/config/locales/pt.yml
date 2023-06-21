@@ -1,0 +1,9 @@
+pt:
+
+  layouts:
+    application:
+      title: "Loja depot"
+      home: "Início"
+      questions: "Perguntas"
+      news: "Notícias"
+      contact: "Contato"
