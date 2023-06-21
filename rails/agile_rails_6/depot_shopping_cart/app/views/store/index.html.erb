@@ -3,9 +3,7 @@
   </aside>
 <% end %>
 
-<h1>
-  Your Depot Catalog
-</h1>
+<h1><%= t(".title") %></h1>
 <ul class="catalog">
   <% cache @products do %>
     <% @products.each do |product| %>
@@ -18,7 +16,7 @@
           </p>
           <div class="price">
             <%= number_to_currency(product.price) %>
-            <%= button_to "Add to Cart", line_items_path(product_id: product), remote:true  %>
+            <%= button_to t(".add"), line_items_path(product_id: product), remote: true %>
           </div>
         </li>
       <% end %>

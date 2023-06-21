@@ -7,3 +7,8 @@ pt:
       questions: "Perguntas"
       news: "Notícias"
       contact: "Contato"
+  
+  store:
+    index:
+      title: "Seu catálogo"
+      add: "Adicionar ao carrinho"
