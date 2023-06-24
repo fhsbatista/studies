@@ -12,3 +12,13 @@ en:
     index:
       title: "Your catalog"
       add: "Add to Card"
+  
+  carts:
+    cart:
+      title: "Your Cart"
+      empty: "Empty cart"
+      checkout: "Checkout"
+
+  line_items:
+    line_item:
+      remove: "Remove"

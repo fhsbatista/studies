@@ -12,3 +12,13 @@ pt:
     index:
       title: "Seu catálogo"
       add: "Adicionar ao carrinho"
+  
+  carts:
+    cart:
+      title: "Seu carrinho"
+      empty: "Esvaziar carrinho"
+      checkout: "Comprar"
+  
+  line_items:
+    line_item:
+      remove: "Remover"
