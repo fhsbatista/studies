@@ -30,3 +30,26 @@ pt:
   line_items:
     line_item:
       remove: "Remover"
+
+  orders:
+    new:
+      legend: "Por favor insira seus dados"
+    form:
+      name: "Nome"
+      address: "Endereço"
+      email: "Email"
+      pay_type: "Pagar com"
+      pay_prompt: "Selecio um meio de pagamento"
+      submit: "Confirmar compra"
+      pay_types:
+        check: "Cheque"
+        credit_cart: "Cartão de crédito"
+        purchase_order: "Requisição de compra"
+      check_pay_type:
+        routing_number: "Routing #"
+        account_number: "Conta #"
+      credit_card_pay_type:
+        cc_number: "CC #"
+        expiration_date: "Validade"
+      purchase_order_pay_type:
+        po_number: "Req #"
