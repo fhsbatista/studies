@@ -2,7 +2,8 @@
   (:require [io.pedestal.http.route :as route]
             [io.pedestal.http :as http]
             [io.pedestal.test :as test]
-            [clojure-service.database :as database]))
+            [clojure-service.database :as database]
+            [io.pedestal.interceptor :as i]))
 
 
 (defn assoc-store [context]
@@ -53,15 +54,19 @@
 
 (def routes (route/expand-routes
               #{["/hello" :get hello-function :route-name :hello-world]
-                ["/task" :post [db-interceptor create-task] :route-name :create-task]
-                ["/list-tasks" :get [db-interceptor list-tasks] :route-name :list-tasks]
-                ["/task/:id" :delete [db-interceptor delete-task] :route-name :delete-task]
-                ["/task/:id" :patch [db-interceptor update-task] :route-name :update-task]}))
+                ["/task" :post [create-task] :route-name :create-task]
+                ["/list-tasks" :get [list-tasks] :route-name :list-tasks]
+                ["/task/:id" :delete [delete-task] :route-name :delete-task]
+                ["/task/:id" :patch [update-task] :route-name :update-task]}))
 
-(def service-map {::http/routes routes
-                  ::http/port   9999
-                  ::http/type   :jetty
-                  ::http/join?  false})
+(def service-map-base {::http/routes routes
+                       ::http/port   9999
+                       ::http/type   :jetty
+                       ::http/join?  false})
+
+(def service-map (-> service-map-base
+                     (http/default-interceptors)
+                     (update ::http/interceptors conj (i/interceptor db-interceptor))))
 
 (defonce server (atom nil))
 
