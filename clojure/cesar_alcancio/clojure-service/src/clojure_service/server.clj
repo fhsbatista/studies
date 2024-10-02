@@ -39,9 +39,17 @@
     (swap! store dissoc task-id-uuid)
     {:status 200 :body {:message "Removido com sucesso"}}))
 
-
 (defn update-task [request]
-  )
+  (let [task-id (get-in request [:path-params :id])
+        task-id-uuid (java.util.UUID/fromString task-id)
+        name (get-in request [:query-params :name])
+        status (get-in request [:query-params :status])
+        task (create-task-map task-id-uuid name status)
+        store (:store request)]
+    (swap! store assoc task-id-uuid task)
+    {:status 200 :body {:message "Task update"
+                        :task    task}}
+    ))
 
 (def routes (route/expand-routes
               #{["/hello" :get hello-function :route-name :hello-world]
@@ -73,9 +81,16 @@
 (start-server)
 ;(restart-server)
 
+(defn clean-store []
+  (reset! database/store {}))
+
+
 (test-request :get "/hello?name=fernando")
 (test-request :post "/task?name=eat&status=pending")
 (test-request :post "/task?name=run&status=done")
 (test-request :post "/task?name=study&status=done")
 (clojure.edn/read-string (:body (test-request :get "/list-tasks")))
 (test-request :delete "/task/3285c74e-55a7-4ed5-8ec9-070c71d4bb79")
+(test-request :patch "/task/15f5adcd-1f1e-4cd5-b37e-d297cc648b47?name=futebol&status=done")
+
+(clean-store)
