@@ -7,5 +7,6 @@
                  [io.pedestal/pedestal.service "0.7.1"]
                  [io.pedestal/pedestal.route "0.7.1"]
                  [io.pedestal/pedestal.jetty "0.7.1"]
-                 [org.slf4j/slf4j-simple "1.7.28"]]
+                 [org.slf4j/slf4j-simple "1.7.28"]
+                 [com.stuartsierra/component "1.1.0"]]
   :repl-options {:init-ns clojure-service.core})
