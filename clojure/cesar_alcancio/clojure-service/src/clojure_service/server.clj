@@ -32,21 +32,33 @@
 (defn list-tasks [request]
   {:status 200 :body @(:store request)})
 
+(defn delete-task [request]
+  (let [store (:store request)
+        task-id (get-in request [:path-params :id])
+        task-id-uuid (java.util.UUID/fromString task-id)]
+    (swap! store dissoc task-id-uuid)
+    {:status 200 :body {:message "Removido com sucesso"}}))
+
+
+(defn update-task [request]
+  )
+
 (def routes (route/expand-routes
               #{["/hello" :get hello-function :route-name :hello-world]
                 ["/task" :post [db-interceptor create-task] :route-name :create-task]
-                ["/list-tasks" :get [db-interceptor list-tasks] :route-name :list-tasks]}))
+                ["/list-tasks" :get [db-interceptor list-tasks] :route-name :list-tasks]
+                ["/task/:id" :delete [db-interceptor delete-task] :route-name :delete-task]
+                ["/task/:id" :patch [db-interceptor update-task] :route-name :update-task]}))
 
 (def service-map {::http/routes routes
                   ::http/port   9999
                   ::http/type   :jetty
                   ::http/join?  false})
 
-(def server (atom nil))
+(defonce server (atom nil))
 
 (defn start-server []
-  (reset! server (http/stop (http/create-server service-map)))
-  )
+  (reset! server (http/stop (http/create-server service-map))))
 
 (defn test-request [verb url]
   (test/response-for (::http/service-fn @server) verb url))
@@ -63,5 +75,7 @@
 
 (test-request :get "/hello?name=fernando")
 (test-request :post "/task?name=eat&status=pending")
-
-(test-request :get "/list-tasks")
+(test-request :post "/task?name=run&status=done")
+(test-request :post "/task?name=study&status=done")
+(clojure.edn/read-string (:body (test-request :get "/list-tasks")))
+(test-request :delete "/task/3285c74e-55a7-4ed5-8ec9-070c71d4bb79")
