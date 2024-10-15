@@ -1,7 +1,7 @@
 (ns clojure-for-brave.core
-  (:gen-class))
+  (:require [clojure-for-brave.destructuring :as descructuring]))
 
 (defn -main
-  "I don't do a whole lot ... yet."
+  "Examples"
   [& args]
-  (println "Hello, World!"))
+  (descructuring/-main))
