@@ -4,7 +4,8 @@
             [clojure-for-brave.anonymous :as anonymous]
             [clojure-for-brave.closure :as closure]
             [clojure-for-brave.let :as let]
-            [clojure-for-brave.set :as set]))
+            [clojure-for-brave.set :as set]
+            [clojure-for-brave.loops :as loop]))
 
 (defn -main
   "Examples"
@@ -14,4 +15,5 @@
   (anonymous/-main)
   (closure/-main)
   (let/-main)
-  (set/-main))
+  (set/-main)
+  (loop/-main))
