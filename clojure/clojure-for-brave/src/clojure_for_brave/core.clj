@@ -5,15 +5,17 @@
             [clojure-for-brave.closure :as closure]
             [clojure-for-brave.let :as let]
             [clojure-for-brave.set :as set]
-            [clojure-for-brave.loops :as loop]))
+            [clojure-for-brave.loops :as loop]
+            [clojure-for-brave.regex :as regex]))
 
 (defn -main
   "Examples"
-  [& args]
+  [& _]
   (vector/-main)
   (descructuring/-main)
   (anonymous/-main)
   (closure/-main)
   (let/-main)
   (set/-main)
-  (loop/-main))
+  (loop/-main)
+  (regex/-main))
