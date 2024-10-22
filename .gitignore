@@ -42,3 +42,5 @@ clojure/cesar_alcancio/clojure-service/.idea
 clojure/clojure-for-brave/.clj-kondo
 clojure/cesar_alcancio/.clj-kondo/.cache
 clojure/cesar_alcancio/.lsp/.cache
+clojure/exercises/basic-bank/.clj-kondo/.cache
+clojure/exercises/basic-bank/.lsp/.cache
