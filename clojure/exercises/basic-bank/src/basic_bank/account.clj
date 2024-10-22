@@ -7,4 +7,12 @@
     (spit filename (str "\nInitial balance: 0.0") :append true)
     {:document document
      :name name
+     :balance 0.0
      :filename filename}))
+
+(defn deposit [account value]
+  (let [updated-balance (+ (account :balance) value)]
+    (spit (account :filename) (str "\nDeposit: " value " | Balance: " updated-balance) :append true)
+    (assoc account :balance updated-balance)))
+
+
