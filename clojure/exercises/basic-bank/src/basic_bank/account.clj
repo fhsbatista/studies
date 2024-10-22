@@ -69,3 +69,8 @@
     (with-open [writer (io/writer (account :filename))]
       (.write writer (json/generate-string updated-json {:pretty true})))
     (assoc account :balance updated-balance)))
+
+(defn balance [account]
+  (let [json (with-open [reader (io/reader (account :filename))]
+               (json/parse-stream reader true))]
+    (json :balance)))
