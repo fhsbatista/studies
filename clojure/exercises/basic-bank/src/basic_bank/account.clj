@@ -44,9 +44,28 @@
         current-json (with-open [reader (io/reader (account :filename))]
                        (json/parse-stream reader true))
         deposit-json {:date current-date
-                      :value value}
+                      :value (+ value)}
         updated-transactions (conj (current-json :transactions) deposit-json)
-        updated-json (assoc current-json :transactions updated-transactions
+        updated-json (assoc current-json
+                            :transactions updated-transactions
                             :balance updated-balance)]
     (with-open [writer (io/writer (account :filename))]
-      (.write writer (json/generate-string updated-json {:pretty true})))))
+      (.write writer (json/generate-string updated-json {:pretty true})))
+    (assoc account :balance updated-balance)))
+
+(defn withdraw [account value]
+  (let [updated-balance (- (account :balance) value)
+        current-date (let [now (LocalDateTime/now)
+                           formatter (DateTimeFormatter/ofPattern "yyyy-MM-dd HH:mm:ss")]
+                       (.format now formatter))
+        current-json (with-open [reader (io/reader (account :filename))]
+                       (json/parse-stream reader true))
+        withdraw-json {:date current-date
+                      :value (- value)}
+        updated-transactions (conj (current-json :transactions) withdraw-json)
+        updated-json (assoc current-json
+                            :transactions updated-transactions
+                            :balance updated-balance)]
+    (with-open [writer (io/writer (account :filename))]
+      (.write writer (json/generate-string updated-json {:pretty true})))
+    (assoc account :balance updated-balance)))
