@@ -46,34 +46,28 @@
      :balance balance
      :filename filename}))
 
-(defn deposit [document value]
-  (let [account (get-account document)
-        updated-balance (+ (account :balance) value)
-        current-json (read-account-json document)
-        deposit-json {:date (current-date)
-                      :value (+ value)}
-        updated-transactions (conj (current-json :transactions) deposit-json)
+(defn add-transaction [date value account]
+  (let [updated-balance (+ (account :balance) value)
+        current-json (read-account-json (account :document))
+        transaction-json {:date date,
+                          :value value}
+        updated-transactions (conj (current-json :transactions) transaction-json)
         updated-json (assoc current-json
                             :transactions updated-transactions
                             :balance updated-balance)
         final-json (json/generate-string updated-json {:pretty true})]
-    (write-account-json document final-json)
+    (write-account-json (account :document) final-json)
     (assoc account :balance updated-balance)))
+
+
+(defn deposit [document value]
+  (let [account (get-account document)]
+    (add-transaction (current-date) value account)))
 
 (defn withdraw [document value]
-  (let [account (get-account document)
-        updated-balance (- (account :balance) value)
-        current-json (read-account-json document)
-        withdraw-json {:date (current-date)
-                       :value (- value)}
-        updated-transactions (conj (current-json :transactions) withdraw-json)
-        updated-json (assoc current-json
-                            :transactions updated-transactions
-                            :balance updated-balance)
-        final-json (json/generate-string updated-json {:pretty true})]
-    (write-account-json document final-json)
-    (assoc account :balance updated-balance)))
-
+  (let [account (get-account document)]
+    (add-transaction (current-date) (- value) account)))
+    
 (defn balance [document]
   (let [json (read-account-json document)]
     (json :balance)))
