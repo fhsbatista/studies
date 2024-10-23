@@ -14,11 +14,10 @@
     (with-open [reader (io/reader filename)]
       (json/parse-stream reader true))))
 
-(defn write-account-json [document data]
-  (let [filename (str "accounts/" document ".json")
-        data-as-json (json/generate-string data {:pretty true})]
+(defn write-account-json [document json]
+  (let [filename (str "accounts/" document ".json")]
     (with-open [writer (io/writer filename)]
-      (.write writer data-as-json))))
+      (.write writer json))))
 
 (defn create-account [document name]
   (let [balance 0.0
@@ -26,8 +25,9 @@
               :name name
               :balance balance
               :created-at (current-date)
-              :transactions []}]
-    (write-account-json document data)))
+              :transactions []}
+        json (json/generate-string data {:pretty true})]
+    (write-account-json document json)))
 
 (defn get-account [document]
   (let [content (read-account-json document)
@@ -43,23 +43,27 @@
 
 (defn add-transaction [date value account]
   (let [updated-balance (+ (account :balance) value)
-        current-json (read-account-json (account :document))
-        transaction-json {:date date,
-                          :value value}
-        updated-transactions (conj (current-json :transactions) transaction-json)
-        data (assoc current-json
-                    :transactions updated-transactions
-                    :balance updated-balance)]
-    (write-account-json (account :document) data)))
+        transaction {:date date,
+                     :value value}
+        updated-transactions (conj (account :transactions) transaction)]
+    (assoc account
+           :transactions updated-transactions
+           :balance updated-balance)))
 
+(defn update-account [document update-fn]
+  (let [account (read-account-json document)
+        updated-account (update-fn account)
+        json (json/generate-string updated-account {:pretty true})]
+    (write-account-json document json)
+    updated-account))
 
 (defn deposit [document value]
-  (let [account (get-account document)]
-    (add-transaction (current-date) value account)))
+  (update-account document
+                  (fn [account] (add-transaction (current-date) value account))))
 
 (defn withdraw [document value]
-  (let [account (get-account document)]
-    (add-transaction (current-date) (- value) account)))
+  (update-account document
+                  (fn [account] (add-transaction (current-date) (- value) account))))
 
 (defn balance [document]
   (let [json (read-account-json document)]
