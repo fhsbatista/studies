@@ -15,19 +15,19 @@
       (json/parse-stream reader true))))
 
 (defn write-account-json [document data]
-  (let [filename (str "accounts/" document ".json")]
+  (let [filename (str "accounts/" document ".json")
+        data-as-json (json/generate-string data {:pretty true})]
     (with-open [writer (io/writer filename)]
-      (.write writer data))))
+      (.write writer data-as-json))))
 
 (defn create-account [document name]
   (let [balance 0.0
-        initial-data {:document document
-                      :name name
-                      :balance balance
-                      :created-at (current-date)
-                      :transactions []}
-        json-output (json/generate-string initial-data {:pretty true})]
-    (write-account-json document json-output)))
+        data {:document document
+              :name name
+              :balance balance
+              :created-at (current-date)
+              :transactions []}]
+    (write-account-json document data)))
 
 (defn get-account [document]
   (let [content (read-account-json document)
@@ -47,11 +47,10 @@
         transaction-json {:date date,
                           :value value}
         updated-transactions (conj (current-json :transactions) transaction-json)
-        updated-json (assoc current-json
-                            :transactions updated-transactions
-                            :balance updated-balance)
-        final-json (json/generate-string updated-json {:pretty true})]
-    (write-account-json (account :document) final-json)))
+        data (assoc current-json
+                    :transactions updated-transactions
+                    :balance updated-balance)]
+    (write-account-json (account :document) data)))
 
 
 (defn deposit [document value]
