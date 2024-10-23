@@ -14,6 +14,11 @@
     (with-open [reader (io/reader filename)]
       (json/parse-stream reader true))))
 
+(defn write-account-json [document data]
+  (let [filename (str "accounts/" document ".json")]
+    (with-open [writer (io/writer filename)]
+      (.write writer data))))
+
 (defn create-account [document name]
   (let [filename (str  "accounts/" document ".json")
         balance 0.0
@@ -23,12 +28,11 @@
                       :created-at (current-date)
                       :transactions []}
         json-output (json/generate-string initial-data {:pretty true})]
-    (with-open [writer (io/writer filename)]
-      (.write writer json-output)
-      {:document document
-       :name name
-       :balance balance
-       :filename filename})))
+    (write-account-json document json-output)
+    {:document document
+     :name name
+     :balance balance
+     :filename filename}))
 
 (defn get-account [document]
   (let [content (read-account-json document)
@@ -51,9 +55,9 @@
         updated-transactions (conj (current-json :transactions) deposit-json)
         updated-json (assoc current-json
                             :transactions updated-transactions
-                            :balance updated-balance)]
-    (with-open [writer (io/writer (account :filename))]
-      (.write writer (json/generate-string updated-json {:pretty true})))
+                            :balance updated-balance)
+        final-json (json/generate-string updated-json {:pretty true})]
+    (write-account-json document final-json)
     (assoc account :balance updated-balance)))
 
 (defn withdraw [document value]
@@ -65,9 +69,9 @@
         updated-transactions (conj (current-json :transactions) withdraw-json)
         updated-json (assoc current-json
                             :transactions updated-transactions
-                            :balance updated-balance)]
-    (with-open [writer (io/writer (account :filename))]
-      (.write writer (json/generate-string updated-json {:pretty true})))
+                            :balance updated-balance)
+        final-json (json/generate-string updated-json {:pretty true})]
+    (write-account-json document final-json)
     (assoc account :balance updated-balance)))
 
 (defn balance [document]
