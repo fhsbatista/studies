@@ -4,16 +4,18 @@
   (:import [java.time LocalDateTime]
            [java.time.format DateTimeFormatter]))
 
+(defn current-date []
+  (let [now (LocalDateTime/now)
+        formatter (DateTimeFormatter/ofPattern "yyyy-MM-dd HH:mm:ss")]
+    (.format now formatter)))
+
 (defn create-account [document name]
   (let [filename (str  "accounts/" document ".json")
-        current-date (let [now (LocalDateTime/now)
-                           formatter (DateTimeFormatter/ofPattern "yyyy-MM-dd HH:mm:ss")]
-                       (.format now formatter))
         balance 0.0
         initial-data {:document document
                       :name name
                       :balance balance
-                      :created-at current-date
+                      :created-at (current-date)
                       :transactions []}
         json-output (json/generate-string initial-data {:pretty true})]
     (with-open [writer (io/writer filename)]
@@ -39,12 +41,9 @@
 (defn deposit [document value] 
   (let [account (get-account document)
         updated-balance (+ (account :balance) value)
-        current-date (let [now (LocalDateTime/now)
-                           formatter (DateTimeFormatter/ofPattern "yyyy-MM-dd HH:mm:ss")]
-                       (.format now formatter))
         current-json (with-open [reader (io/reader (account :filename))]
                        (json/parse-stream reader true))
-        deposit-json {:date current-date
+        deposit-json {:date (current-date)
                       :value (+ value)}
         updated-transactions (conj (current-json :transactions) deposit-json)
         updated-json (assoc current-json
@@ -57,12 +56,9 @@
 (defn withdraw [document value]
   (let [account (get-account document)
         updated-balance (- (account :balance) value)
-        current-date (let [now (LocalDateTime/now)
-                           formatter (DateTimeFormatter/ofPattern "yyyy-MM-dd HH:mm:ss")]
-                       (.format now formatter))
         current-json (with-open [reader (io/reader (account :filename))]
                        (json/parse-stream reader true))
-        withdraw-json {:date current-date
+        withdraw-json {:date (current-date)
                       :value (- value)}
         updated-transactions (conj (current-json :transactions) withdraw-json)
         updated-json (assoc current-json
