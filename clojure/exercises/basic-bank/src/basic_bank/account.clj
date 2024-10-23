@@ -51,8 +51,7 @@
                             :transactions updated-transactions
                             :balance updated-balance)
         final-json (json/generate-string updated-json {:pretty true})]
-    (write-account-json (account :document) final-json)
-    (assoc account :balance updated-balance)))
+    (write-account-json (account :document) final-json)))
 
 
 (defn deposit [document value]
