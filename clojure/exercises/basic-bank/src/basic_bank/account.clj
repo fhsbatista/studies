@@ -20,19 +20,14 @@
       (.write writer data))))
 
 (defn create-account [document name]
-  (let [filename (str  "accounts/" document ".json")
-        balance 0.0
+  (let [balance 0.0
         initial-data {:document document
                       :name name
                       :balance balance
                       :created-at (current-date)
                       :transactions []}
         json-output (json/generate-string initial-data {:pretty true})]
-    (write-account-json document json-output)
-    {:document document
-     :name name
-     :balance balance
-     :filename filename}))
+    (write-account-json document json-output)))
 
 (defn get-account [document]
   (let [content (read-account-json document)
@@ -67,7 +62,7 @@
 (defn withdraw [document value]
   (let [account (get-account document)]
     (add-transaction (current-date) (- value) account)))
-    
+
 (defn balance [document]
   (let [json (read-account-json document)]
     (json :balance)))

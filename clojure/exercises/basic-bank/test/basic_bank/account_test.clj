@@ -18,7 +18,8 @@
                       (cleanup)))
 
 (deftest test-create-account
-  (let [account (create-account document name)]
+  (create-account document name)
+  (let [account (get-account document)]
     (is (= (:document account) document))
     (is (= (:name account) name))
     (is (= (:balance account) 0.0))))
