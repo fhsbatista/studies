@@ -36,8 +36,9 @@
      :balance balance
      :filename filename}))
 
-(defn deposit [account value]
-  (let [updated-balance (+ (account :balance) value)
+(defn deposit [document value] 
+  (let [account (get-account document)
+        updated-balance (+ (account :balance) value)
         current-date (let [now (LocalDateTime/now)
                            formatter (DateTimeFormatter/ofPattern "yyyy-MM-dd HH:mm:ss")]
                        (.format now formatter))
@@ -53,8 +54,9 @@
       (.write writer (json/generate-string updated-json {:pretty true})))
     (assoc account :balance updated-balance)))
 
-(defn withdraw [account value]
-  (let [updated-balance (- (account :balance) value)
+(defn withdraw [document value]
+  (let [account (get-account document)
+        updated-balance (- (account :balance) value)
         current-date (let [now (LocalDateTime/now)
                            formatter (DateTimeFormatter/ofPattern "yyyy-MM-dd HH:mm:ss")]
                        (.format now formatter))
@@ -70,7 +72,8 @@
       (.write writer (json/generate-string updated-json {:pretty true})))
     (assoc account :balance updated-balance)))
 
-(defn balance [account]
-  (let [json (with-open [reader (io/reader (account :filename))]
+(defn balance [document]
+  (let [account (get-account document)
+        json (with-open [reader (io/reader (account :filename))]
                (json/parse-stream reader true))]
     (json :balance)))
