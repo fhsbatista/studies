@@ -9,6 +9,11 @@
         formatter (DateTimeFormatter/ofPattern "yyyy-MM-dd HH:mm:ss")]
     (.format now formatter)))
 
+(defn read-account-json [document]
+  (let [filename (str "accounts/" document ".json")]
+    (with-open [reader (io/reader filename)]
+      (json/parse-stream reader true))))
+
 (defn create-account [document name]
   (let [filename (str  "accounts/" document ".json")
         balance 0.0
@@ -26,9 +31,8 @@
        :filename filename})))
 
 (defn get-account [document]
-  (let [filename (str "accounts/" document ".json")
-        content (with-open [reader (io/reader filename)]
-                  (json/parse-stream reader true))
+  (let [content (read-account-json document)
+        filename (str "accounts/" document ".json")
         name (content :name)
         balance (content :balance)
         created-at (content :created-at)]
@@ -38,11 +42,10 @@
      :balance balance
      :filename filename}))
 
-(defn deposit [document value] 
+(defn deposit [document value]
   (let [account (get-account document)
         updated-balance (+ (account :balance) value)
-        current-json (with-open [reader (io/reader (account :filename))]
-                       (json/parse-stream reader true))
+        current-json (read-account-json document)
         deposit-json {:date (current-date)
                       :value (+ value)}
         updated-transactions (conj (current-json :transactions) deposit-json)
@@ -56,10 +59,9 @@
 (defn withdraw [document value]
   (let [account (get-account document)
         updated-balance (- (account :balance) value)
-        current-json (with-open [reader (io/reader (account :filename))]
-                       (json/parse-stream reader true))
+        current-json (read-account-json document)
         withdraw-json {:date (current-date)
-                      :value (- value)}
+                       :value (- value)}
         updated-transactions (conj (current-json :transactions) withdraw-json)
         updated-json (assoc current-json
                             :transactions updated-transactions
@@ -69,7 +71,5 @@
     (assoc account :balance updated-balance)))
 
 (defn balance [document]
-  (let [account (get-account document)
-        json (with-open [reader (io/reader (account :filename))]
-               (json/parse-stream reader true))]
+  (let [json (read-account-json document)]
     (json :balance)))
