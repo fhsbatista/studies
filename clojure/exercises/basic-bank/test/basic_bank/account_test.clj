@@ -45,8 +45,8 @@
         withdrawal-amount 200]
     (deposit document deposit-amount)
     (withdraw document withdrawal-amount)
-    (let [account-json (read-account-json document)
-          transactions (account-json :transactions)]
+    (let [account (get-account document)
+          transactions (account :transactions)]
       (is (= (count transactions) 2))
       (is (= ((nth transactions 0) :value) deposit-amount))
       (is (= ((nth transactions 0) :date) (current-date)))
