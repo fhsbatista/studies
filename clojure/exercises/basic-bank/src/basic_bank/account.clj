@@ -23,7 +23,6 @@
 (defn create-account [document name]
   (let [data {:document document
               :name name
-              :balance 0.0
               :created-at (current-date)
               :transactions []}
         json (json/generate-string data {:pretty true})]
@@ -33,22 +32,20 @@
   (let [content (read-account-json document)
         filename (account-filename document)
         name (content :name)
-        balance (content :balance)
-        created-at (content :created-at)]
+        created-at (content :created-at)
+        transactions (content :transactions)]
     {:document document
      :name name
      :created-at created-at
-     :balance balance
+     :transactions transactions
      :filename filename}))
 
 (defn add-transaction [date value account]
-  (let [updated-balance (+ (account :balance) value)
-        transaction {:date date,
+  (let [transaction {:date date,
                      :value value}
         updated-transactions (conj (account :transactions) transaction)]
     (assoc account
-           :transactions updated-transactions
-           :balance updated-balance)))
+           :transactions updated-transactions)))
 
 (defn update-account [document update-fn]
   (let [account (read-account-json document)
@@ -69,4 +66,4 @@
 
 (defn balance [document]
   (let [account (get-account document)]
-    (account :balance)))
+    (double (reduce + (map :value (account :transactions))))))

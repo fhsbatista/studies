@@ -22,7 +22,7 @@
   (let [account (get-account document)]
     (is (= (:document account) document))
     (is (= (:name account) name))
-    (is (= (:balance account) 0.0))))
+    (is (= (balance document) 0.0))))
 
 (deftest test-balance
   (create-account document name)
