@@ -1,18 +1,10 @@
 (ns basic-bank.account
   (:require [cheshire.core :as json]
-            [clojure.java.io :as io]
-            [basic-bank.utils :as utils]))
+            [basic-bank.utils :as utils]
+            [basic-bank.io :as io]))
 
 (defn- account-filename [document]
   (str "accounts/" document ".json"))
-
-(defn- read-account-json [document]
-  (with-open [reader (io/reader (account-filename document))]
-    (json/parse-stream reader true)))
-
-(defn- write-account-json [document json]
-  (with-open [writer (io/writer (account-filename document))]
-    (.write writer json)))
 
 (defn- add-transaction [date value account]
   (let [transaction {:date date,
@@ -22,10 +14,10 @@
            :transactions updated-transactions)))
 
 (defn- update-account [document update-fn]
-  (let [account (read-account-json document)
+  (let [account (io/read-account-json (account-filename document))
         updated-account (update-fn account)
         json (json/generate-string updated-account {:pretty true})]
-    (write-account-json document json)
+    (io/write-account-json (account-filename document) json)
     updated-account))
 
 (defn- transact [document value]
@@ -38,10 +30,10 @@
               :created-at (utils/current-date)
               :transactions []}
         json (json/generate-string data {:pretty true})]
-    (write-account-json document json)))
+    (io/write-account-json (account-filename document) json)))
 
 (defn get-account [document]
-  (let [content (read-account-json document)
+  (let [content (io/read-account-json (account-filename document))
         filename (account-filename document)
         {:keys [name
                 created-at
