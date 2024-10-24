@@ -1,13 +1,7 @@
 (ns basic-bank.account
   (:require [cheshire.core :as json]
-            [clojure.java.io :as io])
-  (:import [java.time LocalDateTime]
-           [java.time.format DateTimeFormatter]))
-
-(defn current-date []
-  (let [now (LocalDateTime/now)
-        formatter (DateTimeFormatter/ofPattern "yyyy-MM-dd HH:mm:ss")]
-    (.format now formatter)))
+            [clojure.java.io :as io]
+            [basic-bank.utils :as utils]))
 
 (defn- account-filename [document]
   (str "accounts/" document ".json"))
@@ -36,12 +30,12 @@
 
 (defn- transact [document value]
   (update-account document
-                  (fn [account] (add-transaction (current-date) value account))))
+                  (fn [account] (add-transaction (utils/current-date) value account))))
 
 (defn create-account [document name]
   (let [data {:document document
               :name name
-              :created-at (current-date)
+              :created-at (utils/current-date)
               :transactions []}
         json (json/generate-string data {:pretty true})]
     (write-account-json document json)))

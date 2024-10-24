@@ -1,8 +1,8 @@
 (ns basic-bank.account-test
   (:require [clojure.test :refer :all]
             [basic-bank.account :refer :all]
-            [cheshire.core :as json]
-            [clojure.java.io :as io]))
+            [clojure.java.io :as io]
+            [basic-bank.utils :as utils]))
 
 (def document "12345678900")
 (def name "Test User")
@@ -49,6 +49,6 @@
           transactions (account :transactions)]
       (is (= (count transactions) 2))
       (is (= ((nth transactions 0) :value) deposit-amount))
-      (is (= ((nth transactions 0) :date) (current-date)))
+      (is (= ((nth transactions 0) :date) (utils/current-date)))
       (is (= ((nth transactions 1) :value) (- withdrawal-amount)))
-      (is (= ((nth transactions 1) :date) (current-date))))))
+      (is (= ((nth transactions 1) :date) (utils/current-date))))))
