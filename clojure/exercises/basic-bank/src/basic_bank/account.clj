@@ -9,15 +9,16 @@
         formatter (DateTimeFormatter/ofPattern "yyyy-MM-dd HH:mm:ss")]
     (.format now formatter)))
 
+(defn account-filename [document]
+  (str "accounts/" document ".json"))
+
 (defn read-account-json [document]
-  (let [filename (str "accounts/" document ".json")]
-    (with-open [reader (io/reader filename)]
-      (json/parse-stream reader true))))
+  (with-open [reader (io/reader (account-filename document))]
+    (json/parse-stream reader true)))
 
 (defn write-account-json [document json]
-  (let [filename (str "accounts/" document ".json")]
-    (with-open [writer (io/writer filename)]
-      (.write writer json))))
+  (with-open [writer (io/writer (account-filename document))]
+    (.write writer json)))
 
 (defn create-account [document name]
   (let [balance 0.0
@@ -31,7 +32,7 @@
 
 (defn get-account [document]
   (let [content (read-account-json document)
-        filename (str "accounts/" document ".json")
+        filename (account-filename document)
         name (content :name)
         balance (content :balance)
         created-at (content :created-at)]
