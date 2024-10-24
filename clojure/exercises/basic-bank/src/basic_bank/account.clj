@@ -68,5 +68,5 @@
   (transact document (- value)))
 
 (defn balance [document]
-  (let [json (read-account-json document)]
-    (json :balance)))
+  (let [account (get-account document)]
+    (account :balance)))
