@@ -12,4 +12,8 @@
   ;This is the concept of abstractions on clojure. Sequence is an abstraction and map function relies on it.
   (iterate-greetings ["John" "Mark" "Ivan"])
   (iterate-greetings '("John" "Mark" "Ivan"))
-  (iterate-greetings #{"John" "Mark" "Ivan"}))
+  (iterate-greetings #{"John" "Mark" "Ivan"})
+  ;Note `seq` will produce the same output no matter which sequence input it receives
+  (println (seq [1 2 3])) ;=> (1 2 3)
+  (println (seq '(1 2 3))) ;=> (1 2 3)
+  (println (seq #{1 2 3}))) ;=> (1 2 3)`
