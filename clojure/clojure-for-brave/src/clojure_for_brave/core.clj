@@ -7,7 +7,9 @@
             [clojure-for-brave.set :as set]
             [clojure-for-brave.loops :as loop]
             [clojure-for-brave.regex :as regex]
-            [clojure-for-brave.sequences :as sequences]))
+            [clojure-for-brave.sequences :as sequences]
+            [clojure-for-brave.map :as map]
+            ))
 
 (defn -main
   "Examples"
@@ -20,4 +22,5 @@
   (set/-main)
   (loop/-main)
   (regex/-main)
-  (sequences/-main))
+  (sequences/-main)
+  (map/-main))
