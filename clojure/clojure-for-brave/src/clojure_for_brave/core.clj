@@ -9,7 +9,7 @@
             [clojure-for-brave.regex :as regex]
             [clojure-for-brave.sequences :as sequences]
             [clojure-for-brave.map :as map]
-            ))
+            [clojure-for-brave.reduce :as reduce]))
 
 (defn -main
   "Examples"
@@ -23,4 +23,5 @@
   (loop/-main)
   (regex/-main)
   (sequences/-main)
-  (map/-main))
+  (map/-main)
+  (reduce/-main))
