@@ -9,7 +9,8 @@
             [clojure-for-brave.regex :as regex]
             [clojure-for-brave.sequences :as sequences]
             [clojure-for-brave.map :as map]
-            [clojure-for-brave.reduce :as reduce]))
+            [clojure-for-brave.reduce :as reduce]
+            [clojure-for-brave.take-drop :as take-drop]))
 
 (defn -main
   "Examples"
@@ -24,4 +25,5 @@
   (regex/-main)
   (sequences/-main)
   (map/-main)
-  (reduce/-main))
+  (reduce/-main)
+  (take-drop/-main))
