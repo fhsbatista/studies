@@ -11,7 +11,8 @@
             [clojure-for-brave.map :as map]
             [clojure-for-brave.reduce :as reduce]
             [clojure-for-brave.take-drop :as take-drop]
-            [clojure-for-brave.filter-some :as filter-some]))
+            [clojure-for-brave.filter-some :as filter-some]
+            [clojure-for-brave.sort-sortby :as sort-sortby]))
 
 (defn -main
   "Examples"
@@ -28,4 +29,5 @@
   (map/-main)
   (reduce/-main)
   (take-drop/-main)
-  (filter-some/-main))
+  (filter-some/-main)
+  (sort-sortby/-main))
