@@ -12,7 +12,8 @@
             [clojure-for-brave.reduce :as reduce]
             [clojure-for-brave.take-drop :as take-drop]
             [clojure-for-brave.filter-some :as filter-some]
-            [clojure-for-brave.sort-sortby :as sort-sortby]))
+            [clojure-for-brave.sort-sortby :as sort-sortby]
+            [clojure-for-brave.concat :as concat]))
 
 (defn -main
   "Examples"
@@ -30,4 +31,5 @@
   (reduce/-main)
   (take-drop/-main)
   (filter-some/-main)
-  (sort-sortby/-main))
+  (sort-sortby/-main)
+  (concat/-main))
