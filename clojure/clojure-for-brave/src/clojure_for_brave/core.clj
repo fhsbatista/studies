@@ -10,7 +10,8 @@
             [clojure-for-brave.sequences :as sequences]
             [clojure-for-brave.map :as map]
             [clojure-for-brave.reduce :as reduce]
-            [clojure-for-brave.take-drop :as take-drop]))
+            [clojure-for-brave.take-drop :as take-drop]
+            [clojure-for-brave.filter-some :as filter-some]))
 
 (defn -main
   "Examples"
@@ -26,4 +27,5 @@
   (sequences/-main)
   (map/-main)
   (reduce/-main)
-  (take-drop/-main))
+  (take-drop/-main)
+  (filter-some/-main))
