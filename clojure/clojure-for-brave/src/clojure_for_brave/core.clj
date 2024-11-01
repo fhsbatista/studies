@@ -13,7 +13,8 @@
             [clojure-for-brave.take-drop :as take-drop]
             [clojure-for-brave.filter-some :as filter-some]
             [clojure-for-brave.sort-sortby :as sort-sortby]
-            [clojure-for-brave.concat :as concat]))
+            [clojure-for-brave.concat :as concat]
+            [clojure-for-brave.lazy-seqs :as lazy-seqs]))
 
 (defn -main
   "Examples"
@@ -32,4 +33,5 @@
   (take-drop/-main)
   (filter-some/-main)
   (sort-sortby/-main)
-  (concat/-main))
+  (concat/-main)
+  (lazy-seqs/-main))
