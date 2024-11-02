@@ -1,4 +1,4 @@
-(ns clojure-for-brave.lazy-seqs)
+(ns clojure-for-brave.sequences.lazy-seqs)
 
 (def numbers-size 1000)
 

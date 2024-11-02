@@ -1,5 +1,5 @@
-(ns clojure-for-brave.take-drop
-  (:require [clojure-for-brave.take-drop :as take-drop]))
+(ns clojure-for-brave.sequences.take-drop
+  (:require [clojure-for-brave.sequences.take-drop :as take-drop]))
 
 (defn example-take-drop []
   (println "-----------------------")

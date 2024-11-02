@@ -1,4 +1,4 @@
-(ns clojure-for-brave.filter-some)
+(ns clojure-for-brave.sequences.filter-some)
 
 (defn long-word? [word]
   (> (count word) 6))

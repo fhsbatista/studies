@@ -1,4 +1,4 @@
-(ns clojure-for-brave.sequences)
+(ns clojure-for-brave.sequences.sequences)
 
 (defn greeting [name]
   (str "Hello, " name))

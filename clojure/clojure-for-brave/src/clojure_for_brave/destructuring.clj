@@ -12,7 +12,7 @@
   (println "And others are:" (str/join ", " others)))
 
 (defn map-only-first
-  [{first :first second :second}]
+  [{first :first _ :second}]
   (println first))
 
 (defn map-two-firsts
@@ -21,13 +21,13 @@
   (println (str "Dog's name is: " dog)))
 
 (defn map-two-firsts-b
-  [{:keys [cat dog] :as animals}] ;alias can be omitted.
+  [{:keys [cat dog] :as _}] ;alias can be omitted.
   (println (str "Cat's name is: " cat))
   (println (str "Dog's name is: " dog)))
 
 (defn -main
   "Destructuring examples"
-  [& args]
+  [& _]
   (println "Examples of destructuring")
   (list-only-first ["bread" "oven" "butter"])
   (list-two-firsts ["Mug" "Dog" "House" "Hair"])

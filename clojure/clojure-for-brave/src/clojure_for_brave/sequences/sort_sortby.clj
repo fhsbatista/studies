@@ -1,4 +1,4 @@
-(ns clojure-for-brave.sort-sortby)
+(ns clojure-for-brave.sequences.sort-sortby)
 
 (defn example-sort []
   (println "-----------------------")

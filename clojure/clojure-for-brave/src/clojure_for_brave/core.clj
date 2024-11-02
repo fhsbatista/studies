@@ -7,15 +7,15 @@
             [clojure-for-brave.set :as set]
             [clojure-for-brave.loops :as loop]
             [clojure-for-brave.regex :as regex]
-            [clojure-for-brave.sequences :as sequences]
+            [clojure-for-brave.sequences.sequences :as sequences]
             [clojure-for-brave.map :as map]
-            [clojure-for-brave.reduce :as reduce]
-            [clojure-for-brave.take-drop :as take-drop]
-            [clojure-for-brave.filter-some :as filter-some]
-            [clojure-for-brave.sort-sortby :as sort-sortby]
+            [clojure-for-brave.sequences.reduce :as reduce]
+            [clojure-for-brave.sequences.take-drop :as take-drop]
+            [clojure-for-brave.sequences.filter-some :as filter-some]
+            [clojure-for-brave.sequences.sort-sortby :as sort-sortby]
             [clojure-for-brave.concat :as concat]
-            [clojure-for-brave.lazy-seqs :as lazy-seqs]
-            [clojure-for-brave.infinite-seqs :as infinite-seqs]))
+            [clojure-for-brave.sequences.lazy-seqs :as lazy-seqs]
+            [clojure-for-brave.sequences.infinite-seqs :as infinite-seqs]))
 
 (defn -main
   "Examples"

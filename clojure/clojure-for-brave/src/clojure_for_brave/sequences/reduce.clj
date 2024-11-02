@@ -1,4 +1,4 @@
-(ns clojure-for-brave.reduce)
+(ns clojure-for-brave.sequences.reduce)
 
 (defn sum [values]
   (reduce + values))

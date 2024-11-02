@@ -1,4 +1,4 @@
-(ns clojure-for-brave.infinite-seqs)
+(ns clojure-for-brave.sequences.infinite-seqs)
 
 (defn -main []
   (println "Infinite seqs examples")
