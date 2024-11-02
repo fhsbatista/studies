@@ -14,7 +14,8 @@
             [clojure-for-brave.filter-some :as filter-some]
             [clojure-for-brave.sort-sortby :as sort-sortby]
             [clojure-for-brave.concat :as concat]
-            [clojure-for-brave.lazy-seqs :as lazy-seqs]))
+            [clojure-for-brave.lazy-seqs :as lazy-seqs]
+            [clojure-for-brave.infinite-seqs :as infinite-seqs]))
 
 (defn -main
   "Examples"
@@ -34,4 +35,5 @@
   (filter-some/-main)
   (sort-sortby/-main)
   (concat/-main)
-  (lazy-seqs/-main))
+  (lazy-seqs/-main)
+  (infinite-seqs/-main))
