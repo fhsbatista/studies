@@ -15,7 +15,8 @@
             [clojure-for-brave.sequences.sort-sortby :as sort-sortby]
             [clojure-for-brave.concat :as concat]
             [clojure-for-brave.sequences.lazy-seqs :as lazy-seqs]
-            [clojure-for-brave.sequences.infinite-seqs :as infinite-seqs]))
+            [clojure-for-brave.sequences.infinite-seqs :as infinite-seqs]
+            [clojure-for-brave.collections.into :as into]))
 
 (defn -main
   "Examples"
@@ -36,4 +37,5 @@
   (sort-sortby/-main)
   (concat/-main)
   (lazy-seqs/-main)
-  (infinite-seqs/-main))
+  (infinite-seqs/-main)
+  (into/-main))
