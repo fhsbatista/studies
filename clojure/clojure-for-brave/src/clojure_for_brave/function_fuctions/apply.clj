@@ -12,6 +12,6 @@
 
 (defn -main []
   (println "---------------------------")
-  (println "Apply examples")
+  (println "(apply) examples")
   (example-max)
   (example-sum))

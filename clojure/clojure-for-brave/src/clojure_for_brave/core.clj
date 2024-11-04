@@ -17,7 +17,9 @@
             [clojure-for-brave.sequences.lazy-seqs :as lazy-seqs]
             [clojure-for-brave.sequences.infinite-seqs :as infinite-seqs]
             [clojure-for-brave.collections.into :as into]
-            [clojure-for-brave.function-fuctions.apply :as apply]))
+            [clojure-for-brave.function-fuctions.apply :as apply]
+            [clojure-for-brave.function-fuctions.partial :as partial]
+            ))
 
 (defn -main
   "Examples"
@@ -40,4 +42,5 @@
   (lazy-seqs/-main)
   (infinite-seqs/-main)
   (into/-main)
-  (apply/-main))
+  (apply/-main)
+  (partial/-main))
