@@ -8,5 +8,10 @@
      :result :goal}))
 
 (defn start []
-  (let [match-result (event (rand-int 10))]
-    (println match-result)))
+  (let [events (take 90 (repeatedly #(event (rand-int 11))))
+        count-goals (fn [team] (count (filter #(and (= (:team %) team) (= (:result %) :goal)) events)))
+        goals-a (count-goals :a)
+        goals-b (count-goals :b)]
+    (if (> goals-a goals-b)
+      :a
+      :b)))
