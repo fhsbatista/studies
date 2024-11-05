@@ -19,7 +19,7 @@
             [clojure-for-brave.collections.into :as into]
             [clojure-for-brave.function-fuctions.apply :as apply]
             [clojure-for-brave.function-fuctions.partial :as partial]
-            ))
+            [clojure-for-brave.function-fuctions.complement :as complement]))
 
 (defn -main
   "Examples"
@@ -43,4 +43,5 @@
   (infinite-seqs/-main)
   (into/-main)
   (apply/-main)
-  (partial/-main))
+  (partial/-main)
+  (complement/-main))
