@@ -19,7 +19,8 @@
             [clojure-for-brave.collections.into :as into]
             [clojure-for-brave.function-fuctions.apply :as apply]
             [clojure-for-brave.function-fuctions.partial :as partial]
-            [clojure-for-brave.function-fuctions.complement :as complement]))
+            [clojure-for-brave.function-fuctions.complement :as complement]
+            [clojure-for-brave.pure-functions.referentially-transparency :as referentially-transparency]))
 
 (defn -main
   "Examples"
@@ -44,4 +45,5 @@
   (into/-main)
   (apply/-main)
   (partial/-main)
-  (complement/-main))
+  (complement/-main)
+  (referentially-transparency/-main))
