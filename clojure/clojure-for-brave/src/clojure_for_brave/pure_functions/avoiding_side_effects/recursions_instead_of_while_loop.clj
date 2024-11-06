@@ -7,8 +7,17 @@
      accumulated
      (sum (rest vals) (+ (first vals) accumulated)))))
 
+(defn sum-better-performance
+  ([vals] (sum vals 0))
+  ([vals accumulated]
+   (if (empty? vals)
+     accumulated
+     ;using (recur) instead of the function name avoids stack overflow
+     (recur (rest vals) (+ (first vals) accumulated)))))
+
 (defn -main []
   (sum [1 2 3])
+  (sum-better-performance [1 2 3])
   )
 
 
