@@ -20,7 +20,8 @@
             [clojure-for-brave.function-fuctions.apply :as apply]
             [clojure-for-brave.function-fuctions.partial :as partial]
             [clojure-for-brave.function-fuctions.complement :as complement]
-            [clojure-for-brave.pure-functions.referentially-transparency :as referentially-transparency]))
+            [clojure-for-brave.pure-functions.referentially-transparency :as referentially-transparency]
+            [clojure-for-brave.pure-functions.avoiding-side-effects.recursions-instead-of-while-loop :as avoiding-side-effects]))
 
 (defn -main
   "Examples"
@@ -46,4 +47,5 @@
   (apply/-main)
   (partial/-main)
   (complement/-main)
-  (referentially-transparency/-main))
+  (referentially-transparency/-main)
+  (avoiding-side-effects/-main))
