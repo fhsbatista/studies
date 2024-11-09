@@ -1,6 +1,7 @@
-(ns ecommerce.core)
+(ns ecommerce.core
+  (:use clojure.pprint)
+  (:require [ecommerce.db :as db]))
 
-(defn foo
-  "I don't do a whole lot."
-  [x]
-  (println x "Hello, World!"))
+(def conn (db/open-connection))
+(pprint conn)
+
