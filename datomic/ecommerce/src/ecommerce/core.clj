@@ -23,6 +23,8 @@
   (d/transact conn [[:db/add product-id :product/price 13.00M]]))
 
 (pprint (db/find-products))
+(pprint (db/find-products-with-pull))
+(pprint (db/find-products-with-pull-all-attrs))
 (pprint (db/find-products-by-slug "/macbook_m1"))
 (pprint (db/find-all-slugs))
 (pprint (db/find-by-price 7500.00M))

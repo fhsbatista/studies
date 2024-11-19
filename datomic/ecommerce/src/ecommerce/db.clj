@@ -32,7 +32,15 @@
 
 (defn find-products []
   (d/q '[:find ?e
-         :keys product/name
+         :keys product/id
+         :where [?e :product/name]] (snapshot)))
+
+(defn find-products-with-pull []
+  (d/q '[:find (pull ?e [:product/name :product/price :product/slug] )
+         :where [?e :product/name]] (snapshot)))
+
+(defn find-products-with-pull-all-attrs []
+  (d/q '[:find (pull ?e [*] )
          :where [?e :product/name]] (snapshot)))
 
 (defn find-products-by-slug [slug]
