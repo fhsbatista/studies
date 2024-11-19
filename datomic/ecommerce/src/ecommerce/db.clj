@@ -27,7 +27,16 @@
 (defn create-scheme [conn]
   (d/transact conn scheme))
 
+(defn snapshot []
+  (d/db (open-connection)))
+
 (defn find-products []
   (d/q '[:find ?id
-         :where [?id :product/name]] (d/db (open-connection))))
+         :where [?id :product/name]] (snapshot)))
+
+(defn find-products-by-slug [slug]
+  (d/q '[:find ?id
+         :in $ ?slug
+         :where [?id :product/slug ?slug]] (snapshot) slug)
+  )
 
