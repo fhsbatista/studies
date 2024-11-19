@@ -40,3 +40,7 @@
          :where [?id :product/slug ?slug]] (snapshot) slug)
   )
 
+(defn find-all-slugs []
+  (d/q '[:find ?slug
+         :where [_ :product/slug ?slug]] (snapshot)))
+
