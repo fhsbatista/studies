@@ -16,4 +16,10 @@
       watch {:product/name "Apple watch"}]
   (d/transact conn [macbook iphone watch]))
 
+
+(let [mug (product/new "Black Mug" "/black_mug" 12.00M)
+      result @(d/transact conn [mug])
+      product-id (first (vals (:tempids result)))]
+  (d/transact conn [[:db/add product-id :product/price 13.00M]]))
+
 (pprint (db/find-products))
