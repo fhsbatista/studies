@@ -31,16 +31,23 @@
   (d/db (open-connection)))
 
 (defn find-products []
-  (d/q '[:find ?id
-         :where [?id :product/name]] (snapshot)))
+  (d/q '[:find ?e
+         :where [?e :product/name]] (snapshot)))
 
 (defn find-products-by-slug [slug]
-  (d/q '[:find ?id
+  (d/q '[:find ?e
          :in $ ?slug
-         :where [?id :product/slug ?slug]] (snapshot) slug)
+         :where [?e :product/slug ?slug]] (snapshot) slug)
   )
 
 (defn find-all-slugs []
   (d/q '[:find ?slug
          :where [_ :product/slug ?slug]] (snapshot)))
+
+(defn find-by-price [price]
+  (d/q '[:find ?price ?name
+         :where
+         [?e :product/price ?price]
+         [?e :product/name ?name]
+         ] (snapshot)))
 

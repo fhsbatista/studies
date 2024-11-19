@@ -22,5 +22,7 @@
       product-id (first (vals (:tempids result)))]
   (d/transact conn [[:db/add product-id :product/price 13.00M]]))
 
-(pprint (db/find-products-by-slug "/macbook_m1"))
-(pprint (db/find-all-slugs))
+;(pprint (db/find-products-by-slug "/macbook_m1"))
+;(pprint (db/find-all-slugs))
+(pprint (db/find-by-price 7500.00M))
+
