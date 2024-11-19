@@ -32,20 +32,24 @@
 
 (defn find-products []
   (d/q '[:find ?e
+         :keys product/name
          :where [?e :product/name]] (snapshot)))
 
 (defn find-products-by-slug [slug]
   (d/q '[:find ?e
+         :keys product/slug
          :in $ ?slug
          :where [?e :product/slug ?slug]] (snapshot) slug)
   )
 
 (defn find-all-slugs []
   (d/q '[:find ?slug
+         :keys product/slug
          :where [_ :product/slug ?slug]] (snapshot)))
 
 (defn find-by-price [price]
-  (d/q '[:find ?price ?name
+  (d/q '[:find ?name ?price
+         :keys product/name product/price
          :where
          [?e :product/price ?price]
          [?e :product/name ?name]
