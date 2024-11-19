@@ -27,3 +27,7 @@
 (defn create-scheme [conn]
   (d/transact conn scheme))
 
+(defn find-products []
+  (d/q '[:find ?id
+         :where [?id :product/name]] (d/db (open-connection))))
+

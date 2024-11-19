@@ -10,18 +10,10 @@
 
 (db/create-scheme conn)
 
-(def db (d/db conn))
+(let [macbook (product/new "Macbook M1" "macbook_m1" 6000.00M)
+      iphone2 (product/new "Iphone 16" "/iphone_15" 7500.00M)
+      iphone (product/new "Iphone 15" "/iphone_15" 7500.00M)
+      watch {:product/name "Apple watch"}]
+  (d/transact conn [macbook iphone watch]))
 
-(d/q '[:find ?product
-       :where [?product :product/name]] db)
-
-(let [macbook (product/new "Macbook M1" "macbook_m1" 6000.00M)]
-  (d/transact conn [macbook]))
-
-(let [iphone (product/new "Iphone 15" "/iphone_15" 7500.00M)
-      result @(d/transact conn [iphone])
-      product-id (first (vals (:tempids result)))]
-  (pprint result)
-  (pprint @(d/transact conn [[:db/add product-id :product/price 7800.00M]])))
-
-
+(pprint (db/find-products))
