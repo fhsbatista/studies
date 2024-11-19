@@ -11,3 +11,8 @@
 
 (let [macbook (product/new "Macbook M1" "macbook_m1" 6000.00M)]
   (d/transact conn [macbook]))
+
+(def db (d/db conn))
+
+(d/q '[:find ?product
+       :where [?product :product/name]] db)
