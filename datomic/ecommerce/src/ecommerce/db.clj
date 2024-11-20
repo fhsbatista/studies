@@ -63,3 +63,14 @@
          [?e :product/name ?name]
          ] (snapshot)))
 
+(defn find-by-min-price [min-price]
+  (d/q '[:find ?name ?price
+         :keys product/name product/price
+         :in $ ?min-price
+         :where
+         [?e :product/price ?price]
+         ;it is a good idea to set more restrictive filters first so that there are less datoms to find next
+         [(> ?price ?min-price)]
+         [?e :product/name ?name]
+         ] (snapshot) min-price))
+

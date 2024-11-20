@@ -28,4 +28,6 @@
 (pprint (db/find-products-by-slug "/macbook_m1"))
 (pprint (db/find-all-slugs))
 (pprint (db/find-by-price 7500.00M))
+(pprint (db/find-by-min-price 7000))
+
 
