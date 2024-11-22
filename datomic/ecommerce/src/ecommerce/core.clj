@@ -22,6 +22,7 @@
       product-id (first (vals (:tempids result)))]
   (d/transact conn [[:db/add product-id :product/price 13.00M]]))
 
+(pprint (db/find-product-by-id 17592186045418))
 (pprint (db/find-products))
 (pprint (db/find-products-with-pull))
 (pprint (db/find-products-with-pull-all-attrs))

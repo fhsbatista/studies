@@ -30,6 +30,9 @@
 (defn snapshot []
   (d/db (open-connection)))
 
+(defn find-product-by-id [id]
+  (d/pull (snapshot) '[*] id))
+
 (defn find-products []
   (d/q '[:find ?e
          :keys product/id
