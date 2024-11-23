@@ -39,16 +39,4 @@
 
 (d/transact conn [books keyboards electronics])
 
-(pprint (db/find-categories))
-(pprint (db/find-category-by-uuid #uuid "acbb268e-93b4-495c-a186-f4ebb6c4eaf8"))
-(pprint (db/find-product-by-uuid (:product/id macbook)))
-(:category/id electronics)
-
-(let [macbook-id (:product/id macbook)
-      electronics-id (:category/id electronics)]
-  (d/transact conn [[:db/add
-                     [:product/id macbook-id]
-                     :product/category
-                     [:category/id electronics-id]]]))
-
-
+(db/set-category-on-products [macbook iphone iphone2] electronics)

@@ -105,3 +105,12 @@
 (defn find-category-by-uuid [id]
   (d/pull (snapshot) '[*] [:category/id id]))
 
+(defn set-category-on-products [products category]
+  (let [conn (open-connection)
+        to-add (reduce (fn [db-adds product] (conj db-adds [:db/add
+                                                            [:product/id (:product/id product)]
+                                                            :product/category
+                                                            [:category/id (:category/id category)]]))
+                       []
+                       products)]
+    (d/transact conn to-add)))
