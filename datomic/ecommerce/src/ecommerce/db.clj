@@ -145,3 +145,12 @@
          :in $ ?category-name
          :where
          [?category :category/name ?category-name]], (snapshot) category-name))
+
+(defn prices-summary []
+  (let [data (d/q '[:find (max ?price) (min ?price) (count ?price)
+                    :with ?product
+                    :where [?product :product/price ?price]] (snapshot))
+        [max min count] (first data)]
+    {:max   max
+     :min   min
+     :count count}))

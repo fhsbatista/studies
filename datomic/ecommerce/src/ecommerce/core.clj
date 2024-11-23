@@ -47,3 +47,4 @@
 (pprint (db/list-products-and-categories))
 (pprint (db/find-products-by-category-forward "Electronics"))
 (pprint (db/find-products-by-category-backwards "Electronics"))
+(pprint (db/prices-summary))
