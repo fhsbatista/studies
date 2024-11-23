@@ -164,3 +164,11 @@
          [?product :product/price ?price]
          [?product :product/category ?category]
          [?category :category/name ?category-name]] (snapshot)))
+
+(defn most-expensive-product []
+  (d/q '[:find (pull ?product [*])
+         :where
+         [(q '[:find (max ?price)
+                      :where [_ :product/price ?price]
+                      ]$) [[?price]]]
+         [?product :product/price ?price]] (snapshot)))

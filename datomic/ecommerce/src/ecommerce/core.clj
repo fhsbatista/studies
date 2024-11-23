@@ -17,7 +17,7 @@
 
 (db/add-categories! [books keyboards electronics])
 
-(def macbook (product/new "Macbook M1" "/macbook_m1" 6000.00M (:category/id electronics)))
+(def macbook (product/new "Macbook M1" "/macbook_m1" 16000.00M (:category/id electronics)))
 (def iphone2 (product/new "Iphone 16" "/iphone_15" 7500.00M (:category/id electronics)))
 (def iphone (product/new "Iphone 15" "/iphone_16" 7500.00M (:category/id electronics)))
 (def mxkeys (product/new "Logitech MX Keys" "/mxkeys" 7500.00M  (:category/id keyboards)))
@@ -49,3 +49,4 @@
 (pprint (db/find-products-by-category-backwards "Electronics"))
 (pprint (db/summary))
 (pprint (db/summary-by-category))
+(pprint (db/most-expensive-product))
