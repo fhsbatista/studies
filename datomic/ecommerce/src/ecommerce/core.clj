@@ -50,3 +50,4 @@
 (pprint (db/summary))
 (pprint (db/summary-by-category))
 (pprint (db/most-expensive-product))
+(pprint (db/most-cheap-product))

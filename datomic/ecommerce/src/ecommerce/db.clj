@@ -172,3 +172,11 @@
                       :where [_ :product/price ?price]
                       ]$) [[?price]]]
          [?product :product/price ?price]] (snapshot)))
+
+(defn most-cheap-product []
+  (d/q '[:find (pull ?product [*])
+         :where
+         [(q '[:find (min ?price)
+               :where [_ :product/price ?price]
+               ]$) [[?price]]]
+         [?product :product/price ?price]] (snapshot)))
