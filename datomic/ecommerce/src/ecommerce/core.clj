@@ -42,4 +42,5 @@
 ;(pprint (db/find-by-min-price 7000))
 
 (pprint (db/list-products-and-categories))
-(pprint (db/find-products-by-category "Electronics"))
+(pprint (db/find-products-by-category-forward "Electronics"))
+(pprint (db/find-products-by-category-backwards "Electronics"))

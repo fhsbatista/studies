@@ -130,9 +130,18 @@
     (d/transact conn to-add)))
 
 
-(defn find-products-by-category [category-name]
+; finding products using forward navigation
+(defn find-products-by-category-forward [category-name]
   (d/q '[:find (pull ?product [:product/name {:product/category [:category/name]}])
          :in $ ?category-name
          :where
          [?category-id :category/name ?category-name]
          [?product :product/category ?category-id]], (snapshot) category-name))
+
+; finding products using backwards navigation
+(defn find-products-by-category-backwards [category-name]
+  ; "_" is for backward navigation
+  (d/q '[:find (pull ?category [:category/name {:product/_category [:product/name]}])
+         :in $ ?category-name
+         :where
+         [?category :category/name ?category-name]], (snapshot) category-name))
