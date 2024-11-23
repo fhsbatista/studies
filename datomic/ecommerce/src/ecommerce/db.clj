@@ -47,6 +47,11 @@
 
 (defn snapshot []
   (d/db (open-connection)))
+(defn add-products [products]
+  (d/transact (open-connection!) products))
+
+(defn add-categories [categories]
+  (d/transact (open-connection!) categories))
 
 (defn find-product-by-id [id]
   (d/pull (snapshot) '[*] id))
