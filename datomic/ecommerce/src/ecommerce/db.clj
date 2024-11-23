@@ -128,3 +128,11 @@
                        []
                        products)]
     (d/transact conn to-add)))
+
+
+(defn find-products-by-category [category-name]
+  (d/q '[:find (pull ?product [:product/name {:product/category [:category/name]}])
+         :in $ ?category-name
+         :where
+         [?category-id :category/name ?category-name]
+         [?product :product/category ?category-id]], (snapshot) category-name))
