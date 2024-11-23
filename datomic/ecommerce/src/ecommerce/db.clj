@@ -146,7 +146,7 @@
          :where
          [?category :category/name ?category-name]], (snapshot) category-name))
 
-(defn prices-summary []
+(defn summary []
   (let [data (d/q '[:find (max ?price) (min ?price) (count ?price)
                     :with ?product
                     :where [?product :product/price ?price]] (snapshot))
@@ -154,3 +154,13 @@
     {:max   max
      :min   min
      :count count}))
+
+
+(defn summary-by-category []
+  (d/q '[:find ?category-name (max ?price) (min ?price) (count ?price) (sum ?price)
+         :keys category max min count sum
+         :with ?product
+         :where
+         [?product :product/price ?price]
+         [?product :product/category ?category]
+         [?category :category/name ?category-name]] (snapshot)))
