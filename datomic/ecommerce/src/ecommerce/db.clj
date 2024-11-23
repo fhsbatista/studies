@@ -11,7 +11,8 @@
 (defn delete-database []
   (d/delete-database db-uri))
 
-(def scheme [{:db/ident       :product/id
+(def scheme [;Products
+             {:db/ident       :product/id
               :db/valueType   :db.type/uuid
               :db/cardinality :db.cardinality/one
               :db/unique      :db.unique/identity
@@ -27,7 +28,19 @@
              {:db/ident       :product/price
               :db/valueType   :db.type/bigdec
               :db/cardinality :db.cardinality/one
-              :db/doc         "Product's price with monetary precision"}])
+              :db/doc         "Product's price with monetary precision"}
+             {:db/ident       :product/category
+              :db/valueType   :db.type/ref
+              :db/cardinality :db.cardinality/one}
+
+             ;Categories
+             {:db/ident       :category/id
+              :db/valueType   :db.type/uuid
+              :db/cardinality :db.cardinality/one
+              :db/unique      :db.unique/identity}
+             {:db/ident       :category/name
+              :db/valueType   :db.type/string
+              :db/cardinality :db.cardinality/one}])
 
 (defn create-scheme [conn]
   (d/transact conn scheme))
@@ -47,11 +60,11 @@
          :where [?e :product/name]] (snapshot)))
 
 (defn find-products-with-pull []
-  (d/q '[:find (pull ?e [:product/name :product/price :product/slug] )
+  (d/q '[:find (pull ?e [:product/name :product/price :product/slug])
          :where [?e :product/name]] (snapshot)))
 
 (defn find-products-with-pull-all-attrs []
-  (d/q '[:find (pull ?e [*] )
+  (d/q '[:find (pull ?e [*])
          :where [?e :product/name]] (snapshot)))
 
 (defn find-products-by-slug [slug]
@@ -84,4 +97,11 @@
          [(> ?price ?min-price)]
          [?e :product/name ?name]
          ] (snapshot) min-price))
+
+(defn find-categories []
+  (d/q '[:find (pull ?e [*])
+         :where [?e :category/id]] (snapshot)))
+
+(defn find-category-by-uuid [id]
+  (d/pull (snapshot) '[*] [:category/id id]))
 
