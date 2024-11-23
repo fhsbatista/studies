@@ -40,3 +40,5 @@
 ;(pprint (db/find-all-slugs))
 ;(pprint (db/find-by-price 7500.00M))
 ;(pprint (db/find-by-min-price 7000))
+
+(pprint (db/list-products-and-categories))

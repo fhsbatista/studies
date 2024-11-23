@@ -111,6 +111,14 @@
 (defn find-category-by-uuid [id]
   (d/pull (snapshot) '[*] [:category/id id]))
 
+(defn list-products-and-categories []
+  (d/q '[:find ?product-name ?category-name
+         :keys product category
+         :where
+         [?product :product/name ?product-name]
+         [?product :product/category ?category-id]
+         [?category-id :category/name ?category-name]] (snapshot)))
+
 (defn set-category-on-products! [products category]
   (let [conn (open-connection!)
         to-add (reduce (fn [db-adds product] (conj db-adds [:db/add
