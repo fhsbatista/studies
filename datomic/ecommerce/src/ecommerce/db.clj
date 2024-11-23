@@ -4,11 +4,11 @@
 
 (def db-uri "datomic:dev://localhost:4334/ecommerce")
 
-(defn open-connection []
+(defn open-connection! []
   (d/create-database db-uri)
   (d/connect db-uri))
 
-(defn delete-database []
+(defn delete-database! []
   (d/delete-database db-uri))
 
 (def scheme [;Products
@@ -42,15 +42,16 @@
               :db/valueType   :db.type/string
               :db/cardinality :db.cardinality/one}])
 
-(defn create-scheme [conn]
+(defn create-scheme! [conn]
   (d/transact conn scheme))
 
 (defn snapshot []
-  (d/db (open-connection)))
-(defn add-products [products]
+  (d/db (open-connection!)))
+
+(defn add-products! [products]
   (d/transact (open-connection!) products))
 
-(defn add-categories [categories]
+(defn add-categories! [categories]
   (d/transact (open-connection!) categories))
 
 (defn find-product-by-id [id]
@@ -110,8 +111,8 @@
 (defn find-category-by-uuid [id]
   (d/pull (snapshot) '[*] [:category/id id]))
 
-(defn set-category-on-products [products category]
-  (let [conn (open-connection)
+(defn set-category-on-products! [products category]
+  (let [conn (open-connection!)
         to-add (reduce (fn [db-adds product] (conj db-adds [:db/add
                                                             [:product/id (:product/id product)]
                                                             :product/category
