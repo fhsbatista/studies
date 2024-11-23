@@ -2,7 +2,7 @@
   (:use clojure.pprint)
   (:require [datomic.api :as d]))
 
-(def db-uri "datomic:dev://localhost:4334/hello")
+(def db-uri "datomic:dev://localhost:4334/ecommerce")
 
 (defn open-connection []
   (d/create-database db-uri)
@@ -11,7 +11,12 @@
 (defn delete-database []
   (d/delete-database db-uri))
 
-(def scheme [{:db/ident       :product/name
+(def scheme [{:db/ident       :product/id
+              :db/valueType   :db.type/uuid
+              :db/cardinality :db.cardinality/one
+              :db/unique      :db.unique/identity
+              :db/doc         "Product's uuid"}
+             {:db/ident       :product/name
               :db/valueType   :db.type/string
               :db/cardinality :db.cardinality/one
               :db/doc         "Product's name"}
@@ -32,6 +37,9 @@
 
 (defn find-product-by-id [id]
   (d/pull (snapshot) '[*] id))
+
+(defn find-product-by-uuid [uuid]
+  (d/pull (snapshot) '[*] [:product/id uuid]))
 
 (defn find-products []
   (d/q '[:find ?e
