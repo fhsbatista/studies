@@ -24,7 +24,7 @@
 (def clojure-brave (product/new "Clojure for the true and brave" "/clojure_brave" 7500.00M (:category/id books)))
 (def watch {:product/name "Apple watch"})
 
-(db/add-products! [macbook iphone iphone2 watch mxkeys clojure-brave])
+(db/add-products! [macbook iphone iphone2 watch mxkeys clojure-brave] "200.123.124.145")
 
 (let [mug (product/new "Black Mug" "/black_mug" 12.00M)
       result @(d/transact conn [mug])
@@ -51,3 +51,5 @@
 (pprint (db/summary-by-category))
 (pprint (db/most-expensive-product))
 (pprint (db/most-cheap-product))
+
+(pprint (db/find-products-added-by-ip "192.168.1.2"))

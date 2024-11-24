@@ -11,7 +11,12 @@
 (defn delete-database! []
   (d/delete-database db-uri))
 
-(def scheme [;Products
+(def scheme [;Transactions
+             {:db/ident       :tx-data/ip
+              :db/valueType   :db.type/string
+              :db/cardinality :db.cardinality/one}
+
+             ;Products
              {:db/ident       :product/id
               :db/valueType   :db.type/uuid
               :db/cardinality :db.cardinality/one
@@ -48,8 +53,10 @@
 (defn snapshot []
   (d/db (open-connection!)))
 
-(defn add-products! [products]
-  (d/transact (open-connection!) products))
+(defn add-products! [products ip]
+  (let [ip-db-add [:db/add "datomic.tx" :tx-data/ip ip]
+        db-adds (conj products ip-db-add)]
+    (d/transact (open-connection!) db-adds)))
 
 (defn add-categories! [categories]
   (d/transact (open-connection!) categories))
@@ -146,6 +153,14 @@
          :where
          [?category :category/name ?category-name]], (snapshot) category-name))
 
+
+(defn find-products-added-by-ip [ip]
+  (d/q '[:find (pull ?product [*])
+         :in $ ?ip
+         :where
+         [?transaction :tx-data/ip ?ip]
+         [?product :product/id _ ?transaction]] (snapshot) ip))
+
 (defn summary []
   (let [data (d/q '[:find (max ?price) (min ?price) (count ?price)
                     :with ?product
@@ -169,8 +184,8 @@
   (d/q '[:find (pull ?product [*])
          :where
          [(q '[:find (max ?price)
-                      :where [_ :product/price ?price]
-                      ]$) [[?price]]]
+               :where [_ :product/price ?price]
+               ] $) [[?price]]]
          [?product :product/price ?price]] (snapshot)))
 
 (defn most-cheap-product []
@@ -178,5 +193,5 @@
          :where
          [(q '[:find (min ?price)
                :where [_ :product/price ?price]
-               ]$) [[?price]]]
+               ] $) [[?price]]]
          [?product :product/price ?price]] (snapshot)))
