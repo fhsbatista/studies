@@ -1,6 +1,8 @@
 (ns ecommerce.db
   (:use clojure.pprint)
-  (:require [datomic.api :as d]))
+  (:require [datomic.api :as d]
+            [ecommerce.product :as product]
+            [ecommerce.category :as category]))
 
 (def db-uri "datomic:dev://localhost:4334/ecommerce")
 
@@ -61,6 +63,19 @@
 (defn add-categories! [categories]
   (d/transact (open-connection!) categories))
 
+(defn seed! [conn ip]
+  (let [books (category/new "Books")
+        keyboards (category/new "Keyboards")
+        electronics (category/new "Electronics")
+        macbook (product/new "Macbook M1" "/macbook_m1" 16000.00M (:category/id electronics))
+        iphone2 (product/new "Iphone 16" "/iphone_15" 7500.00M (:category/id electronics))
+        iphone (product/new "Iphone 15" "/iphone_16" 7500.00M (:category/id electronics))
+        mxkeys (product/new "Logitech MX Keys" "/mxkeys" 7500.00M  (:category/id keyboards))
+        clojure-brave (product/new "Clojure for the true and brave" "/clojure_brave" 7500.00M (:category/id books))
+        watch {:product/name "Apple watch"}]
+    (add-categories! [books keyboards electronics])
+    (add-products! [macbook iphone2 iphone mxkeys clojure-brave watch] ip)))
+
 (defn find-product-by-id [id]
   (d/pull (snapshot) '[*] id))
 
@@ -114,6 +129,11 @@
 (defn find-categories []
   (d/q '[:find (pull ?e [*])
          :where [?e :category/id]] (snapshot)))
+
+(defn find-category-by-name [name]
+  (d/q '[:find (pull ?e [*])
+         :in $ ?name
+         :where [?e :category/name ?name]] (snapshot) name))
 
 (defn find-category-by-uuid [id]
   (d/pull (snapshot) '[*] [:category/id id]))
