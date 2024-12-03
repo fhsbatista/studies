@@ -22,7 +22,7 @@ RSpec.describe BinaryTree do
       expect(tree.root.right.right.value).to eq(12)
     end
 
-    fit "finds node" do
+    it "finds node" do
       tree = BinaryTree.new
       tree.insert(10)
       tree.insert(19)
