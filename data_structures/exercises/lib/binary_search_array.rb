@@ -1,4 +1,4 @@
-module BinarySearch
+module BinarySearchArray
   def self.search(array, target)
     left = 0
     right = array.length - 1
