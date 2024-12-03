@@ -30,7 +30,7 @@ RSpec.describe LinkedList do
           list.add("index 3")
         end
 
-        fit { expect(list.get_at(5)).to be_nil }
+        it { expect(list.get_at(5)).to be_nil }
       end
       context "when index exists" do
         before do
@@ -40,7 +40,7 @@ RSpec.describe LinkedList do
           list.add("index 3")
         end
 
-        fit { expect(list.get_at(2)).to eq("index 1") }
+        it { expect(list.get_at(2)).to eq("index 1") }
       end
     end
   end
