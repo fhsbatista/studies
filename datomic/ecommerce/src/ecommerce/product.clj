@@ -1,7 +1,17 @@
-(ns ecommerce.product)
+(ns ecommerce.product
+  (:require [schema.core :as s]
+            [ecommerce.category :as category])
+  (:import (java.util UUID)))
 
 (defn uuid []
-  (java.util.UUID/randomUUID))
+  (UUID/randomUUID))
+
+(def Product
+  {:product/id                        UUID
+   :product/name                      s/Str
+   :product/slug                      s/Str
+   :product/price                     BigDecimal
+   (s/optional-key :product/category) category/Category})
 
 (defn new
   ([name slug price]

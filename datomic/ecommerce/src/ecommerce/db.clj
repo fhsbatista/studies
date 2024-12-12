@@ -1,6 +1,7 @@
 (ns ecommerce.db
   (:use clojure.pprint)
   (:require [datomic.api :as d]
+            [schema.core :as s]
             [ecommerce.product :as product]
             [ecommerce.category :as category]))
 
@@ -60,7 +61,7 @@
         db-adds (conj products ip-db-add)]
     (d/transact (open-connection!) db-adds)))
 
-(defn add-categories! [categories]
+(s/defn add-categories! [categories :- [category/Category]]
   (d/transact (open-connection!) categories))
 
 (defn seed! [conn ip]
@@ -70,7 +71,7 @@
         macbook (product/new "Macbook M1" "/macbook_m1" 16000.00M (:category/id electronics))
         iphone2 (product/new "Iphone 16" "/iphone_15" 7500.00M (:category/id electronics))
         iphone (product/new "Iphone 15" "/iphone_16" 7500.00M (:category/id electronics))
-        mxkeys (product/new "Logitech MX Keys" "/mxkeys" 7500.00M  (:category/id keyboards))
+        mxkeys (product/new "Logitech MX Keys" "/mxkeys" 7500.00M (:category/id keyboards))
         clojure-brave (product/new "Clojure for the true and brave" "/clojure_brave" 7500.00M (:category/id books))
         watch {:product/name "Apple watch"}]
     (add-categories! [books keyboards electronics])
