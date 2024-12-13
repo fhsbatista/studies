@@ -56,6 +56,9 @@
 (defn snapshot []
   (d/db (open-connection!)))
 
+(defn datomic-to-schema [entities]
+  (map #(dissoc % :db/id) entities))
+
 (s/defn add-products! [products :- [product/Product] ip]
   (let [ip-db-add [:db/add "datomic.tx" :tx-data/ip ip]
         db-adds (conj products ip-db-add)]
@@ -126,9 +129,9 @@
          [?e :product/name ?name]
          ] (snapshot) min-price))
 
-(defn find-categories []
-  (d/q '[:find (pull ?e [*])
-         :where [?e :category/id]] (snapshot)))
+(s/defn find-categories :- [category/Category] []
+  (datomic-to-schema (d/q '[:find [(pull ?e [*]) ... ]
+         :where [?e :category/id]] (snapshot))))
 
 (defn find-category-by-name [name]
   (d/q '[:find (pull ?e [*])
