@@ -56,7 +56,7 @@
 (defn snapshot []
   (d/db (open-connection!)))
 
-(defn add-products! [products ip]
+(s/defn add-products! [products :- [product/Product] ip]
   (let [ip-db-add [:db/add "datomic.tx" :tx-data/ip ip]
         db-adds (conj products ip-db-add)]
     (d/transact (open-connection!) db-adds)))
@@ -64,18 +64,17 @@
 (s/defn add-categories! [categories :- [category/Category]]
   (d/transact (open-connection!) categories))
 
-(defn seed! [conn ip]
+(defn seed! [ip]
   (let [books (category/new "Books")
         keyboards (category/new "Keyboards")
         electronics (category/new "Electronics")
-        macbook (product/new "Macbook M1" "/macbook_m1" 16000.00M (:category/id electronics))
-        iphone2 (product/new "Iphone 16" "/iphone_15" 7500.00M (:category/id electronics))
-        iphone (product/new "Iphone 15" "/iphone_16" 7500.00M (:category/id electronics))
-        mxkeys (product/new "Logitech MX Keys" "/mxkeys" 7500.00M (:category/id keyboards))
-        clojure-brave (product/new "Clojure for the true and brave" "/clojure_brave" 7500.00M (:category/id books))
-        watch {:product/name "Apple watch"}]
+        macbook (product/new "Macbook M1" "/macbook_m1" 16000.00M electronics)
+        iphone2 (product/new "Iphone 16" "/iphone_15" 7500.00M electronics)
+        iphone (product/new "Iphone 15" "/iphone_16" 7500.00M electronics)
+        mxkeys (product/new "Logitech MX Keys" "/mxkeys" 7500.00M keyboards)
+        clojure-brave (product/new "Clojure for the true and brave" "/clojure_brave" 7500.00M books)]
     (add-categories! [books keyboards electronics])
-    (add-products! [macbook iphone2 iphone mxkeys clojure-brave watch] ip)))
+    (add-products! [macbook iphone2 iphone mxkeys clojure-brave] ip)))
 
 (defn find-product-by-id [id]
   (d/pull (snapshot) '[*] id))

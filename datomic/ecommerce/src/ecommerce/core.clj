@@ -12,7 +12,7 @@
 (def conn (db/open-connection!))
 
 (db/create-scheme! conn)
-(db/seed! conn "200.123.124.145")
+(db/seed! "200.123.124.145")
 
 
 (def electronics (category/new "Electronics"))
