@@ -21,5 +21,3 @@
                "/macbook_m1"
                16000.00M))
 
-(pprint (s/validate product/Product (assoc macbook :product/category electronics)))
-(pprint (s/validate category/Category electronics))

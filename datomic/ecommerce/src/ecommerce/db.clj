@@ -2,6 +2,7 @@
   (:use clojure.pprint)
   (:require [datomic.api :as d]
             [schema.core :as s]
+            [clojure.walk :as walk]
             [ecommerce.product :as product]
             [ecommerce.category :as category]))
 
@@ -56,8 +57,13 @@
 (defn snapshot []
   (d/db (open-connection!)))
 
+(defn dissoc-db-id [item]
+  (if (map? item)
+    (dissoc item :db/id)
+    item))
+
 (defn datomic-to-schema [entities]
-  (map #(dissoc % :db/id) entities))
+  (walk/prewalk #(dissoc-db-id %) entities))
 
 (s/defn add-products! [products :- [product/Product] ip]
   (let [ip-db-add [:db/add "datomic.tx" :tx-data/ip ip]
@@ -94,9 +100,9 @@
   (d/q '[:find (pull ?e [:product/name :product/price :product/slug])
          :where [?e :product/name]] (snapshot)))
 
-(defn find-products-with-pull-all-attrs []
-  (d/q '[:find (pull ?e [*])
-         :where [?e :product/name]] (snapshot)))
+(s/defn find-products-with-pull-all-attrs :- [product/Product] []
+  (datomic-to-schema (d/q '[:find [(pull ?e [* {:product/category [*]}]) ...]
+         :where [?e :product/name]] (snapshot))))
 
 (defn find-products-by-slug [slug]
   (d/q '[:find ?e
