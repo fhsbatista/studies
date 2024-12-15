@@ -85,11 +85,19 @@
     (add-categories! [books keyboards electronics])
     (add-products! [macbook iphone2 iphone mxkeys clojure-brave] ip)))
 
-(defn find-product-by-id [id]
-  (d/pull (snapshot) '[*] id))
+(s/defn find-product-by-uuid :- (s/maybe product/Product) [uuid :- java.util.UUID]
+  (let [result (d/pull (snapshot) '[* {:product/category [*]}] [:product/id uuid])
+        product (datomic-to-schema result)]
+    (if (:product/id result)
+      product
+      nil)))
 
-(defn find-product-by-uuid [uuid]
-  (d/pull (snapshot) '[*] [:product/id uuid]))
+(s/defn find-product-by-uuid! :- product/Product [uuid :- java.util.UUID]
+  (let [product (find-product-by-uuid uuid)]
+    (if product
+      product
+      (throw (ex-info "Product not found"
+                      {:type :errors/not-found, :id uuid})))))
 
 (defn find-products []
   (d/q '[:find ?e
@@ -102,7 +110,7 @@
 
 (s/defn find-products-with-pull-all-attrs :- [product/Product] []
   (datomic-to-schema (d/q '[:find [(pull ?e [* {:product/category [*]}]) ...]
-         :where [?e :product/name]] (snapshot))))
+                            :where [?e :product/name]] (snapshot))))
 
 (defn find-products-by-slug [slug]
   (d/q '[:find ?e
@@ -136,8 +144,8 @@
          ] (snapshot) min-price))
 
 (s/defn find-categories :- [category/Category] []
-  (datomic-to-schema (d/q '[:find [(pull ?e [*]) ... ]
-         :where [?e :category/id]] (snapshot))))
+  (datomic-to-schema (d/q '[:find [(pull ?e [*]) ...]
+                            :where [?e :category/id]] (snapshot))))
 
 (defn find-category-by-name [name]
   (d/q '[:find (pull ?e [*])

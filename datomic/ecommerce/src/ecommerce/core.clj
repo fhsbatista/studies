@@ -3,7 +3,9 @@
   (:require [ecommerce.db :as db]
             [schema.core :as s]
             [ecommerce.category :as category]
-            [ecommerce.product :as product]))
+            [ecommerce.product :as product]
+            [datomic.api :as datomic]
+            [schema.core :as s]))
 
 (s/set-fn-validation! true)
 
@@ -19,5 +21,10 @@
 (def macbook
   (product/new "Macbook M1"
                "/macbook_m1"
-               16000.00M))
+               16000.00M
+               electronics))
 
+(db/add-products! [macbook] "200.200.121.623")
+
+(pprint
+  (db/find-product-by-uuid (product/uuid)))
