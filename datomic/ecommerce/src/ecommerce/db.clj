@@ -38,6 +38,9 @@
               :db/valueType   :db.type/bigdec
               :db/cardinality :db.cardinality/one
               :db/doc         "Product's price with monetary precision"}
+             {:db/ident       :product/stock
+              :db/valueType   :db.type/long
+              :db/cardinality :db.cardinality/one}
              {:db/ident       :product/category
               :db/valueType   :db.type/ref
               :db/cardinality :db.cardinality/one}
@@ -232,3 +235,10 @@
                :where [_ :product/price ?price]
                ] $) [[?price]]]
          [?product :product/price ?price]] (snapshot)))
+
+(defn add-stock [uuid quantity]
+  (let [product (find-product-by-uuid uuid)
+        current-stock (:product/stock product)
+        new-stock (+ current-stock quantity)
+        updated-product (assoc product :product/stock new-stock)]
+    (d/transact (open-connection!) [updated-product])))

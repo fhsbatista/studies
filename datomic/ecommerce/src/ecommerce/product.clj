@@ -11,6 +11,7 @@
    :product/name                      s/Str
    :product/slug                      s/Str
    :product/price                     BigDecimal
+   :product/stock                     s/Int
    (s/optional-key :product/category) category/Category})
 
 (defn new-product
@@ -21,4 +22,5 @@
     :product/name     name
     :product/slug     slug
     :product/price    price
+    :product/stock    0
     :product/category category}))

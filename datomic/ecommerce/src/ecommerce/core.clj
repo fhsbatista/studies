@@ -26,4 +26,6 @@
 (db/add-products! [macbook] "200.200.121.623")
 
 (pprint
-  (db/find-product-by-uuid (product/uuid)))
+  (db/find-product-by-uuid (:product/id macbook)))
+
+(db/add-stock (:product/id macbook) 5)
