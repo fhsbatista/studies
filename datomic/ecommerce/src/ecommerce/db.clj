@@ -242,3 +242,9 @@
         new-stock (+ current-stock quantity)
         updated-product (assoc product :product/stock new-stock)]
     (d/transact (open-connection!) [updated-product])))
+
+(s/defn products-with-stock :- [product/Product] []
+  (datomic-to-schema (d/q '[:find [(pull ?product [* {:product/category [*]}]) ...]
+         :where
+         [?product :product/stock ?stock]
+         [(> ?stock 0)]] (snapshot))))
