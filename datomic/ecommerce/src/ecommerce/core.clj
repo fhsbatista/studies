@@ -4,7 +4,6 @@
             [schema.core :as s]
             [ecommerce.category :as category]
             [ecommerce.product :as product]
-            [datomic.api :as datomic]
             [schema.core :as s]))
 
 (s/set-fn-validation! true)
@@ -19,7 +18,7 @@
 
 (def electronics (category/new "Electronics"))
 (def macbook
-  (product/new "Macbook M1"
+  (product/new-product "Macbook M1"
                "/macbook_m1"
                16000.00M
                electronics))

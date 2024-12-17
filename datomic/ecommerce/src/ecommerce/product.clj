@@ -13,16 +13,11 @@
    :product/price                     BigDecimal
    (s/optional-key :product/category) category/Category})
 
-(defn new
-  ([name slug price]
-   {
-    :product/id    (uuid)
-    :product/name  name
-    :product/slug  slug
-    :product/price price
-    })
+(defn new-product
   ([name slug price category]
-   {:product/id       (uuid)
+   (new-product (uuid) name slug price category))
+  ([uuid name slug price category]
+   {:product/id       uuid
     :product/name     name
     :product/slug     slug
     :product/price    price

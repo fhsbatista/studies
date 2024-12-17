@@ -77,11 +77,11 @@
   (let [books (category/new "Books")
         keyboards (category/new "Keyboards")
         electronics (category/new "Electronics")
-        macbook (product/new "Macbook M1" "/macbook_m1" 16000.00M electronics)
-        iphone2 (product/new "Iphone 16" "/iphone_15" 7500.00M electronics)
-        iphone (product/new "Iphone 15" "/iphone_16" 7500.00M electronics)
-        mxkeys (product/new "Logitech MX Keys" "/mxkeys" 7500.00M keyboards)
-        clojure-brave (product/new "Clojure for the true and brave" "/clojure_brave" 7500.00M books)]
+        macbook (product/new-product "Macbook M1" "/macbook_m1" 16000.00M electronics)
+        iphone2 (product/new-product "Iphone 16" "/iphone_15" 7500.00M electronics)
+        iphone (product/new-product "Iphone 15" "/iphone_16" 7500.00M electronics)
+        mxkeys (product/new-product "Logitech MX Keys" "/mxkeys" 7500.00M keyboards)
+        clojure-brave (product/new-product "Clojure for the true and brave" "/clojure_brave" 7500.00M books)]
     (add-categories! [books keyboards electronics])
     (add-products! [macbook iphone2 iphone mxkeys clojure-brave] ip)))
 
