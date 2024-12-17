@@ -243,8 +243,27 @@
         updated-product (assoc product :product/stock new-stock)]
     (d/transact (open-connection!) [updated-product])))
 
+(def rules
+  '[[(stock ?product ?stock)
+     [?product :product/stock ?stock]]])
+
 (s/defn products-with-stock :- [product/Product] []
   (datomic-to-schema (d/q '[:find [(pull ?product [* {:product/category [*]}]) ...]
-         :where
-         [?product :product/stock ?stock]
-         [(> ?stock 0)]] (snapshot))))
+                            :in $ %                         ;% is a shortcut to pass "rules", as $ pass the database
+                            :where
+                            (stock ?product ?stock)
+                            [(> ?stock 0)]]
+                          (snapshot) rules)))
+
+(s/defn product-if-stock :- (s/maybe product/Product) [uuid]
+  (let [query '[:find (pull ?product [* {:product/category [*]}]) .
+                :in $ % ?uuid
+                :where
+                [?product :product/id ?uuid]
+                (stock ?product ?stock)
+                [(> ?stock 0)]]
+        result (d/q query (snapshot) rules uuid)
+        product (datomic-to-schema result)]
+    (if product
+      product
+      nil)))

@@ -31,3 +31,4 @@
 (db/add-stock (:product/id macbook) 5)
 
 (pprint (db/products-with-stock))
+(pprint (db/product-if-stock (:product/id macbook)))
