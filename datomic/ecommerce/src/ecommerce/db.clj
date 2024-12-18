@@ -277,10 +277,13 @@
       product
       nil)))
 
-(s/defn find-products-in-categories :- [product/Product] [categories :- [s/Str]]
+(s/defn find-products-in-categories :- [product/Product] [categories :- [s/Str] digital? :- s/Bool]
   (datomic-to-schema (d/q '[:find [(pull ?product [* {:product/category [*]}]) ...]
-                            :in $ [?category-name ...]        ; "[<input> ...]"  -> [...] indicates the input is a sequence instead of single value
+                            :in $ [?category-name ...] ?digital?       ; "[<input> ...]"  -> [...] indicates the input is a sequence instead of single value
                             :where
                             [?category :category/name ?category-name]
                             [?product :product/category ?category]
-                            ] (snapshot) categories)))
+                            [?product :product/digital? ?digital?]
+                            ] (snapshot) categories digital?)))
+
+
