@@ -259,7 +259,10 @@
      [(ground 1) ?stock]]
     [(can-sell? ?product)
      (stock ?product ?stock)
-     [(> ?stock 0)]]])
+     [(> ?stock 0)]]
+    [(products-in-category ?product ?category-name)
+     [?category :category/name ?category-name]
+     [?product :product/category ?category]]])
 
 (s/defn available-products :- [product/Product] []
   (datomic-to-schema (d/q '[:find [(pull ?product [* {:product/category [*]}]) ...]
@@ -279,11 +282,12 @@
 
 (s/defn find-products-in-categories :- [product/Product] [categories :- [s/Str] digital? :- s/Bool]
   (datomic-to-schema (d/q '[:find [(pull ?product [* {:product/category [*]}]) ...]
-                            :in $ [?category-name ...] ?digital?       ; "[<input> ...]"  -> [...] indicates the input is a sequence instead of single value
+                            :in $  %[?category-name ...] ?digital?       ; "[<input> ...]"  -> [...] indicates the input is a sequence instead of single value
                             :where
-                            [?category :category/name ?category-name]
-                            [?product :product/category ?category]
+                            (products-in-category ?product ?category-name)
                             [?product :product/digital? ?digital?]
-                            ] (snapshot) categories digital?)))
+                            ] (snapshot) rules categories digital?)))
+
+(find-products-in-categories ["Apps"] true)
 
 
