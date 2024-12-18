@@ -41,6 +41,9 @@
              {:db/ident       :product/stock
               :db/valueType   :db.type/long
               :db/cardinality :db.cardinality/one}
+             {:db/ident       :product/digital?
+              :db/valueType   :db.type/boolean
+              :db/cardinality :db.cardinality/one}
              {:db/ident       :product/category
               :db/valueType   :db.type/ref
               :db/cardinality :db.cardinality/one}
@@ -80,13 +83,17 @@
   (let [books (category/new "Books")
         keyboards (category/new "Keyboards")
         electronics (category/new "Electronics")
+        games (category/new "Games")
+        apps (category/new "Apps")
         macbook (product/new-product "Macbook M1" "/macbook_m1" 16000.00M electronics)
         iphone2 (product/new-product "Iphone 16" "/iphone_15" 7500.00M electronics)
         iphone (product/new-product "Iphone 15" "/iphone_16" 7500.00M electronics)
         mxkeys (product/new-product "Logitech MX Keys" "/mxkeys" 7500.00M keyboards)
-        clojure-brave (product/new-product "Clojure for the true and brave" "/clojure_brave" 7500.00M books)]
+        fifa15 (product/new-product "Game Fifa 15" "/fifa15" 75.00M games true)
+        avast (product/new-product "Avast antivirus" "/avast" 79.00M apps true)
+        clojure-brave (product/new-product "Clojure for the true and brave" "/clojure_brave" 7500.00M books true)]
     (add-categories! [books keyboards electronics])
-    (add-products! [macbook iphone2 iphone mxkeys clojure-brave] ip)))
+    (add-products! [macbook iphone2 iphone mxkeys clojure-brave fifa15 avast] ip)))
 
 (s/defn find-product-by-uuid :- (s/maybe product/Product) [uuid :- java.util.UUID]
   (let [result (d/pull (snapshot) '[* {:product/category [*]}] [:product/id uuid])
@@ -245,23 +252,25 @@
 
 (def rules
   '[[(stock ?product ?stock)
-     [?product :product/stock ?stock]]])
+     [?product :product/stock ?stock]]
+    [(stock ?product ?stock)
+     [?product :product/digital? true]
+     ;if digital, assume stock is 1
+     [(ground 1) ?stock]]
+    [(can-sell? ?product)
+     (stock ?product ?stock)
+     [(> ?stock 0)]]])
 
-(s/defn products-with-stock :- [product/Product] []
+(s/defn available-products :- [product/Product] []
   (datomic-to-schema (d/q '[:find [(pull ?product [* {:product/category [*]}]) ...]
                             :in $ %                         ;% is a shortcut to pass "rules", as $ pass the database
-                            :where
-                            (stock ?product ?stock)
-                            [(> ?stock 0)]]
+                            :where (can-sell? ?product)]
                           (snapshot) rules)))
 
-(s/defn product-if-stock :- (s/maybe product/Product) [uuid]
+(s/defn available-product? :- (s/maybe product/Product) [uuid]
   (let [query '[:find (pull ?product [* {:product/category [*]}]) .
                 :in $ % ?uuid
-                :where
-                [?product :product/id ?uuid]
-                (stock ?product ?stock)
-                [(> ?stock 0)]]
+                :where (can-sell? ?product)]
         result (d/q query (snapshot) rules uuid)
         product (datomic-to-schema result)]
     (if product

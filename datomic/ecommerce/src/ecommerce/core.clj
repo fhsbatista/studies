@@ -29,6 +29,8 @@
   (db/find-product-by-uuid (:product/id macbook)))
 
 (db/add-stock (:product/id macbook) 5)
-
-(pprint (db/products-with-stock))
-(pprint (db/product-if-stock (:product/id macbook)))
+;;
+(pprint (db/available-products))
+(pprint (db/available-product? (:product/id macbook)))
+;
+(pprint (db/find-products-with-pull-all-attrs))
