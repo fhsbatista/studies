@@ -276,3 +276,11 @@
     (if product
       product
       nil)))
+
+(s/defn find-products-in-categories :- [product/Product] [categories :- [s/Str]]
+  (datomic-to-schema (d/q '[:find [(pull ?product [* {:product/category [*]}]) ...]
+                            :in $ [?category-name ...]        ; "[<input> ...]"  -> [...] indicates the input is a sequence instead of single value
+                            :where
+                            [?category :category/name ?category-name]
+                            [?product :product/category ?category]
+                            ] (snapshot) categories)))
