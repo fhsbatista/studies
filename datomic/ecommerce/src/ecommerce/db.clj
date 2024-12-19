@@ -282,12 +282,20 @@
 
 (s/defn find-products-in-categories :- [product/Product] [categories :- [s/Str] digital? :- s/Bool]
   (datomic-to-schema (d/q '[:find [(pull ?product [* {:product/category [*]}]) ...]
-                            :in $  %[?category-name ...] ?digital?       ; "[<input> ...]"  -> [...] indicates the input is a sequence instead of single value
+                            :in $ % [?category-name ...] ?digital? ; "[<input> ...]"  -> [...] indicates the input is a sequence instead of single value
                             :where
                             (products-in-category ?product ?category-name)
                             [?product :product/digital? ?digital?]
                             ] (snapshot) rules categories digital?)))
 
-(find-products-in-categories ["Apps"] true)
+(s/defn update-price [uuid :- java.util.UUID
+                      current-price :- BigDecimal
+                      new-price :- BigDecimal]
+  (d/transact (open-connection!) [[;db/cas is for updating values only if the current value is what we expect.
+                                   ;this avoids the problem of updating an already out-of-date value, which might happen in scenarios of racing conditions
+                                   :db/cas [:product/id uuid]
+                                   :product/price
+                                   current-price
+                                   new-price]]))
 
 

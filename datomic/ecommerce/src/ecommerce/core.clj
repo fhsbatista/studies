@@ -25,12 +25,7 @@
 
 (db/add-products! [macbook] "200.200.121.623")
 
-(pprint
-  (db/find-product-by-uuid (:product/id macbook)))
+(pprint (db/find-product-by-uuid (:product/id macbook)))
 
-(db/add-stock (:product/id macbook) 5)
-;;
-(pprint (db/available-products))
-(pprint (db/available-product? (:product/id macbook)))
-;
-(pprint (db/find-products-with-pull-all-attrs))
+(db/update-price (:product/id macbook) 16000.00M 17000.00M)
+
