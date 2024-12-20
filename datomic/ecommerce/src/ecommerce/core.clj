@@ -31,3 +31,4 @@
 
 (db/add-variant! (:product/id macbook) "Macbook 32GB" 18000.00M)
 
+(db/find-products-with-pull-all-attrs)

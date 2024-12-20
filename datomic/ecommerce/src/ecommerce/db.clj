@@ -49,6 +49,7 @@
               :db/cardinality :db.cardinality/one}
              {:db/ident       :product/variants
               :db/valueType   :db.type/ref
+              :db/isComponent true
               :db/cardinality :db.cardinality/many}
 
              ;Variants
@@ -323,5 +324,3 @@
                                    :product/price
                                    current-price
                                    new-price]]))
-
-

@@ -1,6 +1,7 @@
 (ns ecommerce.product
   (:require [schema.core :as s]
-            [ecommerce.category :as category])
+            [ecommerce.category :as category]
+            [ecommerce.variant :as variant])
   (:import (java.util UUID)))
 
 (defn uuid []
@@ -13,7 +14,8 @@
    :product/price                     BigDecimal
    :product/stock                     s/Int
    :product/digital?                  s/Bool
-   (s/optional-key :product/category) category/Category})
+   (s/optional-key :product/category) category/Category
+   (s/optional-key :product/variants) [variant/Variant]})
 
 (defn new-product
   ([name slug price category]
