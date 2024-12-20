@@ -136,7 +136,7 @@
       (throw (ex-info "Product not found"
                       {:type :errors/not-found, :id uuid})))))
 
-(defn find-products []
+(defn find-all-products-ids []
   (d/q '[:find ?e
          :keys product/id
          :where [?e :product/name]] (snapshot)))
@@ -145,7 +145,7 @@
   (d/q '[:find (pull ?e [:product/name :product/price :product/slug])
          :where [?e :product/name]] (snapshot)))
 
-(s/defn find-products-with-pull-all-attrs :- [product/Product] []
+(s/defn find-all-products :- [product/Product] []
   (datomic-to-schema (d/q '[:find [(pull ?e [* {:product/category [*]}]) ...]
                             :where [?e :product/name]] (snapshot))))
 
