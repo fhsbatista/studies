@@ -47,6 +47,21 @@
              {:db/ident       :product/category
               :db/valueType   :db.type/ref
               :db/cardinality :db.cardinality/one}
+             {:db/ident       :product/variants
+              :db/valueType   :db.type/ref
+              :db/cardinality :db.cardinality/many}
+
+             ;Variants
+             {:db/ident       :variant/id
+              :db/valueType   :db.type/uuid
+              :db/cardinality :db.cardinality/one
+              :db/unique      :db.unique/identity}
+             {:db/ident       :variant/name
+              :db/valueType   :db.type/string
+              :db/cardinality :db.cardinality/one}
+             {:db/ident       :variant/price
+              :db/valueType   :db.type/bigdec
+              :db/cardinality :db.cardinality/one}
 
              ;Categories
              {:db/ident       :category/id
@@ -78,6 +93,17 @@
 
 (s/defn add-categories! [categories :- [category/Category]]
   (d/transact (open-connection!) categories))
+
+(s/defn add-variant! [product-id :- java.util.UUID
+                      name :- s/Str
+                      price :- BigDecimal]
+  (d/transact (open-connection!) [{:variant/id    (product/uuid)
+                                   :variant/name  name
+                                   :variant/price price
+                                   ;this id exist only during transaction, so it can be used in other db/adds to refer this db/add
+                                   :db/id         "transaction-temp-id"}
+                                  {:product/id       product-id
+                                   :product/variants "transaction-temp-id"}]))
 
 (defn seed! [ip]
   (let [books (category/new "Books")
