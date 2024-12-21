@@ -19,4 +19,14 @@ func main() {
 
 	var command int
 	fmt.Scan(&command)
+
+	if command == 1 {
+		fmt.Println("Monitoring started")
+	} else if command == 2 {
+		fmt.Println("Showing logs")
+	} else if command == 0 {
+		fmt.Println("Exiting")
+	} else {
+		fmt.Println("Invalid option")
+	}
 }
