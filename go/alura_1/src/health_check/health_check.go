@@ -1,6 +1,7 @@
 package main
 
 import "fmt"
+import "os"
 
 func main() {
 	showIntroduction()
@@ -18,6 +19,7 @@ func main() {
 		fmt.Println("Showing logs")
 	case 0:
 		fmt.Println("Exiting")
+		os.Exit(0)
 	default:
 		fmt.Println("Invalid option")
 	}
