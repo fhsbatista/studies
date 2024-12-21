@@ -19,9 +19,10 @@ func main() {
 		fmt.Println("Showing logs")
 	case 0:
 		fmt.Println("Exiting")
-		os.Exit(0)
+		os.Exit(0) //0 to the OS means that everything went fine.
 	default:
 		fmt.Println("Invalid option")
+		os.Exit(-1) //-1 to the OS means that something went wrong.
 	}
 }
 
