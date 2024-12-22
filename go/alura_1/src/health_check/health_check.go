@@ -3,6 +3,10 @@ package main
 import "fmt"
 import "os"
 import "net/http"
+import "bufio"
+import "bytes"
+import "strings"
+import "io"
 
 func main() {
 	showIntroduction()
@@ -60,12 +64,7 @@ func readCommand() int {
 
 func monitor() {
 	fmt.Println("Monitoring started")
-	urls := []string{
-		"https://github.com",
-		"https://go.dev",
-		"https://google.com",
-		"https://agilemanifesto.org",
-	}
+	urls := getWebsitesUrls()
 
 	for _, url := range urls {
 		resp, err := http.Get(url)
@@ -73,11 +72,35 @@ func monitor() {
 		if err != nil {
 			fmt.Println("Failure on http request:", err)
 		}
-	
+
 		if resp.StatusCode == 200 {
 			fmt.Println(url, "OK")
 		} else {
 			fmt.Println(url, "NOT OK")
 		}
 	}
+}
+
+func getWebsitesUrls() []string {
+	var urls []string
+
+	file, err := os.ReadFile("urls.txt")
+
+	if err != nil {
+		fmt.Println("Something went wrong:", err)
+	}
+
+	reader := bufio.NewReader(bytes.NewReader(file))
+
+	for {
+		line, err := reader.ReadString('\n')
+		line = strings.TrimSpace(line)
+		urls = append(urls, line)
+
+		if err == io.EOF {
+			break
+		}
+	}
+
+	return urls
 }
