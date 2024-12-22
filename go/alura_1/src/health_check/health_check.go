@@ -67,12 +67,14 @@ func monitor() {
 		"https://agilemanifesto.org",
 	}
 
-	url := urls[0]
-	resp, _ := http.Get(url)
-
-	if resp.StatusCode == 200 {
-		fmt.Println(url, "OK")
-	} else {
-		fmt.Println(url, "NOT OK")
+	for i := 0; i < len(urls); i++ {
+		url := urls[i]
+		resp, _ := http.Get(url)
+	
+		if resp.StatusCode == 200 {
+			fmt.Println(url, "OK")
+		} else {
+			fmt.Println(url, "NOT OK")
+		}
 	}
 }
