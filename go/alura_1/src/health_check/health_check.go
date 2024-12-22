@@ -6,24 +6,26 @@ import "net/http"
 
 func main() {
 	showIntroduction()
-	showMenu()
 
-	command := readCommand()
+	for {
+		showMenu()
+		command := readCommand()
 
-	switch command {
-	case 1:
-		// break -> "break" is not mandatory in Go.
-		// The case used will be the first one which condition is true.
-		// Only the first. Therefore "break" is not necessary.
-		monitor()
-	case 2:
-		fmt.Println("Showing logs")
-	case 0:
-		fmt.Println("Exiting")
-		os.Exit(0) //0 to the OS means that everything went fine.
-	default:
-		fmt.Println("Invalid option")
-		os.Exit(-1) //-1 to the OS means that something went wrong.
+		switch command {
+		case 1:
+			// break -> "break" is not mandatory in Go.
+			// The case used will be the first one which condition is true.
+			// Only the first. Therefore "break" is not necessary.
+			monitor()
+		case 2:
+			fmt.Println("Showing logs")
+		case 0:
+			fmt.Println("Exiting")
+			os.Exit(0) //0 to the OS means that everything went fine.
+		default:
+			fmt.Println("Invalid option")
+			os.Exit(-1) //-1 to the OS means that something went wrong.
+		}
 	}
 }
 
