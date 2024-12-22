@@ -68,7 +68,11 @@ func monitor() {
 	}
 
 	for _, url := range urls {
-		resp, _ := http.Get(url)
+		resp, err := http.Get(url)
+
+		if err != nil {
+			fmt.Println("Failure on http request:", err)
+		}
 	
 		if resp.StatusCode == 200 {
 			fmt.Println(url, "OK")
