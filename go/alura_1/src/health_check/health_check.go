@@ -2,6 +2,7 @@ package main
 
 import "fmt"
 import "os"
+import "net/http"
 
 func main() {
 	showIntroduction()
@@ -14,7 +15,7 @@ func main() {
 		// break -> "break" is not mandatory in Go.
 		// The case used will be the first one which condition is true.
 		// Only the first. Therefore "break" is not necessary.
-		fmt.Println("Monitoring started")
+		monitor()
 	case 2:
 		fmt.Println("Showing logs")
 	case 0:
@@ -53,4 +54,11 @@ func readCommand() int {
 	fmt.Scan(&command)
 
 	return command
+}
+
+func monitor() {
+	fmt.Println("Monitoring started")
+	url := "https://github.com"
+	resp, _ := http.Get(url)
+	fmt.Println(resp)
 }
