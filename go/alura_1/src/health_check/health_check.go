@@ -67,8 +67,7 @@ func monitor() {
 		"https://agilemanifesto.org",
 	}
 
-	for i := 0; i < len(urls); i++ {
-		url := urls[i]
+	for _, url := range urls {
 		resp, _ := http.Get(url)
 	
 		if resp.StatusCode == 200 {
