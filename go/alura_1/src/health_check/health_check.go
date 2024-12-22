@@ -11,8 +11,8 @@ func main() {
 
 	switch command {
 	case 1:
-		// break -> "break" is not mandatory in Go. 
-		// The case used will be the first one which condition is true. 
+		// break -> "break" is not mandatory in Go.
+		// The case used will be the first one which condition is true.
 		// Only the first. Therefore "break" is not necessary.
 		fmt.Println("Monitoring started")
 	case 2:
@@ -27,8 +27,8 @@ func main() {
 }
 
 func showIntroduction() {
-	name := "Fernnado"
-	version := "1.0"
+	//"_" can be used to ommit value returned by a function
+	name, _, version := getUserInfo()
 
 	fmt.Println("Hello, Mr.", name)
 	fmt.Println("This program's version is", version)
@@ -36,6 +36,10 @@ func showIntroduction() {
 	fmt.Println()
 	fmt.Println()
 	fmt.Println()
+}
+
+func getUserInfo() (string, int, float32) {
+	return "Fernando", 29, 1.0
 }
 
 func showMenu() {
