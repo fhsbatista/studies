@@ -60,7 +60,13 @@ func readCommand() int {
 
 func monitor() {
 	fmt.Println("Monitoring started")
-	url := "https://github.com"
+	var urls [4]string
+	urls[0] = "https://github.com"
+	urls[1] = "https://go.dev"
+	urls[2] = "https://google.com"
+	urls[3] = "https://agilemanifesto.org"
+
+	url := urls[0]
 	resp, _ := http.Get(url)
 
 	if resp.StatusCode == 200 {
