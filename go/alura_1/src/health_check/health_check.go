@@ -7,6 +7,7 @@ import "bufio"
 import "bytes"
 import "strings"
 import "io"
+import "strconv"
 
 func main() {
 	showIntroduction()
@@ -71,12 +72,15 @@ func monitor() {
 
 		if err != nil {
 			fmt.Println("Failure on http request:", err)
+			return
 		}
 
 		if resp.StatusCode == 200 {
 			fmt.Println(url, "OK")
+			log(url, true)
 		} else {
 			fmt.Println(url, "NOT OK")
+			log(url, false)
 		}
 	}
 }
@@ -103,4 +107,16 @@ func getWebsitesUrls() []string {
 	}
 
 	return urls
+}
+
+func log(url string, status bool) {
+	file, err := os.OpenFile("logs.txt", os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
+
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	file.WriteString(url + " - online:" + strconv.FormatBool(status) + "\n")
+
+	file.Close()
 }
