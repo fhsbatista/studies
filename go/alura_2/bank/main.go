@@ -11,21 +11,29 @@ type Account struct {
 	balance float64
 }
 
-func (a *Account) Withdraw(value float64) {
+func (a *Account) Withdraw(value float64) (string, float64) {
 	validValue := value > 0
 	if !validValue {
-		fmt.Println("Value must be greater than 0")
-		return
+		return "Value must be greater than 0", a.balance
 	}
 
 	hasBalance := a.balance >= value
 	if !hasBalance {
-		fmt.Println("Could not withdraw because there is not sufficient balance")
-		return
+		return "Could not withdraw because there is not sufficient balance", a.balance
 	}
 
 	a.balance -= value
-	fmt.Println("Withdraw Success") 
+	return "Withdraw success", a.balance
+}
+
+func (a *Account) Deposit(value float64) (string, float64) {
+	validValue := value > 0
+	if !validValue {
+		return "Value must be greater than 0", a.balance
+	}
+
+	a.balance += value
+	return "Deposit succees", a.balance
 }
 
 func (a *Account) BalanceInfo() {
@@ -37,12 +45,11 @@ func main() {
 		holder:  "Fernando Batista",
 		branch:  123,
 		account: 12345,
-		balance: 100.00,
+		balance: 0,
 	}
 
-	account.BalanceInfo()
-	account.Withdraw(50.0)
-	account.BalanceInfo()
-	account.Withdraw(100.0)
-	account.Withdraw(-100.0)
+	fmt.Println(account.Deposit(0))
+	fmt.Println(account.Deposit(200))
+	fmt.Println(account.Withdraw(200))
+	fmt.Println(account.Withdraw(200))
 }
