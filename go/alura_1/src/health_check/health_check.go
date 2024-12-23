@@ -26,7 +26,7 @@ func main() {
 			// Only the first. Therefore "break" is not necessary.
 			monitor()
 		case 2:
-			fmt.Println("Showing logs")
+			printLogs()
 		case 0:
 			fmt.Println("Exiting")
 			os.Exit(0) //0 to the OS means that everything went fine.
@@ -123,4 +123,16 @@ func log(url string, status bool) {
 	file.WriteString(time + " - " + url + " - online:" + strconv.FormatBool(status) + "\n")
 
 	file.Close()
+}
+
+func printLogs() {
+	fmt.Println("Showing logs")
+
+	file, err := os.ReadFile("logs.txt")
+
+	if err != nil {
+		fmt.Println("Something went wrong:", err)
+	}
+
+	fmt.Println(string(file))
 }
