@@ -8,6 +8,7 @@ import "bytes"
 import "strings"
 import "io"
 import "strconv"
+import "time"
 
 func main() {
 	showIntroduction()
@@ -116,7 +117,8 @@ func log(url string, status bool) {
 		fmt.Println(err)
 	}
 
-	file.WriteString(url + " - online:" + strconv.FormatBool(status) + "\n")
+	time := time.Now().Format("02/01/2006 15:04:05")
+	file.WriteString(time + " - " + url + " - online:" + strconv.FormatBool(status) + "\n")
 
 	file.Close()
 }
