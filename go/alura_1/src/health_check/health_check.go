@@ -1,14 +1,16 @@
 package main
 
-import "fmt"
-import "os"
-import "net/http"
-import "bufio"
-import "bytes"
-import "strings"
-import "io"
-import "strconv"
-import "time"
+import (
+	"bufio"
+	"bytes"
+	"fmt"
+	"io"
+	"net/http"
+	"os"
+	"strconv"
+	"strings"
+	"time"
+)
 
 func main() {
 	showIntroduction()
