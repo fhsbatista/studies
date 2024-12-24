@@ -7,7 +7,7 @@ import (
 )
 
 func BalanceInfo(account accounts.Account) {
-	fmt.Println("Current Balance:", account.Balance)
+	fmt.Println("Current Balance:", account.Balance())
 }
 
 func main() {
@@ -19,7 +19,6 @@ func main() {
 		},
 		Branch:  123,
 		Account: 12345,
-		Balance: 0,
 	}
 
 	account2 := accounts.Account{
@@ -30,7 +29,6 @@ func main() {
 		},
 		Branch:  124,
 		Account: 12345,
-		Balance: 0,
 	}
 
 	fmt.Println(account.Deposit(0))
