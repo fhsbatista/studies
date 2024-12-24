@@ -9,7 +9,7 @@ import (
 )
 
 func connectDatabaes() *sql.DB {
-	conn := "user=postgres dbname=go_web password=default-password host=localhost sslmode=disabled"
+	conn := "user=postgres dbname=go_web password=default-password host=localhost sslmode=disable"
 	db, err := sql.Open("postgres", conn)
 
 	if err != nil {
@@ -20,6 +20,7 @@ func connectDatabaes() *sql.DB {
 }
 
 type Product struct {
+	Id          int
 	Name        string
 	Description string
 	Price       float64
@@ -29,17 +30,36 @@ type Product struct {
 var templates = template.Must(template.ParseGlob("templates/*.html"))
 
 func main() {
-	db := connectDatabaes()
-	defer db.Close()
 	http.HandleFunc("/", index)
 	http.ListenAndServe(":8000", nil)
 }
 
 func index(w http.ResponseWriter, r *http.Request) {
-	products := []Product{
-		{"T-Shirt", "Oversized", 29.0, 10},
-		{"Laptop", "Very fast", 2900.0, 10},
-		{"Sneaker", "Confortable", 290.0, 10},
+	db := connectDatabaes()
+
+	query, err := db.Query("select * from products")
+
+	if err != nil {
+		panic(err.Error())
 	}
+
+	products := []Product{}
+
+	for query.Next() {
+		var id, quantity int
+		var name, description string
+		var price float64
+
+		err = query.Scan(&id, &name, &description, &price, &quantity)
+
+		if err != nil {
+			panic(err.Error())
+		}
+
+		products = append(products, Product{id, name, description, price, quantity})
+	}
+
 	templates.ExecuteTemplate(w, "Index", products)
+
+	defer db.Close()
 }
