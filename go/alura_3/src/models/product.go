@@ -1,6 +1,8 @@
 package models
 
-import "go_web/db"
+import (
+	"go_web/db"
+)
 
 type Product struct {
 	Id          int
@@ -8,6 +10,29 @@ type Product struct {
 	Description string
 	Price       float64
 	Quantity    int
+}
+
+func FindProductById(productId int) Product {
+	db := db.ConnectDatabase()
+
+	query := db.QueryRow("select * from products where id = $1", productId)
+
+	var product Product
+	err := query.Scan(
+		&product.Id,
+		&product.Name,
+		&product.Description,
+		&product.Price,
+		&product.Quantity,
+	)
+
+	if err != nil {
+		panic(err.Error())
+	}
+
+	defer db.Close()
+
+	return product
 }
 
 func FindAllProducts() []Product {
@@ -50,6 +75,20 @@ func NewProduct(name, description string, price float64, quantity int) {
 	}
 
 	query.Exec(name, description, price, quantity)
+
+	defer db.Close()
+}
+
+func EditProduct(id int, name, description string, price float64, quantity int) {
+	db := db.ConnectDatabase()
+
+	query, err := db.Prepare("update products set name = $2, description = $3, price = $4, quantity = $5 where id = $1")
+
+	if err != nil {
+		panic(err.Error())
+	}
+
+	query.Exec(id, name, description, price, quantity)
 
 	defer db.Close()
 }
