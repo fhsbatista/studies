@@ -34,18 +34,14 @@
               </tr>
             </thead>
             <tbody>
+              {{range .}}
               <tr>
-                <td>T-Shirt</td>
-                <td>Oversized</td>
-                <td>29</td>
-                <td>10</td>
+                <td>{{.Name}}</td>
+                <td>{{.Description}}</td>
+                <td>{{.Price}}</td>
+                <td>{{.Quantity}}</td>
               </tr>
-              <tr>
-                <td>Laptop</td>
-                <td>Very fast</td>
-                <td>1999</td>
-                <td>15</td>
-              </tr>
+              {{end}}
             </tbody>
           </table>
         </div>
