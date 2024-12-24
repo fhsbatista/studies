@@ -41,4 +41,23 @@ func main() {
 
 	BalanceInfo(account)
 	BalanceInfo(account2)
+
+	fmt.Println("Saving account examples")
+
+	savingAccount := accounts.SavingAccount{
+		Holder: persons.Person{
+			Name:       "Fernando Batista",
+			CPF:        "123.456.789-00",
+			Profession: "Software Engineer",
+		},
+		Branch:  123,
+		Account: 12345,
+	}
+
+	fmt.Println(savingAccount.Deposit(0))
+	fmt.Println(savingAccount.Deposit(200))
+	fmt.Println(savingAccount.Withdraw(200))
+	fmt.Println(savingAccount.Withdraw(200))
+
+	fmt.Println(savingAccount.Deposit(200))
 }
