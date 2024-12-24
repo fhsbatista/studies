@@ -3,10 +3,9 @@ package accounts
 import "bank/persons"
 
 type Account struct {
-	Holder  persons.Person
-	Branch  int
-	Account int
-	balance float64
+	Holder          persons.Person
+	Branch, Account int
+	balance         float64
 }
 
 func (a *Account) Withdraw(value float64) (string, float64) {
