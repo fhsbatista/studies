@@ -53,3 +53,17 @@ func NewProduct(name, description string, price float64, quantity int) {
 
 	defer db.Close()
 }
+
+func DeleteProduct(productId string) {
+	db := db.ConnectDatabase()
+
+	query, err := db.Prepare("delete from products where id = $1")
+
+	if err != nil {
+		panic(err.Error())
+	}
+
+	query.Exec(productId)
+
+	defer db.Close()
+}
