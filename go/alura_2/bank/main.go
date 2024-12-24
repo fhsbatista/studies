@@ -6,8 +6,17 @@ import (
 	"fmt"
 )
 
-func BalanceInfo(account accounts.CheckingAccount) {
+func BalanceInfo(account account) {
 	fmt.Println("Current Balance:", account.Balance())
+}
+
+type account interface {
+	Withdraw(value float64) (string, float64)
+	Balance() float64
+}
+
+func PayBoleto(account account, value float64) {
+	account.Withdraw(value)
 }
 
 func main() {
@@ -39,8 +48,8 @@ func main() {
 	fmt.Println(checkingAccount.Deposit(200))
 	fmt.Println(checkingAccount.Transfer(140, &checkingAccount2))
 
-	BalanceInfo(checkingAccount)
-	BalanceInfo(checkingAccount2)
+	BalanceInfo(&checkingAccount)
+	BalanceInfo(&checkingAccount2)
 
 	fmt.Println("Saving account examples")
 
@@ -60,4 +69,11 @@ func main() {
 	fmt.Println(savingAccount.Withdraw(200))
 
 	fmt.Println(savingAccount.Deposit(200))
+
+	PayBoleto(&checkingAccount, 100)
+	PayBoleto(&savingAccount, 100)
+	PayBoleto(&savingAccount, 500)
+
+	BalanceInfo(&checkingAccount)
+	BalanceInfo(&savingAccount)
 }
