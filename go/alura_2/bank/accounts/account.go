@@ -1,7 +1,9 @@
 package accounts
 
+import "bank/persons"
+
 type Account struct {
-	Holder  string
+	Holder  persons.Person
 	Branch  int
 	Account int
 	Balance float64

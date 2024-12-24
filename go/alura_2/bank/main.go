@@ -1,8 +1,9 @@
 package main
 
 import (
-	"fmt"
 	"bank/accounts"
+	"bank/persons"
+	"fmt"
 )
 
 func BalanceInfo(account accounts.Account) {
@@ -11,14 +12,22 @@ func BalanceInfo(account accounts.Account) {
 
 func main() {
 	account := accounts.Account{
-		Holder:  "Fernando Batista",
+		Holder: persons.Person{
+			Name:       "Fernando Batista",
+			CPF:        "123.456.789-00",
+			Profession: "Software Engineer",
+		},
 		Branch:  123,
 		Account: 12345,
 		Balance: 0,
 	}
 
 	account2 := accounts.Account{
-		Holder:  "Fernando Batista",
+		Holder: persons.Person{
+			Name:       "Batista Fernando",
+			CPF:        "321.456.789-00",
+			Profession: "UX Designer",
+		},
 		Branch:  124,
 		Account: 12345,
 		Balance: 0,
