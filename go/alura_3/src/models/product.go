@@ -11,7 +11,7 @@ type Product struct {
 }
 
 func FindAllProducts() []Product {
-	db := db.ConnectDatabaes()
+	db := db.ConnectDatabase()
 
 	query, err := db.Query("select * from products")
 
@@ -34,8 +34,22 @@ func FindAllProducts() []Product {
 
 		products = append(products, Product{id, name, description, price, quantity})
 	}
-	
+
 	defer db.Close()
 
 	return products
+}
+
+func NewProduct(name, description string, price float64, quantity int) {
+	db := db.ConnectDatabase()
+
+	query, err := db.Prepare("insert into products (name, description, price, quantity) values($1, $2, $3, $4)")
+
+	if err != nil {
+		panic(err.Error())
+	}
+
+	query.Exec(name, description, price, quantity)
+
+	defer db.Close()
 }

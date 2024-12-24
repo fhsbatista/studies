@@ -1,8 +1,10 @@
 package controllers
 
 import (
+	"fmt"
 	"go_web/models"
 	"net/http"
+	"strconv"
 	"text/template"
 )
 
@@ -11,4 +13,29 @@ var templates = template.Must(template.ParseGlob("templates/*.html"))
 func Index(w http.ResponseWriter, r *http.Request) {
 	products := models.FindAllProducts()
 	templates.ExecuteTemplate(w, "Index", products)
+}
+
+func New(w http.ResponseWriter, r *http.Request) {
+	templates.ExecuteTemplate(w, "New", nil)
+}
+
+func Insert(w http.ResponseWriter, r *http.Request) {
+	if r.Method == "POST" {
+		name := r.FormValue("name")
+		description := r.FormValue("description")
+		price, errPrice := strconv.ParseFloat(r.FormValue("price"), 64) 
+		quantity, errQuantity := strconv.Atoi(r.FormValue("quantity"))
+
+		if errPrice != nil {
+			fmt.Println("Could not parse price")
+		}
+
+		if errQuantity != nil {
+			fmt.Println("Could not parse quantity")
+		}
+
+		models.NewProduct(name, description, price, quantity)
+
+		http.Redirect(w, r, "/", 301)
+	}
 }
