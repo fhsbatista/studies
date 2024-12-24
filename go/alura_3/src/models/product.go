@@ -38,7 +38,7 @@ func FindProductById(productId int) Product {
 func FindAllProducts() []Product {
 	db := db.ConnectDatabase()
 
-	query, err := db.Query("select * from products")
+	query, err := db.Query("select * from products order by id asc")
 
 	if err != nil {
 		panic(err.Error())
