@@ -2,13 +2,13 @@ package accounts
 
 import "bank/persons"
 
-type Account struct {
+type CheckingAccount struct {
 	Holder          persons.Person
 	Branch, Account int
 	balance         float64
 }
 
-func (a *Account) Withdraw(value float64) (string, float64) {
+func (a *CheckingAccount) Withdraw(value float64) (string, float64) {
 	validValue := value > 0
 	if !validValue {
 		return "Value must be greater than 0", a.balance
@@ -23,7 +23,7 @@ func (a *Account) Withdraw(value float64) (string, float64) {
 	return "Withdraw success", a.balance
 }
 
-func (a *Account) Deposit(value float64) (string, float64) {
+func (a *CheckingAccount) Deposit(value float64) (string, float64) {
 	validValue := value > 0
 	if !validValue {
 		return "Value must be greater than 0", a.balance
@@ -33,7 +33,7 @@ func (a *Account) Deposit(value float64) (string, float64) {
 	return "Deposit succees", a.balance
 }
 
-func (a *Account) Transfer(value float64, destination *Account) (string, float64) {
+func (a *CheckingAccount) Transfer(value float64, destination *CheckingAccount) (string, float64) {
 	validValue := value > 0
 	if !validValue {
 		return "Value must be greater than 0", a.balance
@@ -50,6 +50,6 @@ func (a *Account) Transfer(value float64, destination *Account) (string, float64
 	return "Transfer success", a.balance
 }
 
-func (a *Account) Balance() float64 {
+func (a *CheckingAccount) Balance() float64 {
 	return a.balance
 }

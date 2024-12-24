@@ -6,12 +6,12 @@ import (
 	"fmt"
 )
 
-func BalanceInfo(account accounts.Account) {
+func BalanceInfo(account accounts.CheckingAccount) {
 	fmt.Println("Current Balance:", account.Balance())
 }
 
 func main() {
-	account := accounts.Account{
+	checkingAccount := accounts.CheckingAccount{
 		Holder: persons.Person{
 			Name:       "Fernando Batista",
 			CPF:        "123.456.789-00",
@@ -21,7 +21,7 @@ func main() {
 		Account: 12345,
 	}
 
-	account2 := accounts.Account{
+	checkingAccount2 := accounts.CheckingAccount{
 		Holder: persons.Person{
 			Name:       "Batista Fernando",
 			CPF:        "321.456.789-00",
@@ -31,16 +31,16 @@ func main() {
 		Account: 12345,
 	}
 
-	fmt.Println(account.Deposit(0))
-	fmt.Println(account.Deposit(200))
-	fmt.Println(account.Withdraw(200))
-	fmt.Println(account.Withdraw(200))
+	fmt.Println(checkingAccount.Deposit(0))
+	fmt.Println(checkingAccount.Deposit(200))
+	fmt.Println(checkingAccount.Withdraw(200))
+	fmt.Println(checkingAccount.Withdraw(200))
 
-	fmt.Println(account.Deposit(200))
-	fmt.Println(account.Transfer(140, &account2))
+	fmt.Println(checkingAccount.Deposit(200))
+	fmt.Println(checkingAccount.Transfer(140, &checkingAccount2))
 
-	BalanceInfo(account)
-	BalanceInfo(account2)
+	BalanceInfo(checkingAccount)
+	BalanceInfo(checkingAccount2)
 
 	fmt.Println("Saving account examples")
 
