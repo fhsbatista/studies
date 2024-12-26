@@ -19,8 +19,6 @@ func Home(w http.ResponseWriter, r *http.Request) {
 }
 
 func Personalities(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "application/json")
-
 	var personalities []models.Personality
 	database.DB.Find(&personalities)
 
@@ -28,8 +26,6 @@ func Personalities(w http.ResponseWriter, r *http.Request) {
 }
 
 func Personality(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "application/json")
-
 	id := mux.Vars(r)["id"]
 
 	var personality models.Personality
@@ -39,8 +35,6 @@ func Personality(w http.ResponseWriter, r *http.Request) {
 }
 
 func CreatePersonality(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "application/json")
-
 	var personality models.Personality
 	json.NewDecoder(r.Body).Decode(&personality)
 
@@ -50,8 +44,6 @@ func CreatePersonality(w http.ResponseWriter, r *http.Request) {
 }
 
 func DeletePersonality(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "application/json")
-
 	id := mux.Vars(r)["id"]
 
 	var response Response
@@ -59,7 +51,7 @@ func DeletePersonality(w http.ResponseWriter, r *http.Request) {
 	if id == "" {
 		response = Response{"Id parameter is missing"}
 		RespondJson(w, r, http.StatusBadRequest, response)
-		
+
 	}
 
 	result := database.DB.Delete(&models.Personality{}, id)
@@ -81,7 +73,6 @@ func DeletePersonality(w http.ResponseWriter, r *http.Request) {
 }
 
 func EditPersonality(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "application/json")
 
 	id := mux.Vars(r)["id"]
 
