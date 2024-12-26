@@ -10,58 +10,77 @@ import (
 	"github.com/gorilla/mux"
 )
 
+type Response struct {
+	Message string `json:"message"`
+}
+
 func Home(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprint(w, "HomePage")
 }
 
 func Personalities(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+
 	var personalities []models.Personality
 	database.DB.Find(&personalities)
-	json.NewEncoder(w).Encode(personalities)
+
+	RespondJson(w, r, http.StatusAccepted, personalities)
 }
 
 func Personality(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+
 	id := mux.Vars(r)["id"]
 
 	var personality models.Personality
 	database.DB.First(&personality, id)
-	json.NewEncoder(w).Encode(personality)
+
+	RespondJson(w, r, http.StatusAccepted, personality)
 }
 
 func CreatePersonality(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+
 	var personality models.Personality
 	json.NewDecoder(r.Body).Decode(&personality)
 
 	database.DB.Create(&personality)
-	json.NewEncoder(w).Encode(personality)
+
+	RespondJson(w, r, http.StatusAccepted, personality)
 }
 
 func DeletePersonality(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
-	
+
 	id := mux.Vars(r)["id"]
 
-	var response map[string]string
+	var response Response
 
 	if id == "" {
-		w.WriteHeader(http.StatusBadRequest)
-		response = map[string]string{"message": "Id parameter is missing"}
+		response = Response{"Id parameter is missing"}
+		RespondJson(w, r, http.StatusBadRequest, response)
+		
 	}
 
 	result := database.DB.Delete(&models.Personality{}, id)
 
 	if result.Error != nil {
-		response = map[string]string{"message": "Database error"}
-		w.WriteHeader(http.StatusInternalServerError)
+		RespondJson(w, r, http.StatusInternalServerError, response)
+		return
 	} else {
 		if result.RowsAffected > 0 {
-			w.WriteHeader(http.StatusAccepted)
-			response = map[string]string{"message": "Personality deleted!"}
+			response = Response{"Personality deleted!"}
+			RespondJson(w, r, http.StatusAccepted, response)
+			return
 		} else {
-			w.WriteHeader(http.StatusNotFound)
-			response = map[string]string{"message": "Couldn't find personality that matches id"}
+			response = Response{"Couldn't find personality that matches id"}
+			RespondJson(w, r, http.StatusNotFound, response)
+			return
 		}
 	}
+}
 
+func RespondJson[T any](w http.ResponseWriter, r *http.Request, statusCode int, response T) {
+	w.WriteHeader(statusCode)
 	json.NewEncoder(w).Encode(response)
 }
