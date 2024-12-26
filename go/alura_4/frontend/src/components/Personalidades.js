@@ -8,7 +8,7 @@ export default class Personalidades extends Component {
     }
 
     componentDidMount() {
-        axios.get('http://localhost:8000/api/personalidades')
+        axios.get('http://localhost:8000/api/personalities')
             .then(res => {
                 const personalidades = res.data;
                 this.setState({ personalidades })
@@ -20,8 +20,8 @@ export default class Personalidades extends Component {
             <div>
                 {this.state.personalidades.map((p, id )=>
                     <div className="CardPersonalidades" key={id}>
-                        <h3>{p.nome}</h3>
-                        <p>{p.historia}</p>
+                        <h3>{p.name}</h3>
+                        <p>{p.description}</p>
                     </div>)}
             </div>
         );

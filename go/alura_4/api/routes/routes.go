@@ -6,6 +6,7 @@ import (
 	"log"
 	"net/http"
 
+	"github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
 )
 
@@ -18,5 +19,5 @@ func HandleRequest() {
 	router.HandleFunc("/api/personalities", controllers.CreatePersonality).Methods("Post")
 	router.HandleFunc("/api/personalities/{id}", controllers.EditPersonality).Methods("Put")
 	router.HandleFunc("/api/personalities/{id}", controllers.DeletePersonality).Methods("Delete")
-	log.Fatal(http.ListenAndServe(":8000", router))
+	log.Fatal(http.ListenAndServe(":8000", handlers.CORS(handlers.AllowedOrigins([]string{"*"})) (router)))
 }
