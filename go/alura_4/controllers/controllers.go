@@ -35,3 +35,33 @@ func CreatePersonality(w http.ResponseWriter, r *http.Request) {
 	database.DB.Create(&personality)
 	json.NewEncoder(w).Encode(personality)
 }
+
+func DeletePersonality(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	
+	id := mux.Vars(r)["id"]
+
+	var response map[string]string
+
+	if id == "" {
+		w.WriteHeader(http.StatusBadRequest)
+		response = map[string]string{"message": "Id parameter is missing"}
+	}
+
+	result := database.DB.Delete(&models.Personality{}, id)
+
+	if result.Error != nil {
+		response = map[string]string{"message": "Database error"}
+		w.WriteHeader(http.StatusInternalServerError)
+	} else {
+		if result.RowsAffected > 0 {
+			w.WriteHeader(http.StatusAccepted)
+			response = map[string]string{"message": "Personality deleted!"}
+		} else {
+			w.WriteHeader(http.StatusNotFound)
+			response = map[string]string{"message": "Couldn't find personality that matches id"}
+		}
+	}
+
+	json.NewEncoder(w).Encode(response)
+}
