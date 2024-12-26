@@ -11,6 +11,7 @@ import (
 func HandleRequest() {
 	router := mux.NewRouter()
 	router.HandleFunc("/", controllers.Home)
-	router.HandleFunc("/api/personalities", controllers.Personalities)
+	router.HandleFunc("/api/personalities", controllers.Personalities).Methods("Get")
+	router.HandleFunc("/api/personalities/{id}", controllers.Personality).Methods("Get")
 	log.Fatal(http.ListenAndServe(":8000", router))
 }
