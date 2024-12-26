@@ -80,6 +80,20 @@ func DeletePersonality(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+func EditPersonality(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+
+	id := mux.Vars(r)["id"]
+
+	var personality models.Personality
+	database.DB.First(&personality, id)
+	json.NewDecoder(r.Body).Decode(&personality)
+
+	database.DB.Save(&personality)
+
+	RespondJson(w, r, http.StatusAccepted, personality)
+}
+
 func RespondJson[T any](w http.ResponseWriter, r *http.Request, statusCode int, response T) {
 	w.WriteHeader(statusCode)
 	json.NewEncoder(w).Encode(response)
