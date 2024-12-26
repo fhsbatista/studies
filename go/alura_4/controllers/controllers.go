@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"api-rest/database"
 	"api-rest/models"
 	"encoding/json"
 	"fmt"
@@ -15,7 +16,9 @@ func Home(w http.ResponseWriter, r *http.Request) {
 }
 
 func Personalities(w http.ResponseWriter, r *http.Request) {
-	json.NewEncoder(w).Encode(models.Personalities)
+	var personalities []models.Personality
+	database.DB.Find(&personalities)
+	json.NewEncoder(w).Encode(personalities)
 }
 
 func Personality(w http.ResponseWriter, r *http.Request) {
