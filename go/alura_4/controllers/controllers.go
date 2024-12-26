@@ -6,7 +6,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
-	"strconv"
 
 	"github.com/gorilla/mux"
 )
@@ -24,9 +23,7 @@ func Personalities(w http.ResponseWriter, r *http.Request) {
 func Personality(w http.ResponseWriter, r *http.Request) {
 	id := mux.Vars(r)["id"]
 
-	for _, personality := range models.Personalities {
-		if strconv.Itoa(personality.Id) == id {
-			json.NewEncoder(w).Encode(personality)
-		}
-	}
+	var personality models.Personality
+	database.DB.First(&personality, id)
+	json.NewEncoder(w).Encode(personality)
 }
