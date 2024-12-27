@@ -101,3 +101,19 @@ func  EditStudent(c *gin.Context) {
 
 	c.JSON(http.StatusOK, student)
 }
+
+func StudentByCPF(c *gin.Context) {
+	var student models.Student
+	cpf := c.Param("cpf")
+
+	database.DB.Where(&models.Student{CPF: cpf}).First(&student)
+
+	if student.ID == 0 {
+		c.JSON(http.StatusNotFound, gin.H{
+			"message": "Could not find student which CPF is " + cpf + ".",
+		})
+		return
+	}
+
+	c.JSON(http.StatusOK, student)
+}
