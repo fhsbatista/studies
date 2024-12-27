@@ -92,6 +92,16 @@ Habilidades desse tipo de profissional
 - Muitas empresas não tem uma pessoa específica com esse papel, mas outras pessoas acabam fazendo esses papeis, como seniors e tech leads.
 - Algumas empresas também podem ter um departamento de arquitetura que auxilia os times com questões arquiteturais. Então antes de iniciar um determinado projeto, esse departamento pode prestar uma espécie de consultoria. Por exemplo, um time pode estar querendo fazer um projeto que outro time já fez. Nesse caso, esse departamento por ter essa visão mais sistemica, pode auxiliar orientando esse time a usar o projeto que havia sido feito.
 
+### Vantagens em se aprender sobre arquitetura de software
+- Entender o sistema em que trabalhamos como um todo em vez de só enxergar aquele componente individualmente que estamos programando
+- Enxergar as tecnologias de uma maneira mais madura não entrando na onda de qualquer hype do momento
+- Pensar no desenvolvimento do software a longo prazo não trocando pequenas vantagens a curto prazo que custem o sucesso do software no longo prazo
+- Conseguir tomar melhores decisões de padrões de projeto e práticas
+- Não confundir pastas "domain", "infra", "models" com arquitetura de software. Arquitetura vai mundo além disso.
+- Mais visão sistêmica do software em relação à empresa, dando mais ciência do impacto que o software tem na empresa toda.
+  - Alguns devs por não terem a noção disso, acabam não tendo a sensação do quao importante o trabalho dele está sendo e acabam até saindo da empresa por conta disso.
+- Tomar decisões com mais confiança. O conhecimento de arquitetura vai ajudar a ter um ponto de partida para as decisões mesmo em situações de crise.
+
 
 
 
