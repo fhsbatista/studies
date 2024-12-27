@@ -102,6 +102,20 @@ Habilidades desse tipo de profissional
   - Alguns devs por não terem a noção disso, acabam não tendo a sensação do quao importante o trabalho dele está sendo e acabam até saindo da empresa por conta disso.
 - Tomar decisões com mais confiança. O conhecimento de arquitetura vai ajudar a ter um ponto de partida para as decisões mesmo em situações de crise.
 
+### Arquitetura vs design
+- para alguns, os dois são a mesma coisa
+- é um tópico polemico
+- arquitetura seria mais "alto nível" do que design
+- no design, temos uma visão mais concreta, e na arquitetura uma visão mais abstrada
+- podemos dizer que decisões de arquitetura são aquelas de um escopo grande tal que pode ditar se o software será viável, se atende algum requisito não funcional, etc
+- enquanto que no design, estamos falando de decisões que talvez só afetem os desenvolvedores
+  - como algum padrão de componente, que pro usuário final não fará uma diferença direta, mas para o desenvolvedor pode mudar totalmente a maneira de se fazer algo
+- arquitetura teria um escopo "global", enquanto que "design" seria local
+- elemar
+  - "Todas decisões de arquitetura são decisões de design, mas nem toda decisão de design é sobre arquitetura".
+- "Como vamos colocar log na aplicação, talvez open telemetry?" Isso é sobre arquitetura. Agora, "como vamos escrever a integração com open telemetry aqui nesse serviço?" Isso é design.
+- Mindblowing: O "clean architecture" é mais sobre design do arquitetura pois fala mais sobre como escrever os componentes, os limites e dependências entre eles no nível do código.
+
 
 
 
