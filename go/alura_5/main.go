@@ -1,18 +1,7 @@
 package main
 
-import "github.com/gin-gonic/gin"
-
-func Students(c *gin.Context) {
-	c.JSON(200, gin.H{
-		"id": "1",
-		"name": "Fernando Batista",
-	})
-}
+import "api-gin/routes"
 
 func main() {
-	r := gin.Default()
-
-	r.GET("/students", Students)
-
-	r.Run(":8000")
+	routes.HandleRequests()
 }
