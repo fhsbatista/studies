@@ -71,3 +71,33 @@ func DeleteStudent(c *gin.Context) {
 		"message": "Student has been deleted.",
 	})
 }
+
+func  EditStudent(c *gin.Context) {
+	id := c.Params.ByName("id")
+	var student models.Student
+	database.DB.First(&student, id)
+
+	if student.ID == 0 {
+		c.JSON(http.StatusNotFound, gin.H{
+			"message": "Could not find student which id is " + id + ".",
+		})
+		return
+	}
+	
+	if err := c.ShouldBindJSON(&student); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"message": err.Error()})
+		return
+	}
+	
+	result := database.DB.Save(&student)
+
+	if result.RowsAffected == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"message": result.Error.Error(),
+		})
+		return
+	}
+
+	c.JSON(http.StatusOK, student)
+}
