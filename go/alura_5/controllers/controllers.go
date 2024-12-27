@@ -26,7 +26,7 @@ func Greetings(c *gin.Context) {
 
 func Student(c *gin.Context) {
 	id := c.Params.ByName("id")
-	
+
 	var student models.Student
 	database.DB.First(&student, id)
 
@@ -52,4 +52,22 @@ func NewStudent(c *gin.Context) {
 	database.DB.Create(&student)
 
 	c.JSON(http.StatusOK, &student)
+}
+
+func DeleteStudent(c *gin.Context) {
+	id := c.Params.ByName("id")
+
+	var student models.Student
+	result := database.DB.Delete(&student, id)
+
+	if result.RowsAffected == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"message": result.Error.Error(),
+		})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"message": "Student has been deleted.",
+	})
 }
