@@ -24,6 +24,22 @@ func Greetings(c *gin.Context) {
 	})
 }
 
+func Student(c *gin.Context) {
+	id := c.Params.ByName("id")
+	
+	var student models.Student
+	database.DB.First(&student, id)
+
+	if student.ID == 0 {
+		c.JSON(http.StatusNotFound, gin.H{
+			"message": "Could not find student which id is " + id + ".",
+		})
+		return
+	}
+
+	c.JSON(http.StatusOK, &student)
+}
+
 func NewStudent(c *gin.Context) {
 	var student models.Student
 
