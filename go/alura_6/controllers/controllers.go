@@ -49,6 +49,13 @@ func NewStudent(c *gin.Context) {
 		return
 	}
 
+
+	if err := student.Validate(); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"message": err.Error()})
+		return
+	}
+
 	database.DB.Create(&student)
 
 	c.JSON(http.StatusOK, &student)
@@ -72,7 +79,7 @@ func DeleteStudent(c *gin.Context) {
 	})
 }
 
-func  EditStudent(c *gin.Context) {
+func EditStudent(c *gin.Context) {
 	id := c.Params.ByName("id")
 	var student models.Student
 	database.DB.First(&student, id)
@@ -83,13 +90,19 @@ func  EditStudent(c *gin.Context) {
 		})
 		return
 	}
-	
+
 	if err := c.ShouldBindJSON(&student); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"message": err.Error()})
 		return
 	}
-	
+
+	if err := student.Validate(); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"message": err.Error()})
+		return
+	}
+
 	result := database.DB.Save(&student)
 
 	if result.RowsAffected == 0 {
