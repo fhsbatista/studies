@@ -2,6 +2,7 @@ package main
 
 import (
 	"api-gin/controllers"
+	"io"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -17,11 +18,16 @@ func RoutesSetup() *gin.Engine {
 
 func TestCheckStatusCodeOnGreetings(t *testing.T) {
 	r := RoutesSetup()
-	r.GET("/:nome", controllers.Greetings)
+	r.GET("/greetings/:name", controllers.Greetings)
 	
-	request, _ := http.NewRequest("GET", "/fernando", nil)
+	request, _ := http.NewRequest("GET", "/greetings/fernando", nil)
 	response := httptest.NewRecorder()
 	r.ServeHTTP(response, request)
 
 	assert.Equal(t, http.StatusOK, response.Code, "they should be equal")
+
+	responseMock := `{"message":"Hello, fernando, how are u?"}`
+	responseBody, _ := io.ReadAll(response.Body)
+
+	assert.Equal(t, responseMock, string(responseBody))
 }
