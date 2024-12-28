@@ -7,6 +7,7 @@ import (
 	"testing"
 
 	"github.com/gin-gonic/gin"
+	"github.com/stretchr/testify/assert"
 )
 
 func RoutesSetup() *gin.Engine {
@@ -22,7 +23,5 @@ func TestCheckStatusCodeOnGreetings(t *testing.T) {
 	response := httptest.NewRecorder()
 	r.ServeHTTP(response, request)
 
-	if response.Code != http.StatusOK {
-		t.Fatalf("response status code should be %d but it is %d instead", http.StatusOK, response.Code)
-	}
+	assert.Equal(t, http.StatusOK, response.Code, "they should be equal")
 }
