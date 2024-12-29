@@ -117,5 +117,21 @@ Habilidades desse tipo de profissional
 - Mindblowing: O "clean architecture" é mais sobre design do arquitetura pois fala mais sobre como escrever os componentes, os limites e dependências entre eles no nível do código.
 
 
+### Sustentabilidade do software
+- O desenvolvimento de software é caro, portanto é um parte considerável do custo de operação da empresa
+- Por ser um custo significativo, é necessário ter esse custo sob controle para não inviabilizar a operação
+- Pontos para justificar o custo do desenvolvimento do software
+  - Precisar resolver uma dor real
+    - Ex: Por que um app pra pedir comida em vez de a empresa receber os pedidos por telefone? O que justificaria o software é que a escala
+  - Tem que se pagar ao longo do tempo
+    - O software precisa conseguir evoluir conforme as necessidades da empresa para garantir que ele esteja sendo um facilitador em vez de um bloqueador
+    - se o software é um bloqueador, ele não se paga e está trazendo mais prejuízos pra piorar
+    - se o software chega num ponto de não conseguir evoluir mais por ter sido mal contruído, a empresa entra num dilema, pois o software está trazendo prejuízos mas não quer abandoná-lo pois precisa justificar o investimento que foi feito.
+  - Precisa acompanhar a evolução do negócio
+  - Quanto mais tempo o software fica no ar, mais retorno ele gera
+
+
+
+
 
 
