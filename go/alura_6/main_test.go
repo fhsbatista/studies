@@ -4,7 +4,6 @@ import (
 	"api-gin/controllers"
 	"api-gin/database"
 	"api-gin/models"
-	"fmt"
 	"io"
 	"net/http"
 	"net/http/httptest"
@@ -61,4 +60,21 @@ func TestListStudents(t *testing.T) {
 	r.ServeHTTP(response, request)
 
 	assert.Equal(t, http.StatusOK, response.Code, "they should be equal")
+}
+
+func TestStudentByCpf(t *testing.T) {
+	database.ConnectDatabase()
+	
+	CreateStudent()
+	defer DeleteStudent()
+
+	r := RoutesSetup()
+	r.GET("/students/cpf/:cpf", controllers.StudentByCPF)
+
+	request, _ := http.NewRequest("GET", "/students/cpf/12345678900", nil)
+	response := httptest.NewRecorder()
+	r.ServeHTTP(response, request)
+
+	assert.Equal(t, http.StatusOK, response.Code, "they should be equal")
+
 }
