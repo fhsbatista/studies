@@ -4,9 +4,11 @@ import (
 	"api-gin/controllers"
 	"api-gin/database"
 	"api-gin/models"
+	"encoding/json"
 	"io"
 	"net/http"
 	"net/http/httptest"
+	"strconv"
 	"testing"
 
 	"github.com/gin-gonic/gin"
@@ -22,7 +24,7 @@ func RoutesSetup() *gin.Engine {
 var ID int
 
 func CreateStudent() {
-	student := models.Student{Name:"Student name", RG: "123456789", CPF: "12345678900"}
+	student := models.Student{Name: "Student name", RG: "123456789", CPF: "12345678900"}
 	database.DB.Create(&student)
 	ID = int(student.ID)
 }
@@ -34,7 +36,7 @@ func DeleteStudent() {
 func TestCheckStatusCodeOnGreetings(t *testing.T) {
 	r := RoutesSetup()
 	r.GET("/greetings/:name", controllers.Greetings)
-	
+
 	request, _ := http.NewRequest("GET", "/greetings/fernando", nil)
 	response := httptest.NewRecorder()
 	r.ServeHTTP(response, request)
@@ -63,9 +65,32 @@ func TestListStudents(t *testing.T) {
 	assert.Equal(t, http.StatusOK, response.Code, "they should be equal")
 }
 
+func TestStudent(t *testing.T) {
+	database.ConnectDatabase()
+
+	CreateStudent()
+	defer DeleteStudent()
+
+	r := RoutesSetup()
+	r.GET("/students/:id", controllers.Student)
+
+	path := "/students/" + strconv.Itoa(ID)
+	request, _ := http.NewRequest("GET", path, nil)
+	response := httptest.NewRecorder()
+	r.ServeHTTP(response, request)
+
+	var responseStudent models.Student
+	json.Unmarshal(response.Body.Bytes(), &responseStudent)
+
+	assert.Equal(t, "Student name", responseStudent.Name)
+	assert.Equal(t, "12345678900", responseStudent.CPF)
+	assert.Equal(t, "123456789", responseStudent.RG)
+	assert.Equal(t, http.StatusOK, response.Code)
+}
+
 func TestStudentByCpf(t *testing.T) {
 	database.ConnectDatabase()
-	
+
 	CreateStudent()
 	defer DeleteStudent()
 
