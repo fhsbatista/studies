@@ -2,6 +2,9 @@ package main
 
 import (
 	"api-gin/controllers"
+	"api-gin/database"
+	"api-gin/models"
+	"fmt"
 	"io"
 	"net/http"
 	"net/http/httptest"
@@ -14,6 +17,18 @@ import (
 func RoutesSetup() *gin.Engine {
 	r := gin.Default()
 	return r
+}
+
+var ID int
+
+func CreateStudent() {
+	student := models.Student{Name:"Student name", RG: "123456789", CPF: "12345678900"}
+	database.DB.Create(&student)
+	ID = int(student.ID)
+}
+
+func DeleteStudent() {
+	database.DB.Delete(&models.Student{}, ID)
 }
 
 func TestCheckStatusCodeOnGreetings(t *testing.T) {
@@ -30,4 +45,20 @@ func TestCheckStatusCodeOnGreetings(t *testing.T) {
 	responseBody, _ := io.ReadAll(response.Body)
 
 	assert.Equal(t, responseMock, string(responseBody))
+}
+
+func TestListStudents(t *testing.T) {
+	database.ConnectDatabase()
+
+	CreateStudent()
+	defer DeleteStudent()
+
+	r := RoutesSetup()
+	r.GET("/students", controllers.Students)
+
+	request, _ := http.NewRequest("GET", "/students", nil)
+	response := httptest.NewRecorder()
+	r.ServeHTTP(response, request)
+
+	assert.Equal(t, http.StatusOK, response.Code, "they should be equal")
 }
