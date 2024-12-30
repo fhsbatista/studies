@@ -8,6 +8,10 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+func NotFound(c *gin.Context) {
+	c.HTML(http.StatusNotFound, "404.html", nil)
+}
+
 func Students(c *gin.Context) {
 	var students []models.Student
 

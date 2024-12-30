@@ -11,6 +11,9 @@ func HandleRequests() {
 
 	r.LoadHTMLGlob("templates/*")
 	r.Static("/assets", "./assets")
+
+	r.NoRoute(controllers.NotFound)
+
 	r.GET("/students", controllers.Students)
 	r.GET("/greetings/:name", controllers.Greetings)
 	r.GET("/students/:id", controllers.Student)
