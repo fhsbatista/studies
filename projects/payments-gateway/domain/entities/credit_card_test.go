@@ -30,4 +30,11 @@ func TestCreditCardExpirationYear(t *testing.T) {
 	lastYear := time.Now().AddDate(-1, 0, 0)
 	_, err := NewCreditCard("4193523830170205", "José Silveira", 12, lastYear.Year(), 123)
 	assert.Equal(t, "invalid expiration year", err.Error())
+
+	_, err = NewCreditCard("4193523830170205", "José Silveira", 12, time.Now().Year(), 123)
+	assert.Nil(t, err)
+
+	nextYear := time.Now().AddDate(1, 0, 0)
+	_, err = NewCreditCard("4193523830170205", "José Silveira", 12, nextYear.Year(), 123)
+	assert.Nil(t, err)
 }
