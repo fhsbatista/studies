@@ -14,3 +14,14 @@ func TestTranscation_IsValid(t *testing.T) {
 
 	assert.Nil(t, transaction.IsValid())
 }
+
+func TestTransaction_IsNotValid_AmountGreaterThan1000(t *testing.T) {
+	transaction := NewTransaction()
+	transaction.ID = "1"
+	transaction.Account = "1"
+	transaction.Amount = 1001
+
+	err := transaction.IsValid()
+	assert.Error(t, err)
+	assert.Equal(t, "no limit for this transaction", err.Error())
+}

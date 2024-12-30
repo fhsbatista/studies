@@ -1,5 +1,7 @@
 package entities
 
+import "errors"
+
 type Transaction struct {
 	ID string
 	Account string
@@ -14,5 +16,9 @@ func NewTransaction() *Transaction {
 }
 
 func (t *Transaction) IsValid() error {
+	if t.Amount > 1000 {
+		return errors.New("no limit for this transaction")
+	}
+
 	return nil
 }
