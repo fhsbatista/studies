@@ -104,3 +104,27 @@ func TestStudentByCpf(t *testing.T) {
 	assert.Equal(t, http.StatusOK, response.Code, "they should be equal")
 
 }
+
+func TestDeleteStudent(t *testing.T) {
+	database.ConnectDatabase()
+
+	CreateStudent()
+
+	r := RoutesSetup()
+	r.GET("/students", controllers.Students)
+	r.DELETE("/students/:id", controllers.DeleteStudent)
+
+	path := "/students/" + strconv.Itoa(ID) 
+	request, _ := http.NewRequest("DELETE", path, nil)
+	response := httptest.NewRecorder()
+	r.ServeHTTP(response, request)
+
+	assert.Equal(t, http.StatusOK, response.Code)
+
+	studentsRequest, _ := http.NewRequest("GET", "/students", nil)
+	studentsResponse := httptest.NewRecorder()
+	r.ServeHTTP(studentsResponse, studentsRequest)
+
+	studentsResponseBody, _ := io.ReadAll(studentsResponse.Body)
+	assert.Equal(t, `[]`, string(studentsResponseBody))
+}
