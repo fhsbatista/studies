@@ -59,5 +59,9 @@ func (c *CreditCard) validateNumber() error {
 }
 
 func (c *CreditCard) validateMonth() error {
-	return errors.New("invalid expiration month")
+	if c.expirationMonth < 1  || c.expirationMonth > 12 {
+		return errors.New("invalid expiration month")
+	}
+
+	return nil
 }
