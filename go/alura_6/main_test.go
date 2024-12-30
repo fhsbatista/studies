@@ -4,6 +4,7 @@ import (
 	"api-gin/controllers"
 	"api-gin/database"
 	"api-gin/models"
+	"bytes"
 	"encoding/json"
 	"io"
 	"net/http"
@@ -114,7 +115,7 @@ func TestDeleteStudent(t *testing.T) {
 	r.GET("/students", controllers.Students)
 	r.DELETE("/students/:id", controllers.DeleteStudent)
 
-	path := "/students/" + strconv.Itoa(ID) 
+	path := "/students/" + strconv.Itoa(ID)
 	request, _ := http.NewRequest("DELETE", path, nil)
 	response := httptest.NewRecorder()
 	r.ServeHTTP(response, request)
@@ -127,4 +128,30 @@ func TestDeleteStudent(t *testing.T) {
 
 	studentsResponseBody, _ := io.ReadAll(studentsResponse.Body)
 	assert.Equal(t, `[]`, string(studentsResponseBody))
+}
+
+func TestEditStudent(t *testing.T) {
+	database.ConnectDatabase()
+
+	CreateStudent()
+
+	r := RoutesSetup()
+	r.PATCH("/students/:id", controllers.EditStudent)
+
+	updatedStudent := models.Student{Name: "Student updated", CPF: "00987654321", RG: "987654321"}
+	
+	path := "/students/" + strconv.Itoa(ID)
+	body, _ := json.Marshal(updatedStudent)
+
+	request, _ := http.NewRequest("PATCH", path, bytes.NewBuffer(body))
+	response := httptest.NewRecorder()
+	r.ServeHTTP(response, request)
+
+	var responseStudent models.Student
+	json.Unmarshal(response.Body.Bytes(), &responseStudent)
+
+	assert.Equal(t, http.StatusOK, response.Code)
+	assert.Equal(t, updatedStudent.Name, responseStudent.Name)
+	assert.Equal(t, updatedStudent.CPF, responseStudent.CPF)
+	assert.Equal(t, updatedStudent.RG, responseStudent.RG)
 }
