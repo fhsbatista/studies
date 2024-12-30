@@ -130,3 +130,12 @@ func StudentByCPF(c *gin.Context) {
 
 	c.JSON(http.StatusOK, student)
 }
+
+func IndexPage(c *gin.Context) {
+	var students []models.Student
+	database.DB.Find(&students)
+
+	c.HTML(http.StatusOK, "index.html", gin.H{
+		"students": students,
+	})
+}
