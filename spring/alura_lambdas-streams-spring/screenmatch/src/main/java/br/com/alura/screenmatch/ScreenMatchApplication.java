@@ -1,8 +1,9 @@
 package br.com.alura.screenmatch;
 
+import br.com.alura.screenmatch.model.Episode;
 import br.com.alura.screenmatch.model.Show;
 import br.com.alura.screenmatch.service.ConsumeApi;
-import br.com.alura.screenmatch.service.ShowDataMapper;
+import br.com.alura.screenmatch.service.DataMapper;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -22,12 +23,16 @@ public class ScreenMatchApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        var json = ConsumeApi.get("https://www.omdbapi.com/?t=the+chosen&apikey=6585022c");
-        System.out.println(json);
+        var mapper = new DataMapper();
 
-        var mapper = new ShowDataMapper();
-        var show = mapper.map(json, Show.class);
+        var showJson = ConsumeApi.get("https://www.omdbapi.com/?t=the+chosen&apikey=6585022c");
+        var show = mapper.map(showJson, Show.class);
+
         System.out.println(show);
+
+        var episodeJson = ConsumeApi.get("https://www.omdbapi.com/?t=the+chosen&season=1&episode=4&apikey=6585022c");
+        var episode = mapper.map(episodeJson, Episode.class);
+        System.out.println(episode);
     }
 
 
