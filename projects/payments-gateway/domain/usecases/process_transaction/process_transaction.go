@@ -71,5 +71,22 @@ func (p *ProcessTransaction) Execute(input TransactionDtoInput) (TransactionDtoO
 		return output, nil
 	}
 
-	return TransactionDtoOutput{}, nil
+	err := p.Repository.Insert(
+		transaction.ID,
+		transaction.Account,
+		transaction.Amount,
+		entities.APPROVED,
+		"")
+
+	if err != nil {
+		return TransactionDtoOutput{}, err
+	}
+
+	output := TransactionDtoOutput{
+		ID:           transaction.ID,
+		Status:       entities.APPROVED,
+		ErrorMessage: "",
+	}
+
+	return output, nil
 }
