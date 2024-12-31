@@ -27,48 +27,14 @@ func (p *ProcessTransaction) Execute(input TransactionDtoInput) (TransactionDtoO
 		input.CreditCardCvv)
 
 	if invalidCard != nil {
-		err := p.Repository.Insert(
-			transaction.ID,
-			transaction.Account,
-			transaction.Amount,
-			entities.REJECTED,
-			invalidCard.Error())
-
-		if err != nil {
-			return TransactionDtoOutput{}, err
-		}
-
-		output := TransactionDtoOutput{
-			ID:           transaction.ID,
-			Status:       entities.REJECTED,
-			ErrorMessage: invalidCard.Error(),
-		}
-
-		return output, nil
+		return p.rejectTransaction(transaction, invalidCard)
 	}
 
 	transaction.SetCreditCard(*card)
 	invalidTransaction := transaction.IsValid()
 
 	if invalidTransaction != nil {
-		err := p.Repository.Insert(
-			transaction.ID,
-			transaction.Account,
-			transaction.Amount,
-			entities.REJECTED,
-			invalidTransaction.Error())
-
-		if err != nil {
-			return TransactionDtoOutput{}, err
-		}
-
-		output := TransactionDtoOutput{
-			ID:           transaction.ID,
-			Status:       entities.REJECTED,
-			ErrorMessage: invalidTransaction.Error(),
-		}
-
-		return output, nil
+		return p.rejectTransaction(transaction, invalidTransaction)
 	}
 
 	err := p.Repository.Insert(
@@ -86,6 +52,27 @@ func (p *ProcessTransaction) Execute(input TransactionDtoInput) (TransactionDtoO
 		ID:           transaction.ID,
 		Status:       entities.APPROVED,
 		ErrorMessage: "",
+	}
+
+	return output, nil
+}
+
+func (p *ProcessTransaction) rejectTransaction(transaction *entities.Transaction, error error) (TransactionDtoOutput, error) {
+	err := p.Repository.Insert(
+		transaction.ID,
+		transaction.Account,
+		transaction.Amount,
+		entities.REJECTED,
+		error.Error())
+
+	if err != nil {
+		return TransactionDtoOutput{}, err
+	}
+
+	output := TransactionDtoOutput{
+		ID:           transaction.ID,
+		Status:       entities.REJECTED,
+		ErrorMessage: error.Error(),
 	}
 
 	return output, nil
