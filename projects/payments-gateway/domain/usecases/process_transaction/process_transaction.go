@@ -25,7 +25,7 @@ func (p *ProcessTransaction) Execute(input TransactionDtoInput) (TransactionDtoO
 		input.CreditCardExpirationMonth,
 		input.CreditCardExpirationYear,
 		input.CreditCardCvv)
-
+ 
 	if invalidCard != nil {
 		return p.rejectTransaction(transaction, invalidCard)
 	}
@@ -37,24 +37,7 @@ func (p *ProcessTransaction) Execute(input TransactionDtoInput) (TransactionDtoO
 		return p.rejectTransaction(transaction, invalidTransaction)
 	}
 
-	err := p.Repository.Insert(
-		transaction.ID,
-		transaction.Account,
-		transaction.Amount,
-		entities.APPROVED,
-		"")
-
-	if err != nil {
-		return TransactionDtoOutput{}, err
-	}
-
-	output := TransactionDtoOutput{
-		ID:           transaction.ID,
-		Status:       entities.APPROVED,
-		ErrorMessage: "",
-	}
-
-	return output, nil
+	return p.approve(transaction)
 }
 
 func (p *ProcessTransaction) rejectTransaction(transaction *entities.Transaction, error error) (TransactionDtoOutput, error) {
@@ -73,6 +56,27 @@ func (p *ProcessTransaction) rejectTransaction(transaction *entities.Transaction
 		ID:           transaction.ID,
 		Status:       entities.REJECTED,
 		ErrorMessage: error.Error(),
+	}
+
+	return output, nil
+}
+
+func (p *ProcessTransaction) approve(transaction *entities.Transaction) (TransactionDtoOutput, error) {
+	err := p.Repository.Insert(
+		transaction.ID,
+		transaction.Account,
+		transaction.Amount,
+		entities.APPROVED,
+		"")
+
+	if err != nil {
+		return TransactionDtoOutput{}, err
+	}
+
+	output := TransactionDtoOutput{
+		ID:           transaction.ID,
+		Status:       entities.APPROVED,
+		ErrorMessage: "",
 	}
 
 	return output, nil
