@@ -1,16 +1,26 @@
 package process_transaction
 
 import (
+	"payments-gateway/adapters/broker"
 	"payments-gateway/domain/entities"
 	"payments-gateway/domain/repositories"
 )
 
 type ProcessTransaction struct {
 	Repository repositories.TransactionRepository
+	Producer   broker.ProducerInterface
+	Topic      string
 }
 
-func NewProcessTransaction(repository repositories.TransactionRepository) *ProcessTransaction {
-	return &ProcessTransaction{Repository: repository}
+func NewProcessTransaction(
+	repository repositories.TransactionRepository,
+	producerInterface broker.ProducerInterface,
+	topic string) *ProcessTransaction {
+
+	return &ProcessTransaction{
+		Repository: repository,
+		Producer:   producerInterface,
+		Topic:      topic}
 }
 
 func (p *ProcessTransaction) Execute(input TransactionDtoInput) (TransactionDtoOutput, error) {
@@ -25,7 +35,7 @@ func (p *ProcessTransaction) Execute(input TransactionDtoInput) (TransactionDtoO
 		input.CreditCardExpirationMonth,
 		input.CreditCardExpirationYear,
 		input.CreditCardCvv)
- 
+
 	if invalidCard != nil {
 		return p.rejectTransaction(transaction, invalidCard)
 	}
@@ -58,6 +68,11 @@ func (p *ProcessTransaction) rejectTransaction(transaction *entities.Transaction
 		ErrorMessage: error.Error(),
 	}
 
+	err = p.publish(output, []byte(transaction.ID))
+	if err != nil {
+		return TransactionDtoOutput{}, err
+	}
+
 	return output, nil
 }
 
@@ -79,5 +94,19 @@ func (p *ProcessTransaction) approve(transaction *entities.Transaction) (Transac
 		ErrorMessage: "",
 	}
 
+	err = p.publish(output, []byte(transaction.ID))
+	if err != nil {
+		return TransactionDtoOutput{}, err
+	}
+
 	return output, nil
+}
+
+func (p *ProcessTransaction) publish(output TransactionDtoOutput, key []byte) error {
+	err := p.Producer.Publish(output, key, p.Topic)
+	if err != nil {
+		return err
+	}
+
+	return nil
 }

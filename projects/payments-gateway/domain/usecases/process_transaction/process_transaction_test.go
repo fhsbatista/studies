@@ -1,6 +1,7 @@
 package process_transaction
 
 import (
+	mock_broker "payments-gateway/adapters/broker/mocks"
 	"payments-gateway/domain/entities"
 	mock_repositories "payments-gateway/domain/repositories/mocks"
 	"testing"
@@ -36,7 +37,10 @@ func TestProcessTransaction_ExecuteInvalidCreditCard(t *testing.T) {
 		Insert(input.ID, input.AccountID, input.Amount, expected_output.Status, expected_output.ErrorMessage).
 		Return(nil)
 
-	usecase := NewProcessTransaction(repositoryMock)
+	producerMock := mock_broker.NewMockProducerInterface(ctrl)
+	producerMock.EXPECT().Publish(expected_output, []byte(input.ID), "transactions_result")
+
+	usecase := NewProcessTransaction(repositoryMock, producerMock, "transactions_result")
 	output, err := usecase.Execute(input)
 	assert.Nil(t, err)
 	assert.Equal(t, expected_output, output)
@@ -69,7 +73,10 @@ func TestProcessTransaction_ExecuteRejectedTransaction(t *testing.T) {
 		Insert(input.ID, input.AccountID, input.Amount, expected_output.Status, expected_output.ErrorMessage).
 		Return(nil)
 
-	usecase := NewProcessTransaction(repositoryMock)
+	producerMock := mock_broker.NewMockProducerInterface(ctrl)
+	producerMock.EXPECT().Publish(expected_output, []byte(input.ID), "transactions_result")
+
+	usecase := NewProcessTransaction(repositoryMock, producerMock, "transactions_result")
 	output, err := usecase.Execute(input)
 	assert.Nil(t, err)
 	assert.Equal(t, expected_output, output)
@@ -102,7 +109,11 @@ func TestProcessTransaction_ExecuteApprovedTransaction(t *testing.T) {
 		Insert(input.ID, input.AccountID, input.Amount, expected_output.Status, expected_output.ErrorMessage).
 		Return(nil)
 
-	usecase := NewProcessTransaction(repositoryMock)
+	producerMock := mock_broker.NewMockProducerInterface(ctrl)
+	producerMock.EXPECT().Publish(expected_output, []byte(input.ID), "transactions_result")
+
+	usecase := NewProcessTransaction(repositoryMock, producerMock, "transactions_result")
+
 	output, err := usecase.Execute(input)
 	assert.Nil(t, err)
 	assert.Equal(t, expected_output, output)
