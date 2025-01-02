@@ -32,6 +32,11 @@ public class Main {
         }
 
         seasons.forEach(System.out::println);
+
+        seasons.forEach(season -> {
+            season.episodes().forEach(episode -> {
+                System.out.println(episode.title());
+            });
+        });
     }
 }
-
