@@ -22,6 +22,11 @@ func (p *Producer) Publish(msg interface{}, key []byte, topic string) error {
 		return err
 	}
 
+	err = p.Presenter.Bind(msg)
+	if err != nil {
+		return err
+	}
+
 	presenterMsg, err := p.Presenter.Show()
 	if err != nil {
 		return err

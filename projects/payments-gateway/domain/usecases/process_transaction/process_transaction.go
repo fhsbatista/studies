@@ -68,11 +68,12 @@ func (p *ProcessTransaction) rejectTransaction(transaction *entities.Transaction
 		ErrorMessage: error.Error(),
 	}
 
+	
 	err = p.publish(output, []byte(transaction.ID))
 	if err != nil {
 		return TransactionDtoOutput{}, err
 	}
-
+	
 	return output, nil
 }
 
