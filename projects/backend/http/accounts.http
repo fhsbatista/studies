@@ -1,0 +1,28 @@
+###
+GET http://localhost:3000/accounts
+
+###
+
+GET http://localhost:3000/accounts/b7043541-8a68-44a4-a0a8-78b4047ebd2f
+
+###
+
+POST http://localhost:3000/accounts
+Content-Type: application/json
+
+{
+  "name": "Fernando Batista"
+}
+
+###
+
+PATCH http://localhost:3000/accounts/8134dcd7-2057-431e-8cc4-3714fc1a1131
+Content-Type: application/json
+
+{
+  "name": "Fernando H. S. Batista"
+}
+
+###
+
+DELETE http://localhost:3000/accounts/b7043541-8a68-44a4-a0a8-78b4047ebd2f
