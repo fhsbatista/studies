@@ -5,6 +5,7 @@ import { OrdersModule } from './orders/orders.module';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { join } from 'path';
 import { Order } from './orders/entities/order.entity';
+import { AccountsModule } from './accounts/accounts.module';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { Order } from './orders/entities/order.entity';
       autoLoadModels: true,
       models: [Order],
     }),
+    AccountsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
