@@ -1,0 +1,31 @@
+GET http://localhost:3000/orders
+
+###
+
+GET http://localhost:3000/orders/061b81b5-c493-44d5-91d8-867f3e4c7223
+
+###
+
+POST http://localhost:3000/orders
+Content-Type: application/json
+
+{
+  "amount": 120.30,
+  "credit_card_name": "Fernando Batista",
+  "credit_card_number": "1111"
+}
+
+###
+
+PATCH http://localhost:3000/orders/061b81b5-c493-44d5-91d8-867f3e4c7223
+Content-Type: application/json
+
+{
+  "amount": 300.30,
+  "credit_card_name": "Gustavo Batista",
+  "credit_card_number": "2222"
+}
+
+###
+
+DELETE http://localhost:3000/orders/061b81b5-c493-44d5-91d8-867f3e4c7223
