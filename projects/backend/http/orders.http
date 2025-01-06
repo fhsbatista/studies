@@ -7,6 +7,10 @@ GET http://localhost:3000/orders/061b81b5-c493-44d5-91d8-867f3e4c7223
 
 ###
 
+GET http://localhost:3000/orders
+x-api-token: dsphs4o5l1o
+
+###
 POST http://localhost:3000/orders
 Content-Type: application/json
 x-api-token: qzdkaeg5lns

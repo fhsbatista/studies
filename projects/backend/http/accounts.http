@@ -7,6 +7,9 @@ GET http://localhost:3000/accounts/b7043541-8a68-44a4-a0a8-78b4047ebd2f
 
 ###
 
+GET http://localhost:3000/accounts/
+x-api-token: eehqxuooil
+###
 POST http://localhost:3000/accounts
 Content-Type: application/json
 
