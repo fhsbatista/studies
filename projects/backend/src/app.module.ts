@@ -16,6 +16,10 @@ import { Account } from './accounts/entities/account.entity';
       host: join(__dirname, 'database.sqlite'),
       autoLoadModels: true,
       models: [Order, Account],
+      sync: {
+        alter: true,
+        // force: true,
+      },
     }),
     AccountsModule,
   ],
