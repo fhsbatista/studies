@@ -60,3 +60,4 @@ go/alura_6/postgres-data
 projects/payments-gateway/test.db
 projects/backend/.docker/dbdata
 projects/payments-gateway/nestjs/.docker/dbdata
+projects/payments-gateway/go/cmd/test.db
