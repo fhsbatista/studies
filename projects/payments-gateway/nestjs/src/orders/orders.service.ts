@@ -56,7 +56,7 @@ export class OrdersService {
     });
   }
 
-  async update(id: number, updateOrderDto: UpdateOrderDto) {
+  async update(id: string, updateOrderDto: UpdateOrderDto) {
     const order = await this.orderModel.findByPk(id);
     return order.update(updateOrderDto);
   }
