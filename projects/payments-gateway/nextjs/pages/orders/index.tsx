@@ -1,4 +1,3 @@
-// @flow
 import { Button, Typography } from "@mui/material";
 import axios from "axios";
 import { GetServerSideProps } from "next";
@@ -6,7 +5,7 @@ import * as React from "react";
 import { DataGrid, GridColDef, GridColTypeDef } from "@mui/x-data-grid";
 import Link from "next/link";
 import { Link as MuiLink } from "@mui/material";
-import { OrderStatus, OrderStatusTranslate } from "../utils/models";
+import { OrderStatus, OrderStatusTranslate } from "../../utils/models";
 
 type Props = {};
 const OrdersPage = (props: any) => {
