@@ -61,3 +61,5 @@ projects/payments-gateway/test.db
 projects/backend/.docker/dbdata
 projects/payments-gateway/nestjs/.docker/dbdata
 projects/payments-gateway/go/cmd/test.db
+projects/payments-gateway/nextjs/node_modules
+projects/payments-gateway/nextjs/.next
