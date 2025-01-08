@@ -28,7 +28,10 @@ export class OrdersService {
       messages: [
         {
           key: 'transactions',
-          value: JSON.stringify(order),
+          value: JSON.stringify({
+            ...order.toJSON(),
+            ...createOrderDto,
+          }),
         },
       ],
     });

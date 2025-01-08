@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import { IsInt, IsNotEmpty, IsNumber, IsString } from 'class-validator';
 
 export class CreateOrderDto {
   @IsNumber()
@@ -13,15 +13,15 @@ export class CreateOrderDto {
   @IsNotEmpty()
   credit_card_number: string;
 
-  @IsString()
+  @IsInt()
   @IsNotEmpty()
   credit_card_expiration_month: string;
 
-  @IsString()
+  @IsInt()
   @IsNotEmpty()
   credit_card_expiration_year: string;
 
-  @IsString()
+  @IsInt()
   @IsNotEmpty()
   credit_card_expiration_cvv: string;
 }
