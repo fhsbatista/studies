@@ -3,6 +3,7 @@ package main
 import (
 	"database/sql"
 	"encoding/json"
+	"fmt"
 	"log"
 	"payments-gateway/adapters/broker/kafka"
 	"payments-gateway/adapters/factories"
@@ -44,6 +45,20 @@ func main() {
 		var input process_transaction.TransactionDtoInput
 		json.Unmarshal(msg.Value, &input)
 
-		usecase.Execute(input)
+		fmt.Println()
+		fmt.Println("------")
+		fmt.Println("New transaction to process. ID: ", input.ID)
+
+		output, err := usecase.Execute(input)
+
+		if err != nil {
+			fmt.Println("Transaction processing failed. ID: ", input.ID)
+			fmt.Println("Error: ", err)
+		}
+
+		fmt.Println("Transaction processed succesfully.", input.ID)
+		fmt.Println(output)
+		fmt.Println("------")
+		fmt.Println()
 	}
 }
