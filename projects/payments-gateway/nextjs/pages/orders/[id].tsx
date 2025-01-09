@@ -1,17 +1,14 @@
 import {
-  Button,
+  Box,
   Card,
   CardContent,
   CardHeader,
+  Grid2,
   Typography,
 } from "@mui/material";
 import axios from "axios";
-import { GetServerSideProps, GetStaticPaths, GetStaticProps } from "next";
+import { GetStaticPaths, GetStaticProps } from "next";
 import * as React from "react";
-import { DataGrid, GridColDef, GridColTypeDef } from "@mui/x-data-grid";
-import Link from "next/link";
-import { Link as MuiLink } from "@mui/material";
-import { OrderStatus, OrderStatusTranslate } from "../../utils/models";
 import useSWR from "swr";
 import { useRouter } from "next/router";
 
@@ -28,10 +25,43 @@ const OrderShowPage = (props: any) => {
 
   return data ? (
     <div style={{ height: 400, width: "100%" }}>
-      <CardHeader title="Ordem" subheader={data.id} />
-      <CardContent>
-        <Typography>R$ {data.amount}</Typography>
-      </CardContent>
+      <Grid2 container>
+        <Card>
+          <CardHeader
+            title="Order"
+            subheader={data.id}
+            titleTypographyProps={{ align: "center" }}
+            subheaderTypographyProps={{
+              align: "center",
+            }}
+            sx={{
+              backgroundColor: (theme) => theme.palette.grey[700],
+            }}
+          />
+          <CardContent>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "baseline",
+                mb: 2,
+              }}
+            >
+              <Typography component="h2" variant="h3" color="text.primary">
+                R$ {data.amount}
+              </Typography>
+            </Box>
+            <ul style={{ listStyle: "none" }}>
+              <Typography component="li" variant="subtitle1">
+                {data.credit_card_number}
+              </Typography>
+              <Typography component="li" variant="subtitle1">
+                {data.credit_card_name}
+              </Typography>
+            </ul>
+          </CardContent>
+        </Card>
+      </Grid2>
     </div>
   ) : null;
 };
