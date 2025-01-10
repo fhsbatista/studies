@@ -9,7 +9,6 @@ import { OrderStatus, OrderStatusTranslate } from "../../utils/models";
 
 type Props = {};
 const OrdersPage = (props: any) => {
-  console.log(props.data);
   const columns: GridColDef[] = [
     {
       field: "id",
