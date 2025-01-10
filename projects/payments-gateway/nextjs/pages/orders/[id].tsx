@@ -10,18 +10,28 @@ import axios from "axios";
 import { GetStaticPaths, GetStaticProps } from "next";
 import * as React from "react";
 import useSWR from "swr";
-import { useRouter } from "next/router";
+import Router, { useRouter } from "next/router";
 
-const fetcher = (url: string) =>
-  axios
-    .get(url, { headers: { "x-api-token": "w5mrhd4un1" } })
-    .then((res) => res.data);
+const fetcher = (url: string) => axios.get(url).then((res) => res.data);
 
 type Props = {};
 const OrderShowPage = (props: any) => {
   const router = useRouter();
   const { id } = router.query;
-  const { data, error } = useSWR(`http://localhost:3000/orders/${id}`, fetcher);
+  const { data, error } = useSWR(
+    `http://localhost:3001/api/orders/${id}`,
+    fetcher,
+    {
+      onError: (error) => {
+        console.log(error);
+        const statusCode = error.response.status;
+        if (statusCode === 401 || statusCode === 403) {
+          Router.push("/login");
+        }
+      },
+    }
+  );
+
 
   return data ? (
     <div style={{ height: 400, width: "100%" }}>
