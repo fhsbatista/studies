@@ -13,7 +13,7 @@ async function ordersList(req: NextApiRequest, res: NextApiResponse) {
   }
 
   try {
-    const { data } = await axios.get(`http://localhost:3000/orders`, {
+    const { data } = await axios.get(`${process.env.NEST_API_HOST}/orders`, {
       headers: {
         "x-api-token": account.token,
       },

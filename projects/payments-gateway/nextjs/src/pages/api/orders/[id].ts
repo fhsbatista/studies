@@ -15,11 +15,18 @@ async function getOrder(req: NextApiRequest, res: NextApiResponse) {
   const { id } = req.query;
 
   try {
-    const { data } = await axios.get(`http://localhost:3000/orders/${id}`, {
-      headers: {
-        "x-api-token": account.token,
-      },
-    });
+    const { data } = await axios.get(
+      `${process.env.NEST_API_HOST}/orders/${id}`,
+      {
+        headers: {
+          "x-api-token": account.token,
+        },
+      }
+    );
+
+    console.log("data resposta");
+    console.log("data resposta");
+    console.log(data);
 
     res.status(200).json(data);
   } catch (e) {

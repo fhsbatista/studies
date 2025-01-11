@@ -8,6 +8,7 @@ import { Link as MuiLink } from "@mui/material";
 import { OrderStatus, OrderStatusTranslate } from "../../utils/models";
 import { withIronSessionSsr } from "iron-session/next";
 import ironConfig from "../../utils/iron-config";
+import { log } from "console";
 
 type Props = {};
 const OrdersPage = (props: any) => {
@@ -18,7 +19,7 @@ const OrdersPage = (props: any) => {
       width: 300,
       renderCell: (params) => {
         return (
-          <Link href={`/orders/${params.value}`}>
+          <Link href={`/orders/${params.value}`} passHref>
             <MuiLink>{params.value}</MuiLink>
           </Link>
         );
@@ -39,7 +40,7 @@ const OrdersPage = (props: any) => {
       field: "status",
       headerName: "Status",
       width: 110,
-      valueFormatter: (value: OrderStatus) => OrderStatusTranslate[value],
+      valueFormatter: (params) => OrderStatusTranslate[params.value as OrderStatus],
     },
   ];
   return (
@@ -51,7 +52,7 @@ const OrdersPage = (props: any) => {
         columns={columns}
         rows={props.data}
         checkboxSelection
-        disableRowSelectionOnClick
+        disableSelectionOnClick
       />
     </div>
   );
@@ -59,24 +60,31 @@ const OrdersPage = (props: any) => {
 
 export default OrdersPage;
 
-export const getServerSideProps: GetServerSideProps = withIronSessionSsr(async (context) => {
-  const account = context.req.session.account;
-
-  if (!account) {
-    return {
-      redirect: {
-        destination: "/login",
-        permanent: false,
-      }
+export const getServerSideProps: GetServerSideProps = withIronSessionSsr(
+  async (context) => {
+    const account = context.req.session.account;
+    
+    if (!account) {
+      return {
+        redirect: {
+          destination: "/login",
+          permanent: false,
+        },
+      };
     }
-  }
-  const { data } = await axios.get("http://localhost:3001/api/orders", {
-    headers: { cookie: context.req.headers.cookie as string },
-  });
 
-  return {
-    props: {
-      data: data,
-    },
-  };
-}, ironConfig);
+    const { data } = await axios.get(
+      `${process.env.NEXT_PUBLIC_API_INTERNAL_HOST}/orders`,
+      {
+        headers: { cookie: context.req.headers.cookie as string },
+      }
+    );
+
+    return {
+      props: {
+        data: data,
+      },
+    };
+  },
+  ironConfig
+);

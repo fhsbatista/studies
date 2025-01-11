@@ -3,7 +3,7 @@ import {
   Card,
   CardContent,
   CardHeader,
-  Grid2,
+  Grid,
   Typography,
 } from "@mui/material";
 import axios from "axios";
@@ -19,7 +19,7 @@ const OrderShowPage = (props: any) => {
   const router = useRouter();
   const { id } = router.query;
   const { data, error } = useSWR(
-    `http://localhost:3001/api/orders/${id}`,
+    `${process.env.NEXT_PUBLIC_API_EXTERNAL_HOST}/orders/${id}`,
     fetcher,
     {
       onError: (error) => {
@@ -32,10 +32,9 @@ const OrderShowPage = (props: any) => {
     }
   );
 
-
   return data ? (
     <div style={{ height: 400, width: "100%" }}>
-      <Grid2 container>
+      <Grid container>
         <Card>
           <CardHeader
             title="Order"
@@ -71,7 +70,7 @@ const OrderShowPage = (props: any) => {
             </ul>
           </CardContent>
         </Card>
-      </Grid2>
+      </Grid>
     </div>
   ) : null;
 };

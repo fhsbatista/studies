@@ -1,5 +1,5 @@
 const ironConfig = {
-  password: "cvgJeRKVSnZR7PL6YBMQAxhbyFFpzDmy",
+  password: process.env.COOKIE_KEY,
   cookieName: "payments-gateway-session",
   cookieOptions: {
     secure: process.env.NODE_ENV === "production" ? true : false,
