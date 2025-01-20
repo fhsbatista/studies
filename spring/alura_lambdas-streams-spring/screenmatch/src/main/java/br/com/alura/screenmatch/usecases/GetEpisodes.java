@@ -22,17 +22,22 @@ public class GetEpisodes {
 
         seasons.forEach(s -> {
             s.episodes().forEach(e -> {
-                var formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-                var releaseDate = LocalDate.parse(e.releaseDate(), formatter);
-                var rating = e.rating().equals("N/A") ? 0.0 : Double.parseDouble(e.rating());
-                var episode = new Episode(
-                        s.season(),
-                        e.number(),
-                        e.title(),
-                        rating,
-                        releaseDate);
+                try {
+                    var formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                    var releaseDate = LocalDate.parse(e.releaseDate(), formatter);
+                    var rating = e.rating().equals("N/A") ? 0.0 : Double.parseDouble(e.rating());
+                    var episode = new Episode(
+                            s.season(),
+                            e.number(),
+                            e.title(),
+                            rating,
+                            releaseDate);
 
-                episodes.add(episode);
+                    episodes.add(episode);
+                } catch (Exception exception) {
+                    System.out.println("Could not parse episode: " + e);
+                }
+
             });
         });
 

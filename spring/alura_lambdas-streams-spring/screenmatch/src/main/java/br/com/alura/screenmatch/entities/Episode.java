@@ -5,6 +5,7 @@ import br.com.alura.screenmatch.model.Season;
 import java.time.LocalDate;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 
 public class Episode {
     private Integer season;
@@ -39,6 +40,13 @@ public class Episode {
                 .sorted(Comparator.comparing(Episode::getRating))
                 .limit(number)
                 .toList();
+    }
+
+    public static Optional<Episode> findByTitle(String title, List<Episode> episodes) {
+        return episodes
+                .stream()
+                .filter(e -> e.getTitle().toUpperCase().contains(title.toUpperCase()))
+                .findFirst();
     }
 
     public String getTitle() {

@@ -29,5 +29,16 @@ public class Main {
 
         System.out.println("3 worst episodes");
         Episode.filterWorstEpisodes(3, episodes).forEach(System.out::println);
+
+        System.out.println("Type a title");
+        var title = scanner.nextLine();
+        var episodeByTitle = Episode.findByTitle(title, episodes);
+
+        if (episodeByTitle.isEmpty()) {
+            System.out.println("Could not find episode");
+            return;
+        }
+
+        System.out.println(episodeByTitle.get());
     }
 }
