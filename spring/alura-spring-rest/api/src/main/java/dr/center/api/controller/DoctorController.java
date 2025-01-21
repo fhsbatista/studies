@@ -1,14 +1,15 @@
 package dr.center.api.controller;
 
+import dr.center.api.doctor.Doctor;
 import dr.center.api.doctor.DoctorRegisterData;
 import dr.center.api.doctor.DoctorRepository;
+import dr.center.api.doctor.ListDoctorData;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/doctors")
@@ -20,5 +21,10 @@ public class DoctorController {
     @Transactional
     public void register(@RequestBody @Valid DoctorRegisterData data) {
         repository.save(data.toDoctor());
+    }
+
+    @GetMapping
+    public List<ListDoctorData> list() {
+        return repository.findAll().stream().map(ListDoctorData::new).toList();
     }
 }

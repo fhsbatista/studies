@@ -3,23 +3,23 @@ package dr.center.api.doctor;
 import dr.center.api.address.Address;
 import jakarta.persistence.*;
 
-@Table(name="doctors")
-@Entity(name="doctor")
+@Table(name = "doctors")
+@Entity(name = "doctor")
 public class Doctor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Enumerated(EnumType.STRING)
-    private final Speciality speciality;
+    private Speciality speciality;
 
     @Embedded
-    private final Address address;
+    private Address address;
 
-    private final String name;
-    private final String email;
-    private final String phone;
-    private final String crm;
+    private String name;
+    private String email;
+    private String phone;
+    private String crm;
 
     public Doctor(
             String name,
@@ -35,5 +35,24 @@ public class Doctor {
         this.crm = crm;
         this.speciality = speciality;
         this.address = address;
+    }
+
+    public Doctor() {
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public String getEmail() {
+        return this.email;
+    }
+
+    public Speciality getSpeciality() {
+        return this.speciality;
+    }
+
+    public String getCrm() {
+        return this.crm;
     }
 }
