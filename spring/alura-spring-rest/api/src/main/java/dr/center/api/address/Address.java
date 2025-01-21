@@ -33,4 +33,34 @@ public class Address {
         this.state = state;
         this.complement = complement;
     }
+
+    public void updateData(AddressData data) {
+        if (data.number() != null) {
+            this.number = data.number();
+        }
+
+        if (data.street() != null) {
+            this.street = data.street();
+        }
+
+        if (data.neighborhood() != null) {
+            this.neighborhood = data.neighborhood();
+        }
+
+        if (data.zip() != null) {
+            this.zip = data.zip();
+        }
+
+        if (data.city() != null) {
+            this.city = data.city();
+        }
+
+        if (data.state() != null) {
+            this.state = data.state();
+        }
+
+        if (data.complement() != null) {
+            this.complement = data.complement();
+        }
+    }
 }

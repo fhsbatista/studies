@@ -1,6 +1,7 @@
 package dr.center.api.doctor;
 
 public record ListDoctorData(
+        Long id,
         String name,
         String email,
         String crm,
@@ -8,6 +9,7 @@ public record ListDoctorData(
 ) {
     public ListDoctorData(Doctor doctor) {
         this(
+                doctor.getId(),
                 doctor.getName(),
                 doctor.getEmail(),
                 doctor.getCrm(),

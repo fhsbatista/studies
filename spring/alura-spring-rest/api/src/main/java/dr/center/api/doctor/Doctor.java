@@ -40,6 +40,10 @@ public class Doctor {
     public Doctor() {
     }
 
+    public Long getId() {
+        return this.id;
+    }
+
     public String getName() {
         return this.name;
     }
@@ -54,5 +58,31 @@ public class Doctor {
 
     public String getCrm() {
         return this.crm;
+    }
+
+    public void updateData(DoctorUpdateData data) {
+        if (data.name() != null) {
+            this.name = data.name();
+        }
+
+        if (data.email() != null) {
+            this.email = data.email();
+        }
+
+        if (data.phone() != null) {
+            this.phone = data.phone();
+        }
+
+        if (data.crm() != null) {
+            this.crm = data.crm();
+        }
+
+        if (data.speciality() != null) {
+            this.speciality = data.speciality();
+        }
+
+        if (data.address() != null) {
+            this.address.updateData(data.address());
+        }
     }
 }

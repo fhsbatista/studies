@@ -1,9 +1,6 @@
 package dr.center.api.controller;
 
-import dr.center.api.doctor.Doctor;
-import dr.center.api.doctor.DoctorRegisterData;
-import dr.center.api.doctor.DoctorRepository;
-import dr.center.api.doctor.ListDoctorData;
+import dr.center.api.doctor.*;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,5 +29,12 @@ public class DoctorController {
             Pageable pagination
     ) {
         return repository.findAll(pagination).map(ListDoctorData::new);
+    }
+
+    @PutMapping
+    @Transactional
+    public void update(@RequestBody @Valid DoctorUpdateData data) {
+        var doctor = repository.getReferenceById(data.id());
+        doctor.updateData(data);
     }
 }
