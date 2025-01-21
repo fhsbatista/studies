@@ -15,6 +15,8 @@ public record DoctorRegisterData(
         @Email
         String email,
 
+        @NotBlank
+        String phone,
 
         @NotBlank
         @Pattern(regexp = "\\d{4,6}")
@@ -31,6 +33,7 @@ public record DoctorRegisterData(
         return new Doctor(
                 name,
                 email,
+                phone,
                 crm,
                 speciality,
                 address.toAddress()

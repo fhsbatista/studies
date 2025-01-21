@@ -18,17 +18,20 @@ public class Doctor {
 
     private final String name;
     private final String email;
+    private final String phone;
     private final String crm;
 
     public Doctor(
             String name,
             String email,
+            String phone,
             String crm,
             Speciality speciality,
             Address address
     ) {
         this.name = name;
         this.email = email;
+        this.phone = phone;
         this.crm = crm;
         this.speciality = speciality;
         this.address = address;
