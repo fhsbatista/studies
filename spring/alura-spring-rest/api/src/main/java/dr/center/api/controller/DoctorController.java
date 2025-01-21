@@ -9,6 +9,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,7 +27,10 @@ public class DoctorController {
     }
 
     @GetMapping
-    public Page<ListDoctorData> list(Pageable pagination) {
+    public Page<ListDoctorData> list(
+            @PageableDefault(size = 10, sort = {"name"})
+            Pageable pagination
+    ) {
         return repository.findAll(pagination).map(ListDoctorData::new);
     }
 }
