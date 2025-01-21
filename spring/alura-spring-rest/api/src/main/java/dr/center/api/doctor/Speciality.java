@@ -1,4 +1,8 @@
 package dr.center.api.doctor;
 
-public class Speciality {
+public enum Speciality {
+    ORTHOPEDY,
+    CARDIOLOGY,
+    DERMATOLOGY,
+    PSYCHIATRY
 }
