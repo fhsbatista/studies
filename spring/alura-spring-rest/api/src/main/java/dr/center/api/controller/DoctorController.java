@@ -3,6 +3,7 @@ package dr.center.api.controller;
 import dr.center.api.doctor.DoctorRegisterData;
 import dr.center.api.doctor.DoctorRepository;
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,7 +18,7 @@ public class DoctorController {
 
     @PostMapping
     @Transactional
-    public void register(@RequestBody DoctorRegisterData data) {
+    public void register(@RequestBody @Valid DoctorRegisterData data) {
         repository.save(data.toDoctor());
     }
 }
