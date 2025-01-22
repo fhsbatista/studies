@@ -87,4 +87,8 @@ public class Patient {
             this.address.updateData(data.address());
         }
     }
+
+    public void deactivate() {
+        this.active = false;
+    }
 }
