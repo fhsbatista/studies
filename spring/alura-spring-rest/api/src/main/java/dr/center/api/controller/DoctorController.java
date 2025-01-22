@@ -17,6 +17,12 @@ public class DoctorController {
     @Autowired
     private DoctorRepository repository;
 
+    @GetMapping("/{id}")
+    public ResponseEntity get(@PathVariable Long id) {
+        var doctor = repository.getReferenceById(id);
+        return ResponseEntity.ok().body(new DoctorDetails(doctor));
+    }
+
     @PostMapping
     @Transactional
     public ResponseEntity register(
@@ -65,4 +71,5 @@ public class DoctorController {
 
         return ResponseEntity.noContent().build();
     }
+
 }
