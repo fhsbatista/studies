@@ -62,6 +62,14 @@ public class Doctor {
         return this.crm;
     }
 
+    public String getPhone() {
+        return this.phone;
+    }
+
+    public Address getAddress() {
+        return this.address;
+    }
+
     public void deactivate() {
         this.active = false;
     }

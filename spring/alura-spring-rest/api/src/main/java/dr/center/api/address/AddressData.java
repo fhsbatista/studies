@@ -33,4 +33,16 @@ public record AddressData(
                 state,
                 complement);
     }
+
+    public static AddressData fromAddress(Address address) {
+        return new AddressData(
+                address.getStreet(),
+                address.getNeighborhood(),
+                address.getZip(),
+                address.getCity(),
+                address.getState(),
+                address.getNumber(),
+                address.getComplement()
+        );
+    }
 }

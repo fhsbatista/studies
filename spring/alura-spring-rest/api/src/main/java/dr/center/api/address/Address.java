@@ -63,4 +63,32 @@ public class Address {
             this.complement = data.complement();
         }
     }
+
+    public String getNumber() {
+        return number;
+    }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public String getNeighborhood() {
+        return neighborhood;
+    }
+
+    public String getZip() {
+        return zip;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public String getComplement() {
+        return complement;
+    }
 }
