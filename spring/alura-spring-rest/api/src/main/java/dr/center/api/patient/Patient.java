@@ -65,4 +65,26 @@ public class Patient {
     public Boolean getActive() {
         return active;
     }
+
+    public void updateData(PatientUpdateData data) {
+        if (data.name() != null) {
+            this.name = data.name();
+        }
+
+        if (data.email() != null) {
+            this.email = data.email();
+        }
+
+        if (data.cpf() != null) {
+            this.cpf = data.cpf();
+        }
+
+        if (data.phone() != null) {
+            this.phone = data.phone();
+        }
+
+        if (data.address() != null) {
+            this.address.updateData(data.address());
+        }
+    }
 }

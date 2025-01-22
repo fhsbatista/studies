@@ -3,6 +3,7 @@ package dr.center.api.controller;
 import dr.center.api.patient.PatientDetails;
 import dr.center.api.patient.PatientRegisterData;
 import dr.center.api.patient.PatientRepository;
+import dr.center.api.patient.PatientUpdateData;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,5 +48,14 @@ public class PatientController {
         var page = repository.findAll(pagination).map(PatientDetails::new);
 
         return ResponseEntity.ok(page);
+    }
+
+    @PutMapping()
+    @Transactional
+    public ResponseEntity update(@RequestBody PatientUpdateData data) {
+        var patient = repository.getReferenceById(data.id());
+        patient.updateData(data);
+
+        return ResponseEntity.ok(new PatientDetails(patient));
     }
 }
