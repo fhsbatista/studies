@@ -9,8 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
+import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
 @RequestMapping("/doctors")
@@ -20,10 +19,14 @@ public class DoctorController {
 
     @PostMapping
     @Transactional
-    public ResponseEntity register(@RequestBody @Valid DoctorRegisterData data) {
-        repository.save(data.toDoctor());
+    public ResponseEntity register(
+            @RequestBody @Valid DoctorRegisterData data,
+            UriComponentsBuilder uriBuilder) {
+        var doctor = repository.save(data.toDoctor());
 
-        return ResponseEntity.ok().build();
+        var uri = uriBuilder.path("/doctors/{id}").buildAndExpand(doctor.getId()).toUri();
+
+        return ResponseEntity.created(uri).body(new DoctorDetails(doctor));
     }
 
     @GetMapping
@@ -42,7 +45,7 @@ public class DoctorController {
         var doctor = repository.getReferenceById(data.id());
         doctor.updateData(data);
 
-        return ResponseEntity.ok(new DoctorUpdatedData(doctor));
+        return ResponseEntity.ok(new DoctorDetails(doctor));
     }
 
     @DeleteMapping("/{id}")

@@ -1,13 +1,8 @@
 package dr.center.api.doctor;
 
-import dr.center.api.address.Address;
 import dr.center.api.address.AddressData;
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Pattern;
 
-public record DoctorUpdatedData(
+public record DoctorDetails(
         Long id,
         String name,
         String email,
@@ -16,7 +11,7 @@ public record DoctorUpdatedData(
         Speciality speciality,
         AddressData address) {
 
-    public DoctorUpdatedData(Doctor dr) {
+    public DoctorDetails(Doctor dr) {
         this(
                 dr.getId(),
                 dr.getName(),
