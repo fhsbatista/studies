@@ -63,3 +63,4 @@ projects/payments-gateway/nestjs/.docker/dbdata
 projects/payments-gateway/go/cmd/test.db
 projects/payments-gateway/nextjs/node_modules
 projects/payments-gateway/nextjs/.next
+docker/notes/fullcycle/5.creating-images/node-app/node_modules
