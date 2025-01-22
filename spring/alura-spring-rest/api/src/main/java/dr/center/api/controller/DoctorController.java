@@ -43,4 +43,11 @@ public class DoctorController {
     public void delete(@PathVariable Long id) {
         repository.deleteById(id);
     }
+
+    @PutMapping("/{id}/deactivate")
+    @Transactional
+    public void deactivate(@PathVariable Long id) {
+        var doctor = repository.getReferenceById(id);
+        doctor.deactivate();
+    }
 }

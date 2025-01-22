@@ -20,6 +20,7 @@ public class Doctor {
     private String email;
     private String phone;
     private String crm;
+    private Boolean active;
 
     public Doctor(
             String name,
@@ -35,6 +36,7 @@ public class Doctor {
         this.crm = crm;
         this.speciality = speciality;
         this.address = address;
+        this.active = true;
     }
 
     public Doctor() {
@@ -58,6 +60,10 @@ public class Doctor {
 
     public String getCrm() {
         return this.crm;
+    }
+
+    public void deactivate() {
+        this.active = false;
     }
 
     public void updateData(DoctorUpdateData data) {
