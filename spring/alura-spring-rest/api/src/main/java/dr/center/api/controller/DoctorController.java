@@ -1,6 +1,6 @@
 package dr.center.api.controller;
 
-import dr.center.api.doctor.*;
+import dr.center.api.domain.doctor.*;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;

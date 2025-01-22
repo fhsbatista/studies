@@ -1,6 +1,6 @@
-package dr.center.api.patient;
+package dr.center.api.domain.patient;
 
-import dr.center.api.address.AddressData;
+import dr.center.api.domain.address.AddressData;
 
 public record PatientDetails(
         Long id,

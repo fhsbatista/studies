@@ -1,4 +1,4 @@
-package dr.center.api.doctor;
+package dr.center.api.domain.doctor;
 
 public record ListDoctorData(
         Long id,

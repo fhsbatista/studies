@@ -1,9 +1,9 @@
 package dr.center.api.controller;
 
-import dr.center.api.patient.PatientDetails;
-import dr.center.api.patient.PatientRegisterData;
-import dr.center.api.patient.PatientRepository;
-import dr.center.api.patient.PatientUpdateData;
+import dr.center.api.domain.patient.PatientDetails;
+import dr.center.api.domain.patient.PatientRegisterData;
+import dr.center.api.domain.patient.PatientRepository;
+import dr.center.api.domain.patient.PatientUpdateData;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;

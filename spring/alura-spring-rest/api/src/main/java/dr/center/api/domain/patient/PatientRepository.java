@@ -1,4 +1,4 @@
-package dr.center.api.patient;
+package dr.center.api.domain.patient;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

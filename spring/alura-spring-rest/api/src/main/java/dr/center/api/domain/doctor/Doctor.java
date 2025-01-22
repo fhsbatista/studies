@@ -1,72 +1,80 @@
-package dr.center.api.patient;
+package dr.center.api.domain.doctor;
 
-import dr.center.api.address.Address;
+import dr.center.api.domain.address.Address;
 import jakarta.persistence.*;
 
-@Table(name = "patients")
-@Entity(name = "patient")
-public class Patient {
+@Table(name = "doctors")
+@Entity(name = "doctor")
+public class Doctor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Enumerated(EnumType.STRING)
+    private Speciality speciality;
 
     @Embedded
     private Address address;
 
     private String name;
     private String email;
-    private String cpf;
     private String phone;
+    private String crm;
     private Boolean active;
 
-    public Patient() {}
-
-    public Patient(
+    public Doctor(
             String name,
             String email,
-            String cpf,
             String phone,
+            String crm,
+            Speciality speciality,
             Address address
-
     ) {
-        this.id = id;
         this.name = name;
         this.email = email;
-        this.cpf = cpf;
         this.phone = phone;
+        this.crm = crm;
+        this.speciality = speciality;
         this.address = address;
         this.active = true;
+    }
+
+    public Doctor() {
     }
 
     public Long getId() {
         return this.id;
     }
 
-    public Address getAddress() {
-        return address;
-    }
-
     public String getName() {
-        return name;
+        return this.name;
     }
 
     public String getEmail() {
-        return email;
+        return this.email;
     }
 
-    public String getCpf() {
-        return cpf;
+    public Speciality getSpeciality() {
+        return this.speciality;
+    }
+
+    public String getCrm() {
+        return this.crm;
     }
 
     public String getPhone() {
-        return phone;
+        return this.phone;
     }
 
-    public Boolean getActive() {
-        return active;
+    public Address getAddress() {
+        return this.address;
     }
 
-    public void updateData(PatientUpdateData data) {
+    public void deactivate() {
+        this.active = false;
+    }
+
+    public void updateData(DoctorUpdateData data) {
         if (data.name() != null) {
             this.name = data.name();
         }
@@ -75,20 +83,20 @@ public class Patient {
             this.email = data.email();
         }
 
-        if (data.cpf() != null) {
-            this.cpf = data.cpf();
-        }
-
         if (data.phone() != null) {
             this.phone = data.phone();
+        }
+
+        if (data.crm() != null) {
+            this.crm = data.crm();
+        }
+
+        if (data.speciality() != null) {
+            this.speciality = data.speciality();
         }
 
         if (data.address() != null) {
             this.address.updateData(data.address());
         }
-    }
-
-    public void deactivate() {
-        this.active = false;
     }
 }

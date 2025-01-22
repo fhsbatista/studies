@@ -1,4 +1,4 @@
-package dr.center.api.doctor;
+package dr.center.api.domain.doctor;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

@@ -1,6 +1,6 @@
-package dr.center.api.doctor;
+package dr.center.api.domain.doctor;
 
-import dr.center.api.address.AddressData;
+import dr.center.api.domain.address.AddressData;
 
 public record DoctorDetails(
         Long id,

@@ -1,6 +1,6 @@
-package dr.center.api.doctor;
+package dr.center.api.domain.doctor;
 
-import dr.center.api.address.AddressData;
+import dr.center.api.domain.address.AddressData;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
