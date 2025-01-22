@@ -28,7 +28,7 @@ public class DoctorController {
             @PageableDefault(size = 10, sort = {"name"})
             Pageable pagination
     ) {
-        return repository.findAll(pagination).map(ListDoctorData::new);
+        return repository.findAllByActiveTrue(pagination).map(ListDoctorData::new);
     }
 
     @PutMapping
