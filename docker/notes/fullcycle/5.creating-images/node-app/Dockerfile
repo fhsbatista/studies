@@ -4,12 +4,16 @@ FROM node:${NODE_VERSION}
 ENV PORT=3001
 ENV MESSAGE="Hello docker."
 
+WORKDIR /app
+
+COPY package*.json ./
+
+RUN npm install
+
 # RUN useradd -m mynode
 # USER mynode
 
 USER 1001
-
-WORKDIR /app
 
 COPY . .
 
