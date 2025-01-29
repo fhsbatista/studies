@@ -1,5 +1,7 @@
 FROM golang:latest AS builder
 
+LABEL env="production"
+
 WORKDIR /app
 COPY . .
 
