@@ -1,0 +1,3 @@
+ - Run a container using image generated from Dockerfile.debug
+ - On Vscode, run the debugger and set some breakpoints
+ - Make a call on /hello and the breakpoints will be hit.
