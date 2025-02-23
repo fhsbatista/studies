@@ -1,0 +1,6 @@
+services:
+  nginx:
+    image: nginx:latest
+  
+  mongo:
+    image: mongo:latest
