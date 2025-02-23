@@ -8,3 +8,6 @@ services:
   
   mongo:
     image: mongo:latest
+
+  node:
+    build: ./node-network

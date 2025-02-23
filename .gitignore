@@ -65,3 +65,5 @@ projects/payments-gateway/nextjs/node_modules
 projects/payments-gateway/nextjs/.next
 docker/notes/fullcycle/5.creating-images/node-app/node_modules
 docker/notes/fullcycle/8.network/node-network/node_modules
+
+docker/notes/fullcycle/9.docker-compose/node-network/node_modules/
