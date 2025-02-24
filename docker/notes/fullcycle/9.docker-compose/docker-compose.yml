@@ -3,6 +3,8 @@ services:
     image: nginx:latest
     ports:
      - "8080:80"
+    depends_on:
+      - node
     volumes:
      - ./nginx-html:/usr/share/nginx/html
   
@@ -13,5 +15,7 @@ services:
     build:
       context: ./node-network
       dockerfile: Dockerfile
+    depends_on:
+      - mongo
     volumes:
       - ./node-network:/app
