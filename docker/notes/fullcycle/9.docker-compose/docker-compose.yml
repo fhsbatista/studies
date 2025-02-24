@@ -10,4 +10,8 @@ services:
     image: mongo:latest
 
   node:
-    build: ./node-network
+    build:
+      context: ./node-network
+      dockerfile: Dockerfile
+    volumes:
+      - ./node-network:/app
