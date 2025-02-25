@@ -7,6 +7,8 @@ services:
       - node
     volumes:
       - ./nginx-html:/usr/share/nginx/html
+    networks:
+      - frontend
 
   mongo:
     image: mongo:latest
@@ -18,8 +20,10 @@ services:
       test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"] #comando que irá dizer se está healthy ou não
       interval: 5s #intervalo entre cada comando
       retries: 5 #quantidade de comandos
-      start_period: 10s #tempo entre inicialização dos containers e a primeira tentativa do comando
+      start_period: 2s #tempo entre inicialização dos containers e a primeira tentativa do comando
       timeout: 5s #tempo máxima de aguardo para resposta do comando
+    networks:
+      - db
 
   node:
     build:
@@ -30,3 +34,11 @@ services:
         condition: service_healthy
     volumes:
       - ./node-network:/app
+    networks:
+      - backend
+      - db
+
+networks:
+  db:
+  backend:
+  frontend:
