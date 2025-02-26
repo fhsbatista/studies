@@ -69,3 +69,5 @@ docker/notes/fullcycle/8.network/node-network/node_modules
 docker/notes/fullcycle/9.docker-compose/node-network/node_modules/
 
 docker/notes/fullcycle/9.docker-compose/mongo/
+
+docker/notes/fullcycle/11.docker-init/node/node_modules/
