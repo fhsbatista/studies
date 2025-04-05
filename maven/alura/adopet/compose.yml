@@ -1,0 +1,16 @@
+services:
+  db:
+    image: mysql:latest
+    container_name: adopet-db
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: root
+      MYSQL_USER: fernando
+      MYSQL_PASSWORD: fernando
+    ports:
+      - "3306:3306"
+    volumes:
+      - adopet-db:/var/lib/mysql
+
+volumes:
+  adopet-db:
