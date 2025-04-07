@@ -1,6 +1,9 @@
 package adopet.api.service;
 
-import adopet.api.dto.*;
+import adopet.api.dto.AdocaoDTO;
+import adopet.api.dto.AprovarAdocaoDTO;
+import adopet.api.dto.ReprovarAdocaoDTO;
+import adopet.api.dto.SolicitacaoDeAdocaoDTO;
 import adopet.api.exception.AdocaoException;
 import adopet.api.model.Adocao;
 import adopet.api.model.Pet;
@@ -9,7 +12,6 @@ import adopet.api.model.Tutor;
 import adopet.api.repository.AdocaoRepository;
 import adopet.api.repository.PetRepository;
 import adopet.api.repository.TutorRepository;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
