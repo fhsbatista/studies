@@ -1,9 +1,9 @@
 package trees;
 
 public class Node {
-    private int value;
-    private Node left;
-    private Node right;
+    public int value;
+    public Node left;
+    public Node right;
 
     private Node(int value, Node left, Node right) {
         this.value = value;
@@ -13,6 +13,10 @@ public class Node {
 
     public static Node of(int value, Node left, Node right) {
         return new Node(value, left, right);
+    }
+
+    public static Node of(int value) {
+        return new Node(value, null, null);
     }
 
     public boolean isValid() {
@@ -30,4 +34,5 @@ public class Node {
 
         return left && right;
     }
+
 } 
