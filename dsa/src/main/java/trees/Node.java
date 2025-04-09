@@ -18,21 +18,4 @@ public class Node {
     public static Node of(int value) {
         return new Node(value, null, null);
     }
-
-    public boolean isValid() {
-        return validate(this, Integer.MIN_VALUE, Integer.MAX_VALUE);
-    }
-
-    private boolean validate(Node node, int min, int max) {
-        if (node == null) return true;
-
-        var valid = node.value > min && node.value < max;
-        if (!valid) return false;
-
-        var left = validate(node.left, min, node.value);
-        var right = validate(node.right, node.value, max);
-
-        return left && right;
-    }
-
 } 
