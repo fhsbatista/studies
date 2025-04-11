@@ -2,6 +2,7 @@ package trees.validation;
 
 import org.junit.jupiter.api.Test;
 import trees.Node;
+import trees.binarySearch.validation.RecursiveValidator;
 
 import static org.junit.jupiter.api.Assertions.*;
 

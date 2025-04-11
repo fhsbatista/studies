@@ -1,4 +1,4 @@
-package trees.validation;
+package trees.binarySearch.validation;
 
 import trees.Node;
 

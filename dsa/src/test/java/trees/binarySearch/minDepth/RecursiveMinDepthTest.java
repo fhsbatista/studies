@@ -1,7 +1,8 @@
-package trees.minDepth;
+package trees.binarySearch.minDepth;
 
 import org.junit.jupiter.api.Test;
 import trees.Node;
+import trees.minDepth.RecursiveMinDepth;
 
 import static org.junit.jupiter.api.Assertions.*;
 

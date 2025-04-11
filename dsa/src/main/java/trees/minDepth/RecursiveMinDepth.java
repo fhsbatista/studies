@@ -2,7 +2,7 @@ package trees.minDepth;
 
 import trees.Node;
 
-public class RecursiveMinDepth implements MinDepth{
+public class RecursiveMinDepth implements MinDepth {
     private int minDepth = Integer.MAX_VALUE;
 
     public int calculate(Node root) {
@@ -15,7 +15,6 @@ public class RecursiveMinDepth implements MinDepth{
         if (node == null) {
             return;
         }
-
         var isLeaf = node.left == null && node.right == null;
 
         if (isLeaf) {
@@ -23,8 +22,8 @@ public class RecursiveMinDepth implements MinDepth{
             return;
         }
 
-        minDepth(node.left, depth + 1);
-        minDepth(node.right, depth + 1);
+        if (node.left != null) minDepth(node.left, depth + 1);
+        if (node.right != null) minDepth(node.right, depth + 1);
     }
 
 }

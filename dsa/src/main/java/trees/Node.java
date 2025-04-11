@@ -18,4 +18,7 @@ public class Node {
     public static Node of(int value) {
         return new Node(value, null, null);
     }
-} 
+}
+
+
+
