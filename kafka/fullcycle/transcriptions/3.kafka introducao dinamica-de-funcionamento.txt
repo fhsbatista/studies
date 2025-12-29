@@ -1,0 +1,31 @@
+(Transcribed by TurboScribe.ai. Go Unlimited to remove this message.)
+
+Olá pessoal, tudo bem? No nosso vídeo anterior, a gente falou um pouco dos superpoderes do Kafka e também a gente entendeu um pouco melhor quais são as empresas que estão utilizando essa solução, legal? E agora eu quero falar com você sobre a dinâmica básica de funcionamento que o Kafka tem aqui pra gente, legal? Então vamos entender, porque de forma geral, a ideia é simples, tá? O grande ponto é que tem muitos detalhes durante todo esse ciclo e é isso que você tem que começar a entender como que isso funciona, legal? Como que a ideia funciona do Kafka? Eu tenho um produtor, o produtor é o que? É o cara que está produzindo o evento. Então vamos partir do princípio que a gente tem o exemplo claro de um e-commerce, legal? Então o cara faz o processo de checkout, faz o pagamento e eu tenho que emitir a nota fiscal. Então vamos imaginar que saiu o evento do pagamento e esse evento vai ter que ser guardado num local, legal? E o sistema da nota fiscal vai ficar acessando esse local para ver todas as compras e quando tiver uma nova compra ele emite a nota fiscal. 
+
+Esse que é o grande ponto, tem dois sistemas completamente diferentes. Então o que o Kafka ele consegue fazer? Ele consegue ser sistema intermediário, ele consegue pegar os eventos e disponibilizar esses eventos para pessoas que queiram ler esse evento, legal? Então por conta disso a gente tem um camarada que é o producer, que é o cara que está produzindo o evento, ou seja, nesse caso o checkout, o sistema que faz o pagamento, legal? E eu tenho um consumer, que é o cara que quer estar interessado naquela mensagem, ou seja, o consumidor da mensagem. Então eu tenho o produtor de um lado, o consumidor do outro e ao invés desses caras falarem diretamente eles falam para o intermediário que é o Kafka. 
+
+O que você tem que entender é que o Kafka não é simplesmente o Kafka, o Kafka ele é um conjunto de máquinas, ele é um cluster e esse cluster é formado de nós. Esses nós do cluster a gente chama de broker. Então quando eu tô falando em Kafka, eu tô falando nos Kafkas brokers, ou seja, eu tenho essas máquinas e essas máquinas são as máquinas que processam e conseguem armazenar e conseguem fazer tudo aí com os nossos eventos.
+
+Então o que acontece? O producer pega a mensagem, manda a mensagem para o Kafka e obviamente essa mensagem ela vai cair num broker e vai ficar guardado num banco de dados. O mais louco de tudo é que cada broker desse também tem o seu banco de dados. Então eventualmente quando eu mando uma mensagem, essa mensagem pode ficar no broker A, às vezes pode ficar no broker B, às vezes fica no broker C, mas o grande ponto é que cada broker é uma máquina. 
+
+Aí o que acontece? O consumidor ele vai lá e acessa esse broker. Então olha só, a gente tem que tomar cuidado e entender alguns aspectos, que tem algumas pessoas que ficam com dúvida em relação a isso. O Kafka ele não envia nenhuma mensagem para ninguém. 
+
+Às vezes a gente fica ali naquela pegada tipo pub-sub, alguém ficar notificando, qualquer coisa desse tipo. Não! O que acontece é o seguinte, o producer manda a mensagem e fica guardado no banco de dados. O consumer acessa o Kafka e lê esse banco de dados e pega essa informação. 
+
+Então o Kafka não fica distribuindo mensagem, nada disso. Ele guarda a mensagem e o consumidor vai ler essa mensagem. Então essa que é a ideia básica dos conceitos quando a gente está falando aí do Kafka. 
+
+Se você entendeu bem o que é producer, o que é consumer, que o producer manda a mensagem, o consumer lê essa mensagem. Não é que o Kafka envia mensagem, mas o consumer vai lá ler essa mensagem. Eu acho que esse vídeo já caiu muito bem aqui pra gente. 
+
+Agora um aspecto que eu tenho que deixar bem claro aqui pra você é o seguinte, normalmente quando você for colocar um cluster em produção no Kafka, a recomendação mínima para você botar em produção são três máquinas, três brokers. Então isso aí é extremamente importante a gente colocar. Um outro ponto importante também, só para que você consiga ter um contexto, é o seguinte, esses brokers se comunicam o tempo inteiro. 
+
+Como que eu vou saber em qual broker a mensagem vai parar? Qual broker que fica armazenando isso aqui? Como que esses caras se comunicam? Como é que funciona toda essa história? Como que é o endereçamento? Se eu colocar mais uma máquina, como que sabe que essa máquina entrou no cluster? Então o que acontece? O Kafka ele precisa de um sistema que ajude a gerenciar todo esse processo, como que esses brokers se comunicam, como que é feita as prioridades, como ele sabe se uma máquina está online ou não, se não está ele já tem que tirar essa máquina para ninguém tentar mandar mensagem para ela. E o que a gente tem? A gente tem um cara, que é um outro projeto da PAH chamada de Zookeeper. O Zookeeper é um sistema de service discovery, ele faz uma porrada de coisa e ele auxilia o Kafka nessa história. 
+
+Wesley, mas por que você não colocou o Zookeeper aqui nessa imagem? Por quê? Porque o Zookeeper ele está, vamos dizer, de saída. O Kafka está querendo a sua independência e fazer todo esse processo por ele mesmo. Então eu não estou colocando o Zookeeper aqui, mas é muito comum que você vá pegar sistemas com o Kafka que vai ter o Zookeeper rodando. 
+
+Vai ser muito comum você pegar, por exemplo, Docker Compose, por exemplo, a gente vai subir, vai ter ali instâncias do Zookeeper, mas você saiba que esse cara ele está ali para fazer um meio de campo ali para os brokers se comunicarem e tudo mais. Mas esse cara aí, conforme o tempo vai passando, vai ficar mais comum esse cara aí desaparecer. Então se você vê um tal Zookeeper, saiba aí do que eu tô falando. 
+
+Show de bola? Então essa foi a dinâmica básica de como que o Kafka funciona e agora a gente vai começar a dar um zoom em toda essa situação para começar a entender esses pormenores. E são nesses detalhes que realmente vão fazer a diferença para você usar o Kafka com mais ou com menos eficiência. Maravilha? Um grande abraço. 
+
+Então vamos lá para o nosso próximo vídeo.
+
+(Transcribed by TurboScribe.ai. Go Unlimited to remove this message.)

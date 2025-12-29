@@ -1,0 +1,35 @@
+(Transcribed by TurboScribe.ai. Go Unlimited to remove this message.)
+
+Olá pessoal, tudo bem? No vídeo anterior eu fiz aí uma pequena apresentação sobre a ideia geral que a gente vai ter do Kafka e agora a gente não vai ter muitas delongas aí. Vamos nessa para a gente entender como é que funciona toda essa ferramenta e como que o Kafka vai poder te ajudar aí no seu dia-a-dia. Bora lá então. 
+
+Seguinte, Apache Kafka, tá? Então já dá para você perceber que o Apache Kafka é um projeto que faz parte ali hoje em dia da Apache Foundation, é um projeto open source inclusive, tá? Então o que é o Apache Kafka? Eu dei uma traduzida basicamente numa frase que eles colocam, num trecho que eles colocam no site deles, tá? Mas para ficar um pouco mais simples da gente entender. Então é o seguinte, o Apache Kafka é uma plataforma distribuída de streaming de eventos open source, que é utilizada por milhares de empresas para uma alta performance em pipeline de dados, stream de analytics, integração de dados e aplicações de missão crítica. É muito louco porque quando a gente escuta isso a gente já começa a pensar, poxa eu li tanta coisa e parece que eu não entendi nada. 
+
+O que que faz realmente essa parada? Eu acho que a gente tem que começar a entender o ponto-chave que ele fala aqui, que é uma plataforma distribuída de stream de eventos, tá? E quando a gente está falando de streaming de eventos, streaming é qualquer coisa que está produzindo de uma forma geral dados, né? São dados que estão vindo e uma vez que a gente consegue capturar esses dados, a gente consegue eventualmente fazer o que? Distribuir esses dados. E aqui ele está dizendo pra gente, opa com esses dados provavelmente eu vou poder utilizar para processar recursos no meu sistema, posso manter essas coisas em aplicações de missão crítica, consigo integrar informações e tudo mais. Mas eu acho que tudo vai ficar um pouco mais fácil quando a gente falar do Kafka, quando a gente começar a entender inclusive alguns casos de uso dele. 
+
+Mas vamos lá. Primeira coisa para que você consiga entender melhor toda essa definição, eu acho que a grande sacada é a gente se ligar em relação ao mundo dos eventos. É muito interessante porque até muito tempo atrás a gente não ficava ouvindo o tempo inteiro ficar falando em eventos. 
+
+E a cada dia eu acredito com as novas tecnologias, toda essa parte de IoT etc, cada dia mais a gente escuta falar em eventos. Então por isso que o Kafka de uma forma ou de outra ele se posicionou ali para ser uma plataforma distribuída que consegue trabalhar com streaming de eventos. Então a primeira coisa que a gente tem que pensar é o diversos tipos de plataforma, desde sistemas que precisam se comunicar, devices para IoT, monitoramentos de aplicação, sistemas de alarme. 
+
+Então se você olhar tudo nos dias de hoje, tudo é baseado em evento. Desde você pedir um Uber, desde você abrir uma porta do carro, desde o seu sistema que caiu e vai produzir um alerta, desde o sistema que está monitorando, qualquer coisa hoje em dia é um evento. Um checkout é uma compra, é uma transação, tudo isso no final das contas estão gerando eventos. 
+
+E cada dia mais a gente precisa pegar esses eventos para diversas situações. Para a gente conseguir tirar métricas, para que a gente consiga integrar sistemas, para que a gente consiga guardar histórico, para que a gente consiga simplesmente entender o que está acontecendo e utilizar aquele dado da melhor forma possível. Então eventos é o que mais acontece. 
+
+Por outro lado, são muitos eventos. Quase tudo que a gente faz hoje em dia produz um determinado evento. Então como a gente consegue fazer aplicações gigantes que têm eventos para tudo contemplado, principalmente quando a gente está falando hoje nesse mundo distribuído com micro serviços etc. 
+
+Como a gente consegue de alguma forma receber esses eventos e conseguir jogar essas informações para lá e para cá. Então quando a gente começa a pensar dessa forma, a gente começa a pensar nos tipos de eventos. Então a gente tem que fazer algumas perguntas. 
+
+O seguinte, onde que eu posso salvar esses eventos? Existem eventos que eles têm que ser armazenados por questões de compliance. Existem eventos que a gente tem, por exemplo, quando a gente trabalha com event sourcing, por exemplo, a gente conta a história de tudo que aconteceu em uma transação. Como que a gente vai integrar um sistema e em algum momento outro sistema ainda não está disponível, por exemplo, para processar aquela informação, ele está offline. 
+
+Onde que eu guardo essas coisas? Outro ponto é o seguinte, como que eu consigo recuperar de forma rápida e simples, de forma que o feedback entre um processo e outro, ou mesmo entre um sistema e outro, possa acontecer de forma fluida e em tempo real? Isso aí é um ponto importante, porque não adianta só eu aguardar eventos. A gente tem histórias de pra caramba hoje em dia. Mas o ponto é, como que eu consigo jogar um evento no lugar e fazer com que sistemas que precisam ler esse evento consigam ler rapidamente isso aí? Como que eu consigo fazer com que isso aconteça? E que seja de forma simples, e que essa velocidade seja tão grande, que aconteça praticamente em tempo real. 
+
+Tempo real é a coisa mais relativa do mundo, mas de forma geral acredito que deu para vocês pegarem. Tem um outro ponto aqui, como que eu escalo esse processo? Hoje em dia a gente tem empresas muito pequenas, que obviamente produzem todos os seus eventos, mas a gente tem bancos, por exemplo, que imagina a quantidade de eventos que não acontecem ali por segundo. Como que eu consigo escalar uma solução dessa, para a gente conseguir ter toda essa possibilidade de injeção de dados e leitura de dados ali rapidamente? E um outro ponto que realmente pega pesado aqui, como que eu consigo ter resiliência e alta disponibilidade? Quando a gente está falando em diversos tipos de transação, a gente precisa ter resiliência. 
+
+Os sistemas não podem perder mensagens. Eu tenho que confiar no que está vindo para mim. Eu não posso simplesmente perder uma transação de um milhão de dólares. 
+
+Tem que haver resiliência. E ao mesmo tempo, eu preciso manter alta disponibilidade, porque se eu preciso armazenar eventos, o que que eu vou precisar fazer? Eu preciso ter algo que não caia de jeito nenhum, porque acaba virando o coração da empresa. De uma certa forma, acaba sendo considerado, depende da forma como você olhar, um ponto único de falha.
+
+Então essas são as perguntas que eu acho que vale a pena a gente se questionar, porque daí a gente começa a sentir falta de uma solução que possa lidar com isso nessas condições. E eu acredito que você já deve ter sacado que o que eu estou querendo dizer é que, de uma forma ou de outra, o Kafka cai com uma luva nesse tipo de situação. Maravilha? Então no próximo vídeo a gente vai entender um pouco melhor sobre esses superpoderes do Apache Kafka. 
+
+Vamos nessa!
+
+(Transcribed by TurboScribe.ai. Go Unlimited to remove this message.)

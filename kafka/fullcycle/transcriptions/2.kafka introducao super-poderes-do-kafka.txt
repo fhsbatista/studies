@@ -1,0 +1,45 @@
+(Transcribed by TurboScribe.ai. Go Unlimited to remove this message.)
+
+Tudo bem? No vídeo anterior a gente falou aí sobre eventos e agora a gente vai entender um pouco melhor como que o Kafka, ele se, vamos dizer, se encaixa dentro desse contexto que eu acabei de colocar aqui pra você. Seguinte, Kafka e os seus superpoderes. O negócio é o seguinte, quando a gente está falando do Kafka, ele é uma solução que consegue fazer todo esse processamento de eventos que eu acabei de falar pra você.
+
+Então, a primeira coisa que você tem que pensar é que o Kafka, ele tem um altíssimo throughput. Basicamente, ele consegue simplesmente aguentar a pancada de receber ali uma pancada de eventos ali por segundo. Então, quando a gente está falando em throughput, a gente está falando da capacidade que ele tem de receber ali e processar as suas requisições.
+
+Um outro ponto importante é que não adianta também a gente ter uma ferramenta que consegue armazenar, ter resiliência, escala, mas que a latência dessa informação seja muito longa, porque a gente precisa de velocidade, a gente precisa de tempo real. O Kafka tem aí uma latência extremamente baixa, dois milissegundos ele consegue bater. Outro ponto importante, Kafka, ele é escalável.
+
+E durante, inclusive, esse nosso bate-papo, você vai entender qual é a estratégia que o Kafka tem para que ele realmente consiga escalar, vamos dizer assim, de forma infinita. E um outro ponto importante, o Kafka, ele também consegue focar em armazenamento, porque a gente tem que mandar mensagens, essas mensagens precisam ficar guardadas. Eu posso escolher em algum momento jogar isso fora, mas eu posso escolher e segurar essas informações comigo.
+
+Então quando a gente está falando do Kafka, a gente também está falando que o Kafka tem uma área de banco de dados extremamente otimizada para que ele consiga guardar com segurança, com resiliência, todas as informações que estão sendo armazenadas nele. E uma coisa que faz parte, inclusive, da estratégia de escala, mas que ao mesmo tempo faz parte da estratégia do Kafka para alta disponibilidade, isso aí basicamente anda em conjunto. Eu tenho que ficar altamente escalável e altamente disponível.
+
+Como que eu penso uma solução que eu consigo os dois ao mesmo tempo? É basicamente essa a ideia que o Kafka consegue e você vai entender daqui a pouco quando a gente falar nisso. E uma coisa muito interessante, o Kafka se conecta com quase tudo. Um ponto importante, o Kafka foi desenvolvido em Java para os amantes da linguagem.
+
+Para quem não gosta de Java, saiba que o Java é top. Os caras conseguiram fazer algo extremamente fantástico para conseguir criar uma solução que realmente é genial. Mas a grande pegada é que existe driver para tudo quanto é linguagem.
+
+Então se você quiser rodar o Kafka com Go, se você quiser rodar o Kafka com Java, se você quiser rodar o Kafka com Python, com PHP, com Javascript e tudo mais, você vai conseguir utilizar o Kafka. Então uma vez que ele tem essa possibilidade de ter múltiplas linguagens, de tecnologias podendo utilizar, isso aí acaba facilitando muito, principalmente as empresas que trabalham em ambientes extremamente heterogêneos. E um outro ponto interessante também é que além do Kafka conseguir se conectar e ter esses drivers, existem muitas bibliotecas prontas que simplesmente acaba ficando muito fácil de você iniciar uma conexão e começar a trabalhar ali já com o Kafka.
+
+Durante esse curso você vai ver que é bem simples de forma geral esse processo. O grande ponto é que você tem que entender muitos dos conceitos que estão por trás do Kafka. Então uma coisa que eu já quero já te adiantar, o conteúdo dessa parada que eu vou começar a passar e que eu tô passando já agora pra você é denso.
+
+Se prepara, pega uma xícara de café, pega um pouco de água aí, toma porque não adianta eu começar a sair mostrando o Kafka pra você. Não adianta se você não entender os fundamentos dele. Você simplesmente vai ficar ali morgando e não entendendo o que está acontecendo por trás.
+
+Então eu acho que muita gente acaba fantasiando que o Kafka é muito complexo etc. É que existe sim essa complexidade inicial que você tem que entender, mas você vai ver que essa complexidade é o que dá o brilho que essa ferramenta tem. Basicamente é essa pegada ali.
+
+E obviamente uma vez que o Kafka é open source tem muita coisa em volta do Kafka que também fica open source. Então isso aí é muito bacana você verificar. Existe Kafka, existe Kafka Connect, Streams, tem o ksqlDB, a gente tem o Schema Registry.
+
+Então tem muita coisa em volta do Kafka. Então essa que é a grande pegada e eu acredito que quando a gente começa a pensar nesses pontos eu acho que já dá pra se ligar que os caras partiram ali de um pressuposto e conseguiram colocar essa parada pra funcionar. E obviamente tem muita gente utilizando.
+
+E quando eu falo todo mundo é LinkedIn, Kafka nasceu no LinkedIn. Só pra vocês saberem. A gente tem Netflix, Uber, Twitter, Dropbox, Spotify, PayPal e muitos bancos.
+
+Bancos são amantes do Kafka porque já deve dar pra você imaginar a quantidade de eventos e transações que essas empresas têm. Por outro lado, uma coisa que eu quero deixar muito claro aqui pra você é o seguinte. Não é porque o Uber usa que você tem que usar.
+
+Por outro lado, não é porque o Uber usa e porque você não é um Uber que você também não pode usar. Entende? Então o Kafka não necessariamente é uma solução que precisa ser implantada somente pra empresas que têm altíssima volumetria. Você vai perceber que o Kafka pode ser usado principalmente em dois contextos.
+
+Quando você tem alto volume de dados, ele dá conta. Mas muitas vezes você não tem nem tanto volume, mas você tem muitos sistemas que precisam se conectar. O Kafka consegue atender esses dois casos.
+
+Então a gente tem que tomar muito cuidado em relação a Ah não, o Kafka é muito complexo, não dá pra usar Kafka pra tudo. Você é muito pequeno pra usar Kafka? Depende. Não dá pra generalizar, não dá pra dizer que você tá matando uma formiga com uma bazuca.
+
+Nesse caso, você tem que entender qual é o contexto. Você tem que entender se vale ter a complexidade que o Kafka vai ter. O Kafka funciona em cluster, então você vai ter que gerenciar um cluster.
+
+Ou pagar uma empresa com serviço gerenciado de Kafka. Sei lá, a Amazon tem a própria Confluent, etc. Então isso aí é extremamente importante você se ligar.
+
+Maravilha? Próximo vídeo a gente vai começar a falar nessa imagem aqui sobre os conceitos básicos que o Kafka possui. Bora lá.
+
+(Transcribed by TurboScribe.ai. Go Unlimited to remove this message.)
