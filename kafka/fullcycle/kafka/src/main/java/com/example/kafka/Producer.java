@@ -16,6 +16,13 @@ public class Producer {
     }
 
     public void send(String key, String msg) {
-        kafkaTemplate.send(TOPIC, key, msg);
+        final var completable = kafkaTemplate.send(TOPIC, key, msg);
+        completable.whenComplete((result, ex) -> {
+            final var payload = result.getProducerRecord().value();
+            final var metadata = result.getRecordMetadata();
+            final var partition = metadata.partition();
+
+            System.out.println("Sent message: " + payload + ", on partition: " + partition);
+        });
     }
 }
