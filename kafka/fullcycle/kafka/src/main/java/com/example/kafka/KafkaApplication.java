@@ -19,7 +19,6 @@ public class KafkaApplication {
 
     public static void main(String[] args) throws InterruptedException {
         final var context = SpringApplication.run(KafkaApplication.class, args);
-        logger.info("passei");
 
         final var producer = context.getBean(Producer.class);
 

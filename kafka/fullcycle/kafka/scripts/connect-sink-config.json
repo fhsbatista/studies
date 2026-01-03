@@ -1,0 +1,23 @@
+{
+  "name": "mysql-message-sink",
+  "config": {
+    "connector.class": "io.confluent.connect.jdbc.JdbcSinkConnector",
+    "connection.url": "jdbc:mysql://mysql:3306/kafka_db?allowPublicKeyRetrieval=true&useSSL=false",
+    "connection.user": "kafka_user",
+    "connection.password": "kafka_pass",
+    "topics": "postgres-message",
+    "table.name.format": "message",
+    "insert.mode": "upsert",
+    "pk.mode": "record_value",
+    "pk.fields": "id",
+    "auto.create": "true",
+    "auto.evolve": "true",
+    "key.converter": "org.apache.kafka.connect.json.JsonConverter",
+    "value.converter": "org.apache.kafka.connect.json.JsonConverter",
+    "key.converter.schemas.enable": "true",
+    "value.converter.schemas.enable": "true",
+    "errors.tolerance": "all",
+    "errors.log.enable": "true"
+  }
+}
+

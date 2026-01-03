@@ -1,0 +1,19 @@
+{
+  "name": "postgres-message-source",
+  "config": {
+    "connector.class": "io.confluent.connect.jdbc.JdbcSourceConnector",
+    "connection.url": "jdbc:postgresql://postgres:5432/kafka_db",
+    "connection.user": "kafka_user",
+    "connection.password": "kafka_pass",
+    "table.whitelist": "message",
+    "mode": "incrementing",
+    "incrementing.column.name": "id",
+    "topic.prefix": "postgres-",
+    "poll.interval.ms": "1000",
+    "key.converter": "org.apache.kafka.connect.json.JsonConverter",
+    "value.converter": "org.apache.kafka.connect.json.JsonConverter",
+    "key.converter.schemas.enable": "true",
+    "value.converter.schemas.enable": "true"
+  }
+}
+
